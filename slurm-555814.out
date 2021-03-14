@@ -1,0 +1,9 @@
+Warning message:
+In dir.create(output) :
+  '/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output' already exists
+Loading required package: parallel
+Loading required package: Rsubread
+Error in if (is.na(files) || is.null(files) || class(files) != "character") { : 
+  missing value where TRUE/FALSE needed
+Calls: align -> .check_and_NormPath
+Execution halted
