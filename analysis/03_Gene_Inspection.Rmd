@@ -48,16 +48,17 @@ SampleInfo = SampleInfo %>% dplyr::arrange(CellLine, desc(gRNA), desc(DIFF), des
 
 # image(SampleInfo %>% select( CellLine, gRNA, DIFF, RAPA) %>% mutate_all(as.numeric) %>% as.matrix)
 
-GOIsEntrez=c(MAP2=4133,
-             VGLUT1 =57030,
-              VGLUT2=57084, 
-              DLG4=1742,
-              TUBB3=10381,
-              VGAT=140679, 
-              GPHN=10243,
-             RPTOR=57521,
-              DEPDC5=9681)
-
+GOIsEntrez=c(MAP2="4133",
+             KI67="4288",
+             CDC2="983",
+             VGLUT1 ="57030",
+              VGLUT2="57084", 
+              DLG4="1742",
+              TUBB3="10381",
+              VGAT="140679", 
+              GPHN="10243",
+             RPTOR="57521",
+              DEPDC5="9681")
 
 
 CellID = c("ReN")

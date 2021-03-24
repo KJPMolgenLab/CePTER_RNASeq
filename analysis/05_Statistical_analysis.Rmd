@@ -8,7 +8,7 @@ output: html_document
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=F
+reanalyze=T
 home = getwd()
 output= paste0(home, "/output/")
 
@@ -22,6 +22,7 @@ library(WGCNA)
 library(flashClust)
 library(pheatmap)
 library(limma)
+library(xlsx)
 
 opts_chunk$set(echo = TRUE, 
                fig.height = 7, 
@@ -46,7 +47,7 @@ log_2cpm=log2(counts(ddsMat, normalize=T)+1)
 
 ### Modelling the KO in all different combinations
 
-```{r functions_for_comparison, message=F}
+```{r loops_for_comparison, message=F}
 
 if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
   # calculate all combinations 
@@ -74,12 +75,7 @@ if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
           assign(lab, 
                  comparison(ddsMat, samples = Set, 
                             target =target,randomeffect = c()))
-          labme = paste("restab_ME", Cl, vs_label, d,r, sep="_")
-          lmF
-          assign(labme,
-          
-          
-        }
+          }
       }
     }
   }
@@ -171,7 +167,9 @@ pheatmap(plotmatrix,
 prolif_KO_genes = hits
 
 ```
-```{r noDIFF_noRAPA,  fig.height=20, fig.width=15}
+
+### replicated KO effect in DIFF noRAPA
+```{r DIFF_noRAPA,  fig.height=20, fig.width=15}
 
 
 geneids=rownames(restab_D244_sgNTC_sg2.1_DIFF_noRAPA)
@@ -244,6 +242,8 @@ pheatmap(plotmatrix,
 diff_KO_genes = hits
 ```
 
+
+## GO-term analysis 
 
 ```{r gprofilr}
 
