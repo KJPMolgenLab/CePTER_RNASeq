@@ -261,7 +261,6 @@ labels = SampleInfo[,c("CellLine","gRNA","DIFF", "RAPA")] %>%
 
 rownames(labels)=SampleInfo$label_rep
 
-
 pheatmap(sampleDistMatrix,
          clustering_distance_rows = distance,
          clustering_distance_cols = distance,
@@ -276,6 +275,13 @@ pheatmap(sampleDistMatrix,
 save(ddsMat, file=paste0(output,"/dds_matrix.RData"))
 
 ```
+
+
+
+## Clustering just no Rapa
+
+
+
 
 
 ## PCA and MDS

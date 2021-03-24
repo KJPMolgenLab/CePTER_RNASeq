@@ -376,7 +376,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-03-22
+<strong>Last updated:</strong> 2021-03-24
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -400,7 +400,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreedc58d85374c58683be5543f9dce347fa470e60d0targetblankdc58d85a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/dc58d85374c58683be5543f9dce347fa470e60d0" target="_blank">dc58d85</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreefec7077e92ca1afdc97eb22403b96727414cfef9targetblankfec7077a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/fec7077e92ca1afdc97eb22403b96727414cfef9" target="_blank">fec7077</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreedc58d85374c58683be5543f9dce347fa470e60d0targetblankdc58d85a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreefec7077e92ca1afdc97eb22403b96727414cfef9targetblankfec7077a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/dc58d85374c58683be5543f9dce347fa470e60d0" target="_blank">dc58d85</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/fec7077e92ca1afdc97eb22403b96727414cfef9" target="_blank">fec7077</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -485,20 +485,18 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/Softpower.png
 
 Untracked files:
-    Untracked:  analysis/02_Preprocessing_counts.Rmd
-    Untracked:  analysis/03_Gene_Inspection.Rmd
-    Untracked:  analysis/04_WGCNA.Rmd
     Untracked:  analysis/MDSplots/
-    Untracked:  code/00_Installer.R
-    Untracked:  code/01_Mapping_Alignment.R
-    Untracked:  code/custom_functions.R
-    Untracked:  code/trimmomatic_Preprocessing.sh
     Untracked:  data/SampleSheet_20200307-D62D244ReN-diff_RNAconcentrations.xlsx
     Untracked:  data/Sample_info_CePTER_RNASeq.csv
     Untracked:  data/Sample_info_CePTER_RNASeq_alt.csv
+    Untracked:  data/~$SampleSheet_20200307-D62D244ReN-diff_RNAconcentrations.xlsx
+    Untracked:  output/GOresWGCNA.xlsx
+    Untracked:  output/ResTabs_KO.RData
     Untracked:  output/dds_matrix.RData
+    Untracked:  output/gostres.pdf
     Untracked:  output/mdsplots.RData
 
 Unstaged changes:
@@ -509,7 +507,7 @@ Unstaged changes:
     Deleted:    Preprocessing.R~
     Deleted:    Sample_info_CePTER_RNASeq.csv
     Deleted:    Wrappter.sh~
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/03_Gene_Inspection.Rmd
     Deleted:    slurm-555373.out
     Deleted:    slurm-555814.out
     Deleted:    trimmomatic_Preprocessing.sh
@@ -541,16 +539,14 @@ SampleInfo = SampleInfo %&gt;% dplyr::arrange(CellLine, desc(gRNA), desc(DIFF), 
 # image(SampleInfo %&gt;% select( CellLine, gRNA, DIFF, RAPA) %&gt;% mutate_all(as.numeric) %&gt;% as.matrix)
 
 GOIsEntrez=c(MAP2=4133,
-             SLC17A7=57030,
-              SLC17A6=57084, 
+             VGLUT1 =57030,
+              VGLUT2=57084, 
               DLG4=1742,
               TUBB3=10381,
-              SLC32A1=140679, 
+              VGAT=140679, 
               GPHN=10243,
+             RPTOR=57521,
               DEPDC5=9681)
-
-
-
 
 
 
@@ -561,7 +557,9 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
   
   idx = match(GOIsEntrez, rownames(exprobj))
   log_2cpm=log2(counts(ddsMat, normalize=T)+1)
-  dataset= log_2cpm[idx, SampleInfo$CellLine %in% CellID]
+  idxsmpl = SampleInfo$CellLine %in% CellID
+  
+  dataset= log_2cpm[idx, rownames(SampleInfo)[idxsmpl]]
   
   colnames(dataset)= SampleInfo$label_rep[match(colnames(dataset), SampleInfo$fastQID)]
   rownames(dataset) = names(GOIsEntrez)

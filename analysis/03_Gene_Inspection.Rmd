@@ -49,29 +49,30 @@ SampleInfo = SampleInfo %>% dplyr::arrange(CellLine, desc(gRNA), desc(DIFF), des
 # image(SampleInfo %>% select( CellLine, gRNA, DIFF, RAPA) %>% mutate_all(as.numeric) %>% as.matrix)
 
 GOIsEntrez=c(MAP2=4133,
-             SLC17A7=57030,
-              SLC17A6=57084, 
+             VGLUT1 =57030,
+              VGLUT2=57084, 
               DLG4=1742,
               TUBB3=10381,
-              SLC32A1=140679, 
+              VGAT=140679, 
               GPHN=10243,
+             RPTOR=57521,
               DEPDC5=9681)
 
 
 
-
-
-
 CellID = c("ReN")
+exprobj=ddsMat
 
 
 geneheatmap=function(GOIsEntrez,exprobj,CellID){
   
   idx = match(GOIsEntrez, rownames(exprobj))
-  log_2cpm=log2(counts(ddsMat, normalize=T)+1)
-  dataset= log_2cpm[idx, SampleInfo$CellLine %in% CellID]
+  log_2cpm=log2(counts(exprobj, normalize=T)+1)
+  idxsmpl = SampleInfo$CellLine %in% CellID
   
-  colnames(dataset)= SampleInfo$label_rep[match(colnames(dataset), SampleInfo$fastQID)]
+  dataset= log_2cpm[idx, rownames(SampleInfo)[idxsmpl]]
+  
+  colnames(dataset)= SampleInfo[rownames(SampleInfo)[idxsmpl],"label_rep"]
   rownames(dataset) = names(GOIsEntrez)
   
   #colors for plotting heatmap
