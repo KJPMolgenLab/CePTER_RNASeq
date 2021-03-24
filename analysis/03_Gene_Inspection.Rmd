@@ -1,0 +1,125 @@
+---
+title: "Check Markers"
+author: "AGC, AY"
+date: "17 3 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+home = getwd()
+output= paste0(home, "/output/")
+
+source(paste0(home,"/code/custom_functions.R"))
+
+library(DESeq2)
+library(knitr)
+library(tidyverse)
+library(pheatmap)
+
+opts_chunk$set(echo = TRUE, 
+               fig.height = 7, 
+               fig.width = 9, 
+               message = TRUE,
+               warning = TRUE,
+               fig.align='center',
+               dev = c("png", "svg"),
+               dpi=500
+)
+
+
+
+```
+
+```{r load_data}
+
+load(paste0(output,"/dds_matrix.RData"))
+
+
+```
+
+
+```{r}
+
+SampleInfo = as.data.frame(colData(ddsMat))
+genedata=rowData(ddsMat)
+
+SampleInfo = SampleInfo %>% dplyr::arrange(CellLine, desc(gRNA), desc(DIFF), desc(RAPA))
+
+# image(SampleInfo %>% select( CellLine, gRNA, DIFF, RAPA) %>% mutate_all(as.numeric) %>% as.matrix)
+
+GOIsEntrez=c(MAP2=4133,
+             SLC17A7=57030,
+              SLC17A6=57084, 
+              DLG4=1742,
+              TUBB3=10381,
+              SLC32A1=140679, 
+              GPHN=10243,
+              DEPDC5=9681)
+
+
+
+
+
+
+CellID = c("ReN")
+
+
+geneheatmap=function(GOIsEntrez,exprobj,CellID){
+  
+  idx = match(GOIsEntrez, rownames(exprobj))
+  log_2cpm=log2(counts(ddsMat, normalize=T)+1)
+  dataset= log_2cpm[idx, SampleInfo$CellLine %in% CellID]
+  
+  colnames(dataset)= SampleInfo$label_rep[match(colnames(dataset), SampleInfo$fastQID)]
+  rownames(dataset) = names(GOIsEntrez)
+  
+  #colors for plotting heatmap
+  colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+  
+  
+  gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+  names(gRNAcol) = levels(SampleInfo$gRNA)
+  
+  diffcol = brewer.pal(3,"Set1")[1:nlevels(SampleInfo$DIFF)]
+  names(diffcol) = levels(SampleInfo$DIFF)
+  
+  rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
+  names(rapacol) = levels(SampleInfo$RAPA)
+  
+  ann_colors = list(
+    DIFF = diffcol, 
+    RAPA = rapacol,
+    gRNA = gRNAcol)
+  
+  
+  
+  labels = SampleInfo[match(colnames(dataset), SampleInfo$label_rep),
+                      c("gRNA","DIFF", "RAPA")] %>%  
+    mutate_all(as.character) %>% as.data.frame()
+  
+  
+  rownames(labels)=colnames(dataset)
+  
+  pheatmap(dataset, 
+           cluster_rows = F,
+           cluster_cols = F,
+           scale = "row", 
+           annotation_col = labels,
+           annotation_colors = ann_colors, 
+           main=CellID)
+}
+
+geneheatmap(GOIsEntrez,ddsMat,CellID="D62")
+geneheatmap(GOIsEntrez,ddsMat,CellID="D244")
+geneheatmap(GOIsEntrez,ddsMat,CellID="ReN")
+
+```
+
+
+
+
+
+
+
+
