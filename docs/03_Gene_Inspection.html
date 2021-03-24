@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree3da89e9f05b48bf9273b91a0b4fb49fa90100428targetblank3da89e9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/3da89e9f05b48bf9273b91a0b4fb49fa90100428" target="_blank">3da89e9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreec22aa6b655a1e5186f6fd3993f6478b119f7ce3atargetblankc22aa6ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/c22aa6b655a1e5186f6fd3993f6478b119f7ce3a" target="_blank">c22aa6b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree3da89e9f05b48bf9273b91a0b4fb49fa90100428targetblank3da89e9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreec22aa6b655a1e5186f6fd3993f6478b119f7ce3atargetblankc22aa6ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/3da89e9f05b48bf9273b91a0b4fb49fa90100428" target="_blank">3da89e9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/c22aa6b655a1e5186f6fd3993f6478b119f7ce3a" target="_blank">c22aa6b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -536,16 +536,17 @@ SampleInfo = SampleInfo %&gt;% dplyr::arrange(CellLine, desc(gRNA), desc(DIFF), 
 
 # image(SampleInfo %&gt;% select( CellLine, gRNA, DIFF, RAPA) %&gt;% mutate_all(as.numeric) %&gt;% as.matrix)
 
-GOIsEntrez=c(MAP2=4133,
-             VGLUT1 =57030,
-              VGLUT2=57084, 
-              DLG4=1742,
-              TUBB3=10381,
-              VGAT=140679, 
-              GPHN=10243,
-             RPTOR=57521,
-              DEPDC5=9681)
-
+GOIsEntrez=c(MAP2=&quot;4133&quot;,
+             KI67=&quot;4288&quot;,
+             CDC2=&quot;983&quot;,
+             VGLUT1 =&quot;57030&quot;,
+              VGLUT2=&quot;57084&quot;, 
+              DLG4=&quot;1742&quot;,
+              TUBB3=&quot;10381&quot;,
+              VGAT=&quot;140679&quot;, 
+              GPHN=&quot;10243&quot;,
+             RPTOR=&quot;57521&quot;,
+              DEPDC5=&quot;9681&quot;)
 
 
 CellID = c(&quot;ReN&quot;)
