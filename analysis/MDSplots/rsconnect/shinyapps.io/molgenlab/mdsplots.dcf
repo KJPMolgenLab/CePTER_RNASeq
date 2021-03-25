@@ -5,6 +5,6 @@ account: molgenlab
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3794945
-bundleId: 4393700
+bundleId: 4390240
 url: https://molgenlab.shinyapps.io/mdsplots/
-when: 1616680359.03965
+when: 1616604105.01181

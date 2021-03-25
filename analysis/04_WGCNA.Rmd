@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+reanalyze=F
 home = getwd()
 output= paste0(home, "/output/")
 
@@ -72,11 +73,18 @@ text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 ```{r adjacency}
 softPower = 6; # The point where the curve flattens
 #calclute the adjacency matrix
-adj= adjacency(WGCNA_matrix,type = "unsigned", power = softPower);
 
-#Converting adjacency matrix into To so that the noise could be reduced
-TOM=TOMsimilarityFromExpr(WGCNA_matrix,networkType = "unsigned", 
-                          TOMType = "unsigned", power = softPower);
+if(reanalyze | !file.exists(paste0(output,"/WGCNA_adj_TOM.RData"))){
+  adj= adjacency(WGCNA_matrix,type = "unsigned", power = softPower);
+  
+  #Converting adjacency matrix into To so that the noise could be reduced
+  TOM=TOMsimilarityFromExpr(WGCNA_matrix,networkType = "unsigned", 
+                            TOMType = "unsigned", power = softPower);
+  save(list = c("adj", "TOM"), file=paste0(output,"/WGCNA_adj_TOM.RData"))
+  
+} else {
+  load(paste0(output,"/WGCNA_adj_TOM.RData"))
+}
 
 SubGeneNames<-colnames(WGCNA_matrix)
 
@@ -117,8 +125,7 @@ plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut",
 diag(dissTOM) = NA;
 
 #Visualize the Tom plot. Raise the dissimilarity matrix to the power of 4 to bring out the module structure
-TOMplot(dissTOM, geneTree, as.character(dynamicColors))
-
+TOMplot(dissTOM^4, geneTree, as.character(dynamicColors), main="weighted distance of Topological overlap Matrix")
 
 ```
 
@@ -146,9 +153,7 @@ mcols(ddsMat) = cbind(mcols(ddsMat), data.frame(cluster=colors_new))
 
 save(ddsMat, file=paste0(output,"/dds_matrix.RData"))
 
-
 ```
-
 
 ## Heatmaps MEs
 ```{r heatmap,  fig.height=20, fig.width=15}
@@ -166,7 +171,6 @@ names(diffcol) = levels(SampleInfo$DIFF)
 
 rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
 names(rapacol) = levels(SampleInfo$RAPA)
-
 
 clustcol = gplots::col2hex(unique(as.character(colors_new)))
 names(clustcol) = unique(as.character(colors_new))

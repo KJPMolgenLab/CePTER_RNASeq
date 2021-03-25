@@ -10,4 +10,3 @@ analysis/*html
 analysis/*_cache
 analysis/site_libs
 oldcode/*
-*.RData

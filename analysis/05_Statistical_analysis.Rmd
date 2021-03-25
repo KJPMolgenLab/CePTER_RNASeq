@@ -244,7 +244,7 @@ diff_KO_genes = hits
 
 ## GO-term analysis 
 
-```{r gprofilr, fig.height=15, fig.width=15}
+```{r gprofilr}
 
 gene_univers = rownames(ddsMat)
 
