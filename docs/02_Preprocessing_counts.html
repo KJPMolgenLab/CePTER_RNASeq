@@ -1,0 +1,8412 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="AGC, AY" />
+
+
+<title>Preprocessing_Countdata</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CePTER_RNASeq</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Preprocessing_Countdata</h1>
+<h4 class="author">AGC, AY</h4>
+<h4 class="date">15 3 2021</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-03-24
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>CePTER_RNASeq/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210315code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210315)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210315code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210315)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreec22aa6b655a1e5186f6fd3993f6478b119f7ce3atargetblankc22aa6ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/c22aa6b655a1e5186f6fd3993f6478b119f7ce3a" target="_blank">c22aa6b</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreec22aa6b655a1e5186f6fd3993f6478b119f7ce3atargetblankc22aa6ba" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/c22aa6b655a1e5186f6fd3993f6478b119f7ce3a" target="_blank">c22aa6b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/Softpower.png
+    Ignored:    analysis/figure/
+
+Untracked files:
+    Untracked:  analysis/MDSplots/
+    Untracked:  data/SampleSheet_20200307-D62D244ReN-diff_RNAconcentrations.xlsx
+    Untracked:  data/Sample_info_CePTER_RNASeq.csv
+    Untracked:  data/Sample_info_CePTER_RNASeq_alt.csv
+    Untracked:  output/GOresWGCNA.xlsx
+    Untracked:  output/ResTabs_KO.RData
+    Untracked:  output/dds_matrix.RData
+    Untracked:  output/gostres.pdf
+    Untracked:  output/mdsplots.RData
+
+Unstaged changes:
+    Deleted:    00_Installer.R
+    Deleted:    01_Mapping_Alignment.R
+    Deleted:    01_Mapping_Alignment.R~
+    Modified:   Preprocessing.R
+    Deleted:    Preprocessing.R~
+    Deleted:    Sample_info_CePTER_RNASeq.csv
+    Deleted:    Wrappter.sh~
+    Deleted:    slurm-555373.out
+    Deleted:    slurm-555814.out
+    Deleted:    trimmomatic_Preprocessing.sh
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="preprocessing" class="section level2">
+<h2>Preprocessing</h2>
+<pre class="r"><code>#Load Count Matrix
+url=&quot;sftp://fuchs.hhlr-gu.de/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output/Countmatrix.RData&quot;
+filetmp= tempfile(fileext = &quot;.RData&quot;)
+if (file.exists(secret)){
+  source(secret)
+} else {
+  UID    = rstudioapi::askForPassword(&quot;fuchs user&quot;)
+  PWD    = rstudioapi::askForPassword(&quot;fuchs password&quot;)
+}
+
+bin = getBinaryURL(url, userpw=paste0(UID,&quot;:&quot;,PWD))
+writeBin(bin, filetmp)
+
+load(filetmp)
+
+Ntot= nrow(Countdata)
+
+#merge non unique annotations
+if(length(unique(rownames(Countdata))) != Ntot){
+  
+  Countdata = Countdata %&gt;% group_by(row.names(Countdata)) %&gt;% summarise_each(sum)
+  Ntot= nrow(Countdata)
+}
+
+
+hgnc=gconvert(query=as.numeric(rownames(Countdata)), 
+              organism = &quot;hsapiens&quot;, 
+              numeric_ns = &quot;ENTREZGENE_ACC&quot;,
+              target = &quot;HGNC&quot;)
+
+Ids = hgnc %&gt;%  dplyr::select(name, input, description) %&gt;% group_by(input) %&gt;% 
+  summarise(name=paste(name, sep=&quot;; &quot;, collapse = &quot;;&quot;), description = dplyr::first(description))
+
+rowdescription = data.frame(entrez_gene = Ids$input, 
+                            hgnc=Ids$name, 
+                            description=Ids$description)
+
+
+if(all(row.names(Countdata) %in% rowdescription$entrez_gene)){
+  
+  rowdescription = rowdescription[match(row.names(Countdata), rowdescription$entrez_gene),]
+  rownames(rowdescription)=row.names(Countdata)
+}
+
+
+# load and parse sample information 
+SampleInfo=read.csv2(paste0(home,&quot;/data/Sample_info_CePTER_RNASeq_alt.csv&quot;), 
+                     row.names = 1)
+
+# set factors and relevel
+SampleInfo$CellLine = as.factor(SampleInfo$CellLine)
+
+SampleInfo$gRNA = paste0(&quot;sg&quot;,SampleInfo$gRNA)
+SampleInfo$gRNA = factor(SampleInfo$gRNA, levels=c(&quot;sgNTC&quot;, &quot;sg2.1&quot;, &quot;sg2.2&quot;), 
+                         labels=c(&quot;sgNTC&quot;, &quot;sg2.1&quot;, &quot;sg2.2&quot;))
+SampleInfo$gRNA = relevel(SampleInfo$gRNA,ref=&quot;sgNTC&quot; )
+
+SampleInfo$KO = factor(SampleInfo$KO, levels=c(T,F), labels=c(&quot;KO&quot;, &quot;WT&quot;))
+SampleInfo$KO = relevel(SampleInfo$KO,ref=&quot;WT&quot; )
+
+SampleInfo$DIFF = factor(SampleInfo$DIFF, levels=c(T,F), 
+                         labels=c(&quot;DIFF&quot;, &quot;noDIFF&quot;))
+SampleInfo$DIFF = relevel(SampleInfo$DIFF,ref=&quot;noDIFF&quot; )
+
+SampleInfo$RAPA = factor(SampleInfo$RAPA, levels=c(T,F), 
+                         labels=c(&quot;RAPA&quot;, &quot;noRAPA&quot;))
+
+SampleInfo$RAPA = relevel(SampleInfo$RAPA,ref=&quot;noRAPA&quot;)
+
+SampleInfo$label = with(SampleInfo, paste(CellLine,gRNA,DIFF,RAPA, sep=&quot;_&quot;))
+SampleInfo$fastQID = rownames(SampleInfo)
+SampleInfo = SampleInfo %&gt;% dplyr::group_by(label) %&gt;% mutate(replicate=seq(n())) %&gt;% as.data.frame()
+SampleInfo$label_rep=with(SampleInfo, paste(label,replicate,sep=&quot;_&quot;))
+rownames(SampleInfo)=SampleInfo$fastQID
+
+# align datasets
+checkfiles = all(rownames(SampleInfo) %in% colnames(Countdata))
+IDs=intersect(rownames(SampleInfo), colnames(Countdata))
+Countdata = Countdata[,IDs]
+SampleInfo = SampleInfo[IDs, ]
+
+SampleInfo$reads_per_sample = colSums(Countdata)
+
+display_tab(head(Countdata))</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:900px; ">
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE10NGSUKBR112901
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE80NGSUKBR112902
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE53NGSUKBR112903
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE26NGSUKBR112904
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE96NGSUKBR112905
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE69NGSUKBR112906
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE42NGSUKBR112907
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE15NGSUKBR112908
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE85NGSUKBR112909
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE58NGSUKBR112910
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE31NGSUKBR112911
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE04NGSUKBR112912
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE74NGSUKBR112913
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE47NGSUKBR112914
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE20NGSUKBR112915
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE90NGSUKBR112916
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE63NGSUKBR112917
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE36NGSUKBR112918
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE09NGSUKBR112919
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE79NGSUKBR112920
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE52NGSUKBR112921
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE25NGSUKBR112922
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE95NGSUKBR112923
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE68NGSUKBR112924
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE41NGSUKBR112925
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE14NGSUKBR112926
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE84NGSUKBR112927
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE57NGSUKBR112928
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE30NGSUKBR112929
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE03NGSUKBR112930
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE73NGSUKBR112931
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE46NGSUKBR112932
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE19NGSUKBR112933
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE89NGSUKBR112934
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE62NGSUKBR112935
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE35NGSUKBR112936
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE08NGSUKBR112937
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE78NGSUKBR112938
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE51NGSUKBR112939
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE24NGSUKBR112940
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE94NGSUKBR112941
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE67NGSUKBR112942
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE40NGSUKBR112943
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE13NGSUKBR112944
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE83NGSUKBR112945
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE56NGSUKBR112946
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE29NGSUKBR112947
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE02NGSUKBR112948
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE72NGSUKBR112949
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE45NGSUKBR112950
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE18NGSUKBR112951
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE88NGSUKBR112952
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE61NGSUKBR112953
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE34NGSUKBR112954
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE07NGSUKBR112955
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE77NGSUKBR112956
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE50NGSUKBR112957
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE23NGSUKBR112958
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE93NGSUKBR112959
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE66NGSUKBR112960
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE39NGSUKBR112961
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE12NGSUKBR112962
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE82NGSUKBR112963
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE55NGSUKBR112964
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE28NGSUKBR112965
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE98NGSUKBR112966
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE71NGSUKBR112967
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE44NGSUKBR112968
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE17NGSUKBR112969
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE87NGSUKBR112970
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE60NGSUKBR112971
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE33NGSUKBR112972
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE06NGSUKBR112973
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE76NGSUKBR112974
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE49NGSUKBR112975
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE22NGSUKBR112976
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE92NGSUKBR112977
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE65NGSUKBR112978
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE38NGSUKBR112979
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE11NGSUKBR112980
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE81NGSUKBR112981
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE54NGSUKBR112982
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE27NGSUKBR112983
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE97NGSUKBR112984
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE70NGSUKBR112985
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE43NGSUKBR112986
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE16NGSUKBR112987
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE86NGSUKBR112988
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE59NGSUKBR112989
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE32NGSUKBR112990
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE05NGSUKBR112991
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE75NGSUKBR112992
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE48NGSUKBR112993
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE21NGSUKBR112994
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE91NGSUKBR112995
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE64NGSUKBR112996
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE37NGSUKBR112997
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE10NGSUKBR112998
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE80NGSUKBR112999
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE53NGSUKBR113000
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE26NGSUKBR113001
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE96NGSUKBR113002
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE69NGSUKBR113003
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE42NGSUKBR113004
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE15NGSUKBR113005
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE85NGSUKBR113006
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE58NGSUKBR113007
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DE31NGSUKBR113008
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+100287102
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+653635
+</td>
+<td style="text-align:left;">
+46
+</td>
+<td style="text-align:left;">
+82
+</td>
+<td style="text-align:left;">
+133
+</td>
+<td style="text-align:left;">
+121
+</td>
+<td style="text-align:left;">
+84
+</td>
+<td style="text-align:left;">
+78
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+47
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+113
+</td>
+<td style="text-align:left;">
+66
+</td>
+<td style="text-align:left;">
+71
+</td>
+<td style="text-align:left;">
+99
+</td>
+<td style="text-align:left;">
+101
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+55
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+77
+</td>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:left;">
+85
+</td>
+<td style="text-align:left;">
+90
+</td>
+<td style="text-align:left;">
+112
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+47
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:left;">
+66
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+60
+</td>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+99
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+55
+</td>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+95
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+121
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:left;">
+43
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+82
+</td>
+<td style="text-align:left;">
+56
+</td>
+<td style="text-align:left;">
+109
+</td>
+<td style="text-align:left;">
+92
+</td>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+62
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+43
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+112
+</td>
+<td style="text-align:left;">
+81
+</td>
+<td style="text-align:left;">
+126
+</td>
+<td style="text-align:left;">
+137
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+47
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+84
+</td>
+<td style="text-align:left;">
+93
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+65
+</td>
+<td style="text-align:left;">
+55
+</td>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+51
+</td>
+<td style="text-align:left;">
+60
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+102466751
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+100302278
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+645520
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+79501
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>display_tab(SampleInfo)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:900px; ">
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Plate
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Position
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Row
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Col
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+CellLine
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+gRNA
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+KO
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+DIFF
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+RAPA
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+label
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+fastQID
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+replicate
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+label_rep
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+reads_per_sample
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+DE10NGSUKBR112901
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A01
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE10NGSUKBR112901
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+8167558
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE80NGSUKBR112902
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A02
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE80NGSUKBR112902
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7947513
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE53NGSUKBR112903
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A03
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE53NGSUKBR112903
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+8927353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE26NGSUKBR112904
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A04
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE26NGSUKBR112904
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+6192682
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE96NGSUKBR112905
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A05
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE96NGSUKBR112905
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+6316070
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE69NGSUKBR112906
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A06
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE69NGSUKBR112906
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sgNTC_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7211176
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE42NGSUKBR112907
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A07
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE42NGSUKBR112907
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6472088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE15NGSUKBR112908
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A08
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE15NGSUKBR112908
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+6381728
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE85NGSUKBR112909
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A09
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE85NGSUKBR112909
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7515594
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE58NGSUKBR112910
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A10
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE58NGSUKBR112910
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+8072060
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE31NGSUKBR112911
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A11
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE31NGSUKBR112911
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+9132042
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE04NGSUKBR112912
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+A12
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE04NGSUKBR112912
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.1_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+9158749
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE74NGSUKBR112913
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B01
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE74NGSUKBR112913
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+8022580
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE47NGSUKBR112914
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B02
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE47NGSUKBR112914
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+5290014
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE20NGSUKBR112915
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B03
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE20NGSUKBR112915
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7350899
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE90NGSUKBR112916
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B04
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE90NGSUKBR112916
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7142950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE63NGSUKBR112917
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B05
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE63NGSUKBR112917
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+6379496
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE36NGSUKBR112918
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B06
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE36NGSUKBR112918
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.2_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+6345821
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE09NGSUKBR112919
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B07
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE09NGSUKBR112919
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6954777
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE79NGSUKBR112920
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B08
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE79NGSUKBR112920
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+6247879
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE52NGSUKBR112921
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B09
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE52NGSUKBR112921
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7651123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE25NGSUKBR112922
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B10
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE25NGSUKBR112922
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+8143934
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE95NGSUKBR112923
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B11
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE95NGSUKBR112923
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+7710977
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE68NGSUKBR112924
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+B12
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE68NGSUKBR112924
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sgNTC_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+9158766
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE41NGSUKBR112925
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C01
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE41NGSUKBR112925
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+7883862
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE14NGSUKBR112926
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C02
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE14NGSUKBR112926
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7134773
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE84NGSUKBR112927
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C03
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE84NGSUKBR112927
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+8617208
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE57NGSUKBR112928
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C04
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE57NGSUKBR112928
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7544453
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE30NGSUKBR112929
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C05
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE30NGSUKBR112929
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+7622380
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE03NGSUKBR112930
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C06
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE03NGSUKBR112930
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.1_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7939374
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE73NGSUKBR112931
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C07
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE73NGSUKBR112931
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+7320431
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE46NGSUKBR112932
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C08
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE46NGSUKBR112932
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+6532522
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE19NGSUKBR112933
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C09
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE19NGSUKBR112933
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7115292
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE89NGSUKBR112934
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C10
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE89NGSUKBR112934
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7618310
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE62NGSUKBR112935
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C11
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE62NGSUKBR112935
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+7387684
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE35NGSUKBR112936
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+C12
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+D62
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE35NGSUKBR112936
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D62_sg2.2_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7440730
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE08NGSUKBR112937
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D01
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE08NGSUKBR112937
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6178329
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE78NGSUKBR112938
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D02
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE78NGSUKBR112938
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7406448
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE51NGSUKBR112939
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D03
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE51NGSUKBR112939
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+6338186
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE24NGSUKBR112940
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D04
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE24NGSUKBR112940
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+6274167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE94NGSUKBR112941
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D05
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE94NGSUKBR112941
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+5928527
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE67NGSUKBR112942
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D06
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE67NGSUKBR112942
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+6267235
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE40NGSUKBR112943
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D07
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE40NGSUKBR112943
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+7119065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE13NGSUKBR112944
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D08
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE13NGSUKBR112944
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7634764
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE83NGSUKBR112945
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D09
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE83NGSUKBR112945
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7137636
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE56NGSUKBR112946
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D10
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE56NGSUKBR112946
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7764289
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE29NGSUKBR112947
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D11
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE29NGSUKBR112947
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+7877670
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE02NGSUKBR112948
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D12
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE02NGSUKBR112948
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+8604849
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE72NGSUKBR112949
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E01
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE72NGSUKBR112949
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6814818
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE45NGSUKBR112950
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E02
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE45NGSUKBR112950
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7117729
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE18NGSUKBR112951
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E03
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE18NGSUKBR112951
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+5945129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE88NGSUKBR112952
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E04
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE88NGSUKBR112952
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7519852
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE61NGSUKBR112953
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E05
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE61NGSUKBR112953
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+5783946
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE34NGSUKBR112954
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E06
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE34NGSUKBR112954
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+6347263
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE07NGSUKBR112955
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E07
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE07NGSUKBR112955
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+7676047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE77NGSUKBR112956
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E08
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE77NGSUKBR112956
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+6505596
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE50NGSUKBR112957
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E09
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE50NGSUKBR112957
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+6630480
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE23NGSUKBR112958
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E10
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE23NGSUKBR112958
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+6984521
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE93NGSUKBR112959
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E11
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE93NGSUKBR112959
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+8152264
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE66NGSUKBR112960
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+E12
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE66NGSUKBR112960
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sgNTC_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7595849
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE39NGSUKBR112961
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F01
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE39NGSUKBR112961
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6704413
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE12NGSUKBR112962
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F02
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE12NGSUKBR112962
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+5751386
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE82NGSUKBR112963
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F03
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE82NGSUKBR112963
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+5811217
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE55NGSUKBR112964
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F04
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE55NGSUKBR112964
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7189688
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE28NGSUKBR112965
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F05
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE28NGSUKBR112965
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+6200389
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE98NGSUKBR112966
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F06
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE98NGSUKBR112966
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.1_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7186721
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE71NGSUKBR112967
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F07
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE71NGSUKBR112967
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6307822
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE44NGSUKBR112968
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F08
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE44NGSUKBR112968
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+6891060
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE17NGSUKBR112969
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F09
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE17NGSUKBR112969
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+6789988
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE87NGSUKBR112970
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F10
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE87NGSUKBR112970
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7050910
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE60NGSUKBR112971
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F11
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE60NGSUKBR112971
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+8331662
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE33NGSUKBR112972
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+F12
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+ReN
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE33NGSUKBR112972
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+ReN_sg2.2_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+8271624
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE06NGSUKBR112973
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G01
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE06NGSUKBR112973
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6649365
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE76NGSUKBR112974
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G02
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE76NGSUKBR112974
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7645043
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE49NGSUKBR112975
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G03
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE49NGSUKBR112975
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7704010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE22NGSUKBR112976
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G04
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE22NGSUKBR112976
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+2696422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE92NGSUKBR112977
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G05
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE92NGSUKBR112977
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+7988548
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE65NGSUKBR112978
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G06
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE65NGSUKBR112978
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sgNTC_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+5755497
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE38NGSUKBR112979
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G07
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE38NGSUKBR112979
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+9078711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE11NGSUKBR112980
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G08
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE11NGSUKBR112980
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+8222243
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE81NGSUKBR112981
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G09
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE81NGSUKBR112981
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+6513540
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE54NGSUKBR112982
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G10
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE54NGSUKBR112982
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+7754476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE27NGSUKBR112983
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G11
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE27NGSUKBR112983
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+8398511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE97NGSUKBR112984
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+G12
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE97NGSUKBR112984
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.1_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7432891
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE70NGSUKBR112985
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H01
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE70NGSUKBR112985
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+8760362
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE43NGSUKBR112986
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H02
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE43NGSUKBR112986
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+8888690
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE16NGSUKBR112987
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H03
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE16NGSUKBR112987
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+8598242
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE86NGSUKBR112988
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H04
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE86NGSUKBR112988
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+9274217
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE59NGSUKBR112989
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H05
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE59NGSUKBR112989
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+8086371
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE32NGSUKBR112990
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H06
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+DIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE32NGSUKBR112990
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.2_DIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+6898881
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE05NGSUKBR112991
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H07
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE05NGSUKBR112991
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+7527521
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE75NGSUKBR112992
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H08
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE75NGSUKBR112992
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+7444314
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE48NGSUKBR112993
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H09
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE48NGSUKBR112993
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+6600900
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE21NGSUKBR112994
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H10
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE21NGSUKBR112994
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+4543120
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE91NGSUKBR112995
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H11
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE91NGSUKBR112995
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+8465146
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE64NGSUKBR112996
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+H12
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sgNTC
+</td>
+<td style="text-align:left;">
+WT
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE64NGSUKBR112996
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sgNTC_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+8262382
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE37NGSUKBR112997
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE37NGSUKBR112997
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6632796
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE10NGSUKBR112998
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE10NGSUKBR112998
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+6565291
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE80NGSUKBR112999
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE80NGSUKBR112999
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+7135203
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE53NGSUKBR113000
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A4
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE53NGSUKBR113000
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+6769717
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE26NGSUKBR113001
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A5
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE26NGSUKBR113001
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+6858477
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE96NGSUKBR113002
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A6
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.1
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE96NGSUKBR113002
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.1_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+7163942
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE69NGSUKBR113003
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A7
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE69NGSUKBR113003
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_RAPA_1
+</td>
+<td style="text-align:left;">
+6244331
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE42NGSUKBR113004
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A8
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE42NGSUKBR113004
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_RAPA_2
+</td>
+<td style="text-align:left;">
+5077409
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE15NGSUKBR113005
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A9
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+RAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_RAPA
+</td>
+<td style="text-align:left;">
+DE15NGSUKBR113005
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_RAPA_3
+</td>
+<td style="text-align:left;">
+6114278
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE85NGSUKBR113006
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A10
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE85NGSUKBR113006
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_noRAPA_1
+</td>
+<td style="text-align:left;">
+6591276
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE58NGSUKBR113007
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A11
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE58NGSUKBR113007
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_noRAPA_2
+</td>
+<td style="text-align:left;">
+7619920
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE31NGSUKBR113008
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+A12
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+D244
+</td>
+<td style="text-align:left;">
+sg2.2
+</td>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+noDIFF
+</td>
+<td style="text-align:left;">
+noRAPA
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_noRAPA
+</td>
+<td style="text-align:left;">
+DE31NGSUKBR113008
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+D244_sg2.2_noDIFF_noRAPA_3
+</td>
+<td style="text-align:left;">
+6147586
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Total number of samples overlapping between Counts and SampleInfo: 108</p>
+<pre class="r"><code>boxplot_counts = function(plotsubset, maintitle, colorcode) {
+  par(mar=c(3,3,5,7))
+  a =boxplot(log2(plotsubset+1), main = maintitle, 
+             col = Dark8[as.factor(SampleInfo[,colorcode])], names=NA,
+             ylab = &quot;log2 transformed&quot;, xlab=&quot;samples&quot;)
+  legend(&quot;bottomleft&quot;, legend = levels(SampleInfo[,colorcode]),
+         bty = &quot;n&quot;, bg=&quot;white&quot;,
+         pch = 16, col = Dark8[1:length(unique(SampleInfo[,colorcode]))])
+}
+
+
+barplot_counts = function(DF, maintitle, colorcode) {
+  barplot(log2(DF[,&quot;reads_per_sample&quot;]), main = maintitle, 
+          col = Dark8[as.factor(DF[,colorcode])], names=&quot;&quot;,
+          ylab = &quot;log2 transformed&quot;,xlab=&quot;samples&quot;)
+  legend(&quot;bottomleft&quot;, legend = levels(DF[,colorcode]), pch = 16, 
+         bty = &quot;n&quot;, bg=&quot;white&quot;,
+         col = Dark8[1:length(unique(DF[,colorcode]))])
+}
+
+
+boxplot_counts(Countdata, &quot;raw counts&quot;, &quot;CellLine&quot;)</code></pre>
+<p><img src="figure/02_Preprocessing_counts.Rmd/plot_counts-1.png" width="4500" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>boxplot_counts(Countdata, &quot;raw counts&quot;, &quot;gRNA&quot;)</code></pre>
+<p><img src="figure/02_Preprocessing_counts.Rmd/plot_counts-2.png" width="4500" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>barplot_counts(SampleInfo, &quot;total reads&quot;, &quot;CellLine&quot;)</code></pre>
+<p><img src="figure/02_Preprocessing_counts.Rmd/plot_counts-3.png" width="4500" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>barplot_counts(SampleInfo, &quot;total reads&quot;, &quot;gRNA&quot;)</code></pre>
+<p><img src="figure/02_Preprocessing_counts.Rmd/plot_counts-4.png" width="4500" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(density(log2(rowMeans(Countdata))), main=&quot;distribution of gene expression&quot;, 
+     xlab=&quot;mean log2(counts +1)&quot;)</code></pre>
+<p><img src="figure/02_Preprocessing_counts.Rmd/plot_counts-5.png" width="4500" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># remove genes wich were not detected in at least 50% of the samples 
+keeperidx = rowSums(Countdata&gt;1)&gt;nrow(SampleInfo)/2
+
+Countdata_cl = Countdata[keeperidx, ]
+
+rowdescription = rowdescription[row.names(Countdata_cl),]
+
+fullmodel = as.formula(&quot;~CellLine+gRNA+DIFF+RAPA&quot;)
+
+
+ddsMat &lt;- DESeqDataSetFromMatrix(countData = Countdata_cl,
+                                 colData = SampleInfo,
+                                 rowData = rowdescription,
+                                 design = fullmodel)
+
+
+ddsMat = estimateSizeFactors(ddsMat)
+ddsMat = estimateDispersions(ddsMat)</code></pre>
+<pre><code>gene-wise dispersion estimates</code></pre>
+<pre><code>mean-dispersion relationship</code></pre>
+<pre><code>final dispersion estimates</code></pre>
+<pre class="r"><code>reads  = as.data.frame(counts(ddsMat, normalized=T))
+
+SDs = apply(reads, 1, sd)
+keepvar = SDs&gt;0
+
+ddsMat &lt;- ddsMat[keepvar,]
+
+Nfilt = length(ddsMat)
+reads  = as.data.frame(counts(ddsMat, normalized=T))
+
+SampleInfo$reads_per_sample_cl= colSums(reads)</code></pre>
+<div id="before-cleaning" class="section level3">
+<h3>before cleaning</h3>
+<ul>
+<li>Average reads per samples: 7 187 519</li>
+<li>Standard deviation reads per samples: 1 050 507</li>
+<li>Total genes mapped: 28 395</li>
+</ul>
+</div>
+<div id="after-cleaning" class="section level3">
+<h3>after cleaning</h3>
+<ul>
+<li>Average reads per samples: 6 902 029</li>
+<li>Standard deviation reads per samples: 491 463.8</li>
+<li>Genes removed due to low reads: 14 847</li>
+<li>Total genes included after filtering: 13 548</li>
+</ul>
+</div>
+</div>
+<div id="clustering" class="section level2">
+<h2>Clustering</h2>
+<pre class="r"><code>log2_cpm = log2(reads+1)
+
+cpm.sel.trans = t(log2_cpm[,])
+
+
+
+rownames(cpm.sel.trans)=SampleInfo$label_rep
+
+distance = dist(cpm.sel.trans)
+sampleDistMatrix &lt;- as.matrix(distance)
+
+#colors for plotting heatmap
+colors &lt;- colorRampPalette( rev(brewer.pal(9, &quot;Blues&quot;)) )(255)
+
+cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+names(cellcol) = levels(SampleInfo$CellLine)
+
+gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+names(gRNAcol) = levels(SampleInfo$gRNA)
+
+diffcol = brewer.pal(3,&quot;Set1&quot;)[1:nlevels(SampleInfo$DIFF)]
+names(diffcol) = levels(SampleInfo$DIFF)
+
+rapacol = brewer.pal(3,&quot;Set2&quot;)[1:nlevels(SampleInfo$RAPA)]
+names(rapacol) = levels(SampleInfo$RAPA)
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol,
+  CellLine=cellcol)
+
+
+labels = SampleInfo[,c(&quot;CellLine&quot;,&quot;gRNA&quot;,&quot;DIFF&quot;, &quot;RAPA&quot;)] %&gt;%  
+  mutate_all(as.character) %&gt;% as.data.frame()
+
+rownames(labels)=SampleInfo$label_rep
+
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows = distance,
+         clustering_distance_cols = distance,
+         clustering_method = &quot;ward.D2&quot;,
+         border_color = NA, 
+         annotation_row = labels,
+         annotation_col = labels,
+         annotation_colors = ann_colors,
+         col = colors, 
+         main = &quot;Distances  normalized log2 counts&quot;)</code></pre>
+<p><img src="figure/02_Preprocessing_counts.Rmd/clusterandqual-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save(ddsMat, file=paste0(output,&quot;/dds_matrix.RData&quot;))</code></pre>
+</div>
+<div id="clustering-just-no-rapa" class="section level2">
+<h2>Clustering just no Rapa</h2>
+</div>
+<div id="pca-and-mds" class="section level2">
+<h2>PCA and MDS</h2>
+<pre class="r"><code># PCA
+gpca &lt;- glmpca(t(cpm.sel.trans), L = 2)
+gpca.dat &lt;- gpca$factors
+gpca.dat$CellLine &lt;- SampleInfo$CellLine
+gpca.dat$gRNA &lt;- SampleInfo$gRNA
+gpca.dat$KO&lt;- SampleInfo$KO
+gpca.dat$DIFF &lt;- SampleInfo$DIFF
+gpca.dat$RAPA&lt;- SampleInfo$RAPA
+
+rownames(gpca.dat) = SampleInfo$labels
+mds = as.data.frame(SampleInfo) %&gt;% cbind(cmdscale(distance))
+
+save(mds, gpca.dat, file=paste0(home, &quot;/analysis/MDSplots/mdsplots.RData&quot;))
+
+# 
+# ggplot(gpca.dat, aes(x = dim1, y = dim2, color = CellLine, shape = DIFF)) +
+#             geom_point(size = 2)  + ggtitle(&quot;PCA with log2 counts&quot;)
+# 
+# ggplot(mds, aes(x = `1`, y = `2`, color = CellLine, shape = DIFF)) +
+#             geom_point(size = 2)  + ggtitle(&quot;MDS with log2 counts&quot;)
+
+rsconnect::setAccountInfo(name=&#39;molgenlab&#39;,
+              token=&#39;86875F8B6550C3A26488035E69B1F18D&#39;,
+              secret=shinySECRET)
+
+rsconnect::deployApp(paste0(home, &quot;/analysis/MDSplots&quot;))</code></pre>
+<pre><code>Preparing to deploy application...DONE
+Uploading bundle for application: 3794945...DONE
+Deploying bundle: 4390240 for application: 3794945 ...
+Waiting for task: 896954400
+  building: Processing bundle: 4390240
+  building: Parsing manifest
+  building: Building image: 5029158
+  building: Fetching packages
+  building: Installing packages
+  building: Installing files
+  building: Pushing image: 5029158
+  deploying: Starting instances
+  rollforward: Activating new instances
+  unstaging: Stopping old instances
+Application successfully deployed to https://molgenlab.shinyapps.io/mdsplots/</code></pre>
+<iframe src="https://molgenlab.shinyapps.io/mdsplots/" height=900px width=900px />
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.4 (2021-02-15)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 17763)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Germany.1252  LC_CTYPE=German_Germany.1252   
+[3] LC_MONETARY=German_Germany.1252 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.1252    
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] gprofiler2_0.2.0            knitr_1.31                 
+ [3] pheatmap_1.0.12             glmpca_0.2.0               
+ [5] DESeq2_1.30.1               SummarizedExperiment_1.20.0
+ [7] Biobase_2.50.0              MatrixGenerics_1.2.1       
+ [9] matrixStats_0.58.0          GenomicRanges_1.42.0       
+[11] GenomeInfoDb_1.26.4         IRanges_2.24.1             
+[13] S4Vectors_0.28.1            BiocGenerics_0.36.0        
+[15] RCurl_1.98-1.2              RColorBrewer_1.1-2         
+[17] compareGroups_4.4.6         forcats_0.5.1              
+[19] stringr_1.4.0               dplyr_1.0.5                
+[21] purrr_0.3.4                 readr_1.4.0                
+[23] tidyr_1.1.3                 tibble_3.1.0               
+[25] ggplot2_3.3.3               tidyverse_1.3.0            
+[27] kableExtra_1.3.4            workflowr_1.6.2            
+
+loaded via a namespace (and not attached):
+  [1] readxl_1.3.1           uuid_0.1-4             backports_1.2.1       
+  [4] systemfonts_1.0.1      lazyeval_0.2.2         splines_4.0.4         
+  [7] BiocParallel_1.24.1    digest_0.6.27          htmltools_0.5.1.1     
+ [10] rsconnect_0.8.16       fansi_0.4.2            magrittr_2.0.1        
+ [13] Rsolnp_1.16            memoise_2.0.0          annotate_1.68.0       
+ [16] modelr_0.1.8           officer_0.3.17         svglite_2.0.0         
+ [19] askpass_1.1            colorspace_2.0-0       blob_1.2.1            
+ [22] rvest_1.0.0            haven_2.3.1            xfun_0.21             
+ [25] crayon_1.4.1           jsonlite_1.7.2         genefilter_1.72.1     
+ [28] survival_3.2-9         glue_1.4.2             gtable_0.3.0          
+ [31] zlibbioc_1.36.0        XVector_0.30.0         webshot_0.5.2         
+ [34] DelayedArray_0.16.2    scales_1.1.1           DBI_1.1.1             
+ [37] Rcpp_1.0.6             viridisLite_0.3.0      xtable_1.8-4          
+ [40] bit_4.0.4              truncnorm_1.0-8        htmlwidgets_1.5.3     
+ [43] httr_1.4.2             ellipsis_0.3.1         mice_3.13.0           
+ [46] pkgconfig_2.0.3        XML_3.99-0.5           farver_2.1.0          
+ [49] sass_0.3.1             dbplyr_2.1.0           locfit_1.5-9.4        
+ [52] utf8_1.1.4             tidyselect_1.1.0       rlang_0.4.10          
+ [55] later_1.1.0.1          AnnotationDbi_1.52.0   munsell_0.5.0         
+ [58] cellranger_1.1.0       tools_4.0.4            cachem_1.0.4          
+ [61] cli_2.3.1              generics_0.1.0         RSQLite_2.2.4         
+ [64] broom_0.7.5            evaluate_0.14          fastmap_1.1.0         
+ [67] yaml_2.2.1             bit64_4.0.5            fs_1.5.0              
+ [70] zip_2.1.1              packrat_0.5.0          xml2_1.3.2            
+ [73] compiler_4.0.4         rstudioapi_0.13        curl_4.3              
+ [76] plotly_4.9.3           reprex_1.0.0           geneplotter_1.68.0    
+ [79] bslib_0.2.4            stringi_1.5.3          HardyWeinberg_1.7.1   
+ [82] highr_0.8              ps_1.6.0               gdtools_0.2.3         
+ [85] lattice_0.20-41        Matrix_1.3-2           vctrs_0.3.6           
+ [88] pillar_1.5.1           lifecycle_1.0.0        BiocManager_1.30.10   
+ [91] jquerylib_0.1.3        data.table_1.14.0      bitops_1.0-6          
+ [94] flextable_0.6.4        httpuv_1.5.5           R6_2.5.0              
+ [97] promises_1.2.0.1       writexl_1.3.1          MASS_7.3-53.1         
+[100] assertthat_0.2.1       chron_2.3-56           openssl_1.4.3         
+[103] rprojroot_2.0.2        withr_2.4.1            GenomeInfoDbData_1.2.4
+[106] hms_1.0.0              grid_4.0.4             rmarkdown_2.7         
+[109] git2r_0.28.0           lubridate_1.7.10       base64enc_0.1-3       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

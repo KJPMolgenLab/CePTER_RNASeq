@@ -1,0 +1,264 @@
+---
+title: "Statistical analysis"
+author: "AGC, AY"
+date: "23 3 2021"
+output: html_document
+---
+
+# Statistical analysis 
+
+```{r setup, include=FALSE, echo=F}
+reanalyze=T
+home = getwd()
+output= paste0(home, "/output/")
+
+source(paste0(home,"/code/custom_functions.R"))
+
+library(DESeq2)
+library(knitr)
+library(tidyverse)
+library(pheatmap)
+library(WGCNA)
+library(flashClust)
+library(pheatmap)
+library(limma)
+library(xlsx)
+
+opts_chunk$set(echo = TRUE, 
+               fig.height = 7, 
+               fig.width = 9, 
+               message = TRUE,
+               warning = TRUE,
+               fig.align='center',
+               dpi=500
+)
+
+
+load(paste0(output,"/dds_matrix.RData"))
+SampleInfo = as.data.frame(colData(ddsMat))
+log_2cpm=log2(counts(ddsMat, normalize=T)+1)
+
+```
+
+
+
+## Q1 Which genes are differentially regualted upon KO of DEPDC5 
+
+### Modelling the KO in all different combinations
+
+```{r loops_for_comparison, message=F}
+
+if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
+  # calculate all combinations 
+  
+  CellLines=c("D62","D244","ReN")
+  Rapamycin=c("noRAPA", "RAPA")
+  Differentiation=c("noDIFF", "DIFF")
+  Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+  target="KO"
+  
+  
+  # no random effects included 
+  for(r in Rapamycin){
+    Rapafilter = SampleInfo$RAPA %in% r
+    for(d in Differentiation){
+      Difffilter = SampleInfo$DIFF %in% d
+      for(Tp in Type_sgRNA){
+        sgRNAfilter = SampleInfo$gRNA %in% Tp
+        vs_label=paste0(Tp, sep="", collapse="_")
+        for(Cl in CellLines){
+          Celllinefilter = SampleInfo$CellLine %in% Tp
+          Set = rownames(SampleInfo)[Rapafilter*Difffilter*sgRNAfilter*Celllinefilter]
+          lab = paste("restab", Cl, vs_label, d,r, sep="_")
+          print(lab)
+          assign(lab, 
+                 comparison(ddsMat, samples = Set, 
+                            target =target,randomeffect = c()))
+          }
+      }
+    }
+  }
+  
+  comparisons= apropos("restab")
+  save(list = comparisons, file = paste0(home,"/output/ResTabs_KO.RData"))
+} else 
+  load(file = paste0(home,"/output/ResTabs_KO.RData"))
+
+```
+### replicated KO effect in noDIFF noRAPA
+
+
+```{r noDIFF_noRAPA,  fig.height=20, fig.width=15}
+
+mypval=0.05
+
+
+geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
+
+
+pvalrep=  restab_D62_sgNTC_sg2.1_noDIFF_noRAPA$padj<mypval &
+          restab_D62_sgNTC_sg2.2_noDIFF_noRAPA$padj<mypval&
+          restab_D244_sgNTC_sg2.1_noDIFF_noRAPA$padj<mypval&
+          restab_D244_sgNTC_sg2.2_noDIFF_noRAPA$padj<mypval&
+          restab_ReN_sgNTC_sg2.1_noDIFF_noRAPA$padj<mypval &
+          restab_ReN_sgNTC_sg2.2_noDIFF_noRAPA$padj<mypval
+
+
+samesign <- function(x) {abs(sum(sign(x)))==length(x)}
+
+
+betarep = apply(cbind(restab_D62_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
+                restab_D62_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
+                restab_D244_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
+                restab_D244_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
+                restab_ReN_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
+                restab_ReN_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange), 1,
+                samesign)
+
+hits=geneids[betarep & pvalrep]
+
+
+colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
+
+cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+names(cellcol) = levels(SampleInfo$CellLine)
+
+gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+names(gRNAcol) = levels(SampleInfo$gRNA)
+
+diffcol = brewer.pal(3,"Set1")[1:nlevels(SampleInfo$DIFF)]
+names(diffcol) = levels(SampleInfo$DIFF)
+
+rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
+names(rapacol) = levels(SampleInfo$RAPA)
+
+
+SamplesSet=SampleInfo[SampleInfo$DIFF=="noDIFF" & SampleInfo$RAPA=="noRAPA",]
+
+plotmatrix = log_2cpm[hits,rownames(SamplesSet)]
+
+rownames(SamplesSet)=SamplesSet$label_rep
+
+colnames(plotmatrix)=SamplesSet$label_rep
+rownames(plotmatrix)=rowData(ddsMat)[hits,"hgnc"]     
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol,
+  CellLine=cellcol)
+
+collabels = SamplesSet[,c("CellLine","gRNA")] %>%  
+  mutate_all(as.character) %>% as.data.frame()
+
+rownames(collabels)=SamplesSet$label_rep
+
+pheatmap(plotmatrix,
+         border_color = NA, 
+         annotation_col = collabels,
+         annotation_colors = ann_colors,
+         clustering_method = "ward.D2",
+         col = colors, 
+         scale = "row",
+         main = "Normalized log2 counts PROLIF noRAPA")
+
+
+prolif_KO_genes = hits
+
+```
+
+### replicated KO effect in DIFF noRAPA
+```{r DIFF_noRAPA,  fig.height=20, fig.width=15}
+
+
+geneids=rownames(restab_D244_sgNTC_sg2.1_DIFF_noRAPA)
+
+
+pvalrep=  restab_D62_sgNTC_sg2.1_DIFF_noRAPA$padj<mypval &
+          restab_D62_sgNTC_sg2.2_DIFF_noRAPA$padj<mypval&
+          restab_D244_sgNTC_sg2.1_DIFF_noRAPA$padj<mypval&
+          restab_D244_sgNTC_sg2.2_DIFF_noRAPA$padj<mypval&
+          restab_ReN_sgNTC_sg2.1_DIFF_noRAPA$padj<mypval &
+          restab_ReN_sgNTC_sg2.2_DIFF_noRAPA$padj<mypval
+
+
+betarep = apply(cbind(restab_D62_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
+                restab_D62_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
+                restab_D244_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
+                restab_D244_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
+                restab_ReN_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
+                restab_ReN_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange), 1,
+                samesign)
+
+hits=geneids[betarep & pvalrep]
+
+
+colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
+
+cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+names(cellcol) = levels(SampleInfo$CellLine)
+
+gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+names(gRNAcol) = levels(SampleInfo$gRNA)
+
+diffcol = brewer.pal(3,"Set1")[1:nlevels(SampleInfo$DIFF)]
+names(diffcol) = levels(SampleInfo$DIFF)
+
+rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
+names(rapacol) = levels(SampleInfo$RAPA)
+
+
+SamplesSet=SampleInfo[SampleInfo$DIFF=="DIFF" & SampleInfo$RAPA=="noRAPA",]
+
+plotmatrix = log_2cpm[hits,rownames(SamplesSet)]
+
+rownames(SamplesSet)=SamplesSet$label_rep
+
+colnames(plotmatrix)=SamplesSet$label_rep
+rownames(plotmatrix)=rowData(ddsMat)[hits,"hgnc"]     
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol,
+  CellLine=cellcol)
+
+collabels = SamplesSet[,c("CellLine","gRNA")] %>%  
+  mutate_all(as.character) %>% as.data.frame()
+
+rownames(collabels)=SamplesSet$label_rep
+
+pheatmap(plotmatrix,
+         border_color = NA, 
+         annotation_col = collabels,
+         annotation_colors = ann_colors,
+         clustering_method = "ward.D2",
+         col = colors, 
+         scale = "row",
+         main = "Normalized log2 counts DIFF noRAPA")
+
+
+diff_KO_genes = hits
+```
+
+
+## GO-term analysis 
+
+```{r gprofilr}
+
+gene_univers = rownames(ddsMat)
+
+Genes_of_interset = list(prolif_KO_genes, diff_KO_genes)
+
+gostres = getGOresults(Genes_of_interset, gene_univers)
+
+gostplot(gostres, capped = TRUE, interactive = T)
+p = gostplot(gostres, capped = TRUE, interactive = F)
+
+toptab = gostres$result
+
+pp = publish_gostplot(p, filename = paste0(home,"/output/gostres.pdf"))
+write.xlsx2(toptab, file = paste0(output, "/GOres_Comparisons.xlsx"), sheetName = "GO_enrichment")
+
+```
+
