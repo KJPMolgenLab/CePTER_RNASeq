@@ -34,7 +34,6 @@ opts_chunk$set(echo = TRUE,
                message = TRUE,
                warning = TRUE,
                fig.align='center',
-               dev = c("png", "svg"),
                dpi=500
 )
 
