@@ -8,7 +8,7 @@ output: html_document
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=T
+reanalyze=F
 home = getwd()
 output= paste0(home, "/output/")
 
@@ -244,7 +244,7 @@ diff_KO_genes = hits
 
 ## GO-term analysis 
 
-```{r gprofilr}
+```{r gprofilr, fig.height=15, fig.width=15}
 
 gene_univers = rownames(ddsMat)
 
