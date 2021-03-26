@@ -11,3 +11,6 @@ analysis/*_cache
 analysis/site_libs
 oldcode/*
 *.RData
+*.xlsx
+*.dcf
+*.xlsx
