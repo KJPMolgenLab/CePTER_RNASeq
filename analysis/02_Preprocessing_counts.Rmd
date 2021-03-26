@@ -6,9 +6,6 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-
 secret="C:/Users/andreas_chiocchetti/OneDrive/personal/fuchs_credentials.R"
 
 
@@ -18,6 +15,7 @@ output= paste0(home, "/output/")
 source(paste0(home,"/code/00_installer.R")) # installs pacakges if needed
 source(paste0(home,"/code/custom_functions.R")) #also defines colors
 
+library(knitr)
 library(RCurl) 
 library(DESeq2)
 library(RColorBrewer)
@@ -25,7 +23,7 @@ library(glmpca)
 library(ggplot2)
 library(tidyverse)
 library(pheatmap)
-library(knitr)
+library(dendextend)
 library(gprofiler2)
 
 opts_chunk$set(echo = TRUE, 
@@ -218,19 +216,60 @@ SampleInfo$reads_per_sample_cl= colSums(reads)
 * Total genes included after filtering: `r format(Nfilt, big.mark=" ")`
 
 
-## Clustering
+## Clustering 
 
-```{r clusterandqual, fig.height=15, fig.width=15}
-
+hierarchical clustering based on the top 2000 genes by variance 
+```{r hcluster, fig.height=10, fig.width=15}
 log2_cpm = log2(reads+1)
 
-cpm.sel.trans = t(log2_cpm[,])
+varsset=apply(log2_cpm, 1, var)
 
-
+cpm.sel.trans = t(log2_cpm[order(varsset,decreasing = T)[1:2000],])
 
 rownames(cpm.sel.trans)=SampleInfo$label_rep
 
 distance = dist(cpm.sel.trans)
+hc = hclust(distance, method="ward.D2")
+cutN=24
+clusters = cutree(hc, k=cutN)
+Colors=sample(jetcolors(cutN))[clusters]
+
+myLetters <- LETTERS[1:26]
+
+numRow=match(SampleInfo$Row, myLetters)
+numRow=numRow+(SampleInfo$Plate-1)*8
+addRow=LETTERS[numRow]
+
+Plotdata=data.frame(Rows=addRow, numRow = numRow, Cols = SampleInfo$Col, 
+                    Group=clusters, Colors=Colors)
+
+par(mar=c(15,3,5,3))
+plot(as.dendrogram(hc), main=paste("Similairtiy by gene expression, guessed",cutN,"clusters"), cex=0.7)
+colored_dots(colors = Colors, dend = as.dendrogram(hc), rowLabels = "cluster")
+
+```
+
+
+Similarity based on hcluster plot 
+```{r platesetup_cluster, fig.height=8, fig.width=15}
+
+par(mar=c(2,5,8,3))
+plot(0,0, type="n", ylab="", xlab="", 
+     ylim=rev(range(Plotdata$numRow))+c(1,-1), 
+     xlim=range(Plotdata$Cols)+c(-1,1), xaxt="n",yaxt="n" ,
+     main="plate similarity plot")
+points(y=Plotdata$numRow, x=Plotdata$Cols, pch=16, cex=4, col=Plotdata$Colors)
+text(y=Plotdata$numRow, x=Plotdata$Cols, labels = Plotdata$Group)
+text(y=Plotdata$numRow, x=Plotdata$Cols, labels = Plotdata$Group)
+axis(2, at=1:9, labels = c(paste0("P1_", LETTERS[1:8]), "P2_A"), las=1)
+axis(3, at=1:12, labels = c(paste0("Col_", 1:12)), las=3)
+abline(h=8.5)
+
+```
+
+
+
+```{r clusterandqual, fig.height=15, fig.width=15}
 sampleDistMatrix <- as.matrix(distance)
 
 #colors for plotting heatmap
@@ -274,13 +313,6 @@ pheatmap(sampleDistMatrix,
 save(ddsMat, file=paste0(output,"/dds_matrix.RData"))
 
 ```
-
-
-
-## Clustering just no Rapa
-
-
-
 
 
 ## PCA and MDS

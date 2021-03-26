@@ -2,7 +2,7 @@
 
 
 package<-c("RColorBrewer", "dplyr", "httr", "parallel", "rJava",
-           "compareGroups", "kableExtra", "tidyverse",
+           "compareGroups", "kableExtra", "tidyverse","dendextend",
            "knitr", "pheatmap", "glmpca", "plotly", "rsconnect", "xlsx")
 
 
