@@ -49,21 +49,25 @@ set.seed(157434538)
 ```{r getdata}
 
 #Load Count Matrix
-url="sftp://fuchs.hhlr-gu.de/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output/Countmatrix.RData"
-filetmp= tempfile(fileext = ".RData")
-if (file.exists(secret)){
-  source(secret)
+filetarget= paste0(home,"/data/Countmatrix.RData")
+if(!file.exists(filetarget)){
+  url="sftp://fuchs.hhlr-gu.de/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output/Countmatrix.RData"
+  if (file.exists(secret)){
+    source(secret)
+  } else {
+    UID    = rstudioapi::askForPassword("fuchs user")
+    PWD    = rstudioapi::askForPassword("fuchs password")
+  }
+  
+  bin = getBinaryURL(url, userpw=paste0(UID,":",PWD))
+  writeBin(bin, filetarget)
+  load(filetarget)
 } else {
-  UID    = rstudioapi::askForPassword("fuchs user")
-  PWD    = rstudioapi::askForPassword("fuchs password")
+  load(filetarget)
 }
 
-bin = getBinaryURL(url, userpw=paste0(UID,":",PWD))
-writeBin(bin, filetmp)
-
-load(filetmp)
-
 Ntot= nrow(Countdata)
+
 
 #merge non unique annotations
 if(length(unique(rownames(Countdata))) != Ntot){
