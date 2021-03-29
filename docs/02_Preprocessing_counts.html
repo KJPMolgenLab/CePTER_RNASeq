@@ -378,7 +378,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-03-26
+<strong>Last updated:</strong> 2021-03-29
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -469,16 +469,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreeac41a21192a929e14808f7209bc708536528fe5etargetblankac41a21a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/ac41a21192a929e14808f7209bc708536528fe5e" target="_blank">ac41a21</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree5ad980ddf4896b26416b75d2f637968635ec929dtargetblank5ad980da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/5ad980ddf4896b26416b75d2f637968635ec929d" target="_blank">5ad980d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreeac41a21192a929e14808f7209bc708536528fe5etargetblankac41a21a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree5ad980ddf4896b26416b75d2f637968635ec929dtargetblank5ad980da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/ac41a21192a929e14808f7209bc708536528fe5e" target="_blank">ac41a21</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/5ad980ddf4896b26416b75d2f637968635ec929d" target="_blank">5ad980d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -488,12 +488,13 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/Softpower.png
-    Ignored:    analysis/figure/
     Ignored:    oldcode/
     Ignored:    output/WGCNA_adj_TOM.RData
 
 Unstaged changes:
-    Modified:   output/dds_matrix.RData
+    Modified:   output/GOresWGCNA.xlsx
+    Modified:   output/GOres_Comparisons.xlsx
+    Modified:   output/gostres.pdf
 
 </code></pre>
 <p>
@@ -516,21 +517,25 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <div id="preprocessing" class="section level2">
 <h2>Preprocessing</h2>
 <pre class="r"><code>#Load Count Matrix
-url=&quot;sftp://fuchs.hhlr-gu.de/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output/Countmatrix.RData&quot;
-filetmp= tempfile(fileext = &quot;.RData&quot;)
-if (file.exists(secret)){
-  source(secret)
+filetarget= paste0(home,&quot;/data/Countmatrix.RData&quot;)
+if(!file.exists(filetarget)){
+  url=&quot;sftp://fuchs.hhlr-gu.de/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output/Countmatrix.RData&quot;
+  if (file.exists(secret)){
+    source(secret)
+  } else {
+    UID    = rstudioapi::askForPassword(&quot;fuchs user&quot;)
+    PWD    = rstudioapi::askForPassword(&quot;fuchs password&quot;)
+  }
+  
+  bin = getBinaryURL(url, userpw=paste0(UID,&quot;:&quot;,PWD))
+  writeBin(bin, filetarget)
+  load(filetarget)
 } else {
-  UID    = rstudioapi::askForPassword(&quot;fuchs user&quot;)
-  PWD    = rstudioapi::askForPassword(&quot;fuchs password&quot;)
+  load(filetarget)
 }
 
-bin = getBinaryURL(url, userpw=paste0(UID,&quot;:&quot;,PWD))
-writeBin(bin, filetmp)
-
-load(filetmp)
-
 Ntot= nrow(Countdata)
+
 
 #merge non unique annotations
 if(length(unique(rownames(Countdata))) != Ntot){
@@ -8238,17 +8243,18 @@ rsconnect::setAccountInfo(name=&#39;molgenlab&#39;,
 rsconnect::deployApp(paste0(home, &quot;/analysis/MDSplots&quot;))</code></pre>
 <pre><code>Preparing to deploy application...DONE
 Uploading bundle for application: 3794945...DONE
-Deploying bundle: 4398134 for application: 3794945 ...
-Waiting for task: 898353824
+Deploying bundle: 4407050 for application: 3794945 ...
+Waiting for task: 900008864
+  building: Processing bundle: 4407050
   building: Parsing manifest
-  building: Building image: 5039341
+  building: Building image: 5049647
   building: Fetching packages
   building: Installing packages
   building: Installing files
-  building: Pushing image: 5039341
+  building: Pushing image: 5049647
   deploying: Starting instances
   rollforward: Activating new instances
-  unstaging: Stopping old instances
+  terminating: Stopping old instances
 Application successfully deployed to https://molgenlab.shinyapps.io/mdsplots/</code></pre>
 <iframe src="https://molgenlab.shinyapps.io/mdsplots/" height=900px width=900px />
 <br>
