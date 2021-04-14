@@ -378,7 +378,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-13
+<strong>Last updated:</strong> 2021-04-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -469,16 +469,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7534ea4ccf4ee51daff0178b7678c0894b0f8eectargetblank7534ea4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7534ea4ccf4ee51daff0178b7678c0894b0f8eec" target="_blank">7534ea4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree93c6e6e538729c51499fb1c94d1738c9ac03e23etargetblank93c6e6ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/93c6e6e538729c51499fb1c94d1738c9ac03e23e" target="_blank">93c6e6e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7534ea4ccf4ee51daff0178b7678c0894b0f8eectargetblank7534ea4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree93c6e6e538729c51499fb1c94d1738c9ac03e23etargetblank93c6e6ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7534ea4ccf4ee51daff0178b7678c0894b0f8eec" target="_blank">7534ea4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/93c6e6e538729c51499fb1c94d1738c9ac03e23e" target="_blank">93c6e6e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -488,7 +488,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/Softpower.png
-    Ignored:    analysis/figure/
     Ignored:    data/Countmatrix.RData
     Ignored:    oldcode/
     Ignored:    output/WGCNA_adj_TOM.RData
@@ -543,7 +542,6 @@ Ntot= nrow(Countdata)
 
 #merge non unique annotations
 if(length(unique(rownames(Countdata))) != Ntot){
-  
   Countdata = Countdata %&gt;% group_by(row.names(Countdata)) %&gt;% summarise_each(sum)
   Ntot= nrow(Countdata)
 }
@@ -584,9 +582,9 @@ SampleInfo$gRNA = relevel(SampleInfo$gRNA,ref=&quot;sgNTC&quot; )
 SampleInfo$KO = factor(SampleInfo$KO, levels=c(T,F), labels=c(&quot;KO&quot;, &quot;WT&quot;))
 SampleInfo$KO = relevel(SampleInfo$KO,ref=&quot;WT&quot; )
 
-SampleInfo$DIFF = factor(SampleInfo$DIFF, levels=c(T,F), 
+SampleInfo$DIFF = factor(SampleInfo$DIFF, levels=c(TRUE,FALSE), 
                          labels=c(&quot;DIFF&quot;, &quot;noDIFF&quot;))
-SampleInfo$DIFF = relevel(SampleInfo$DIFF,ref=&quot;noDIFF&quot; )
+SampleInfo$DIFF = relevel(SampleInfo$DIFF,ref=&quot;noDIFF&quot;)
 
 SampleInfo$RAPA = factor(SampleInfo$RAPA, levels=c(T,F), 
                          labels=c(&quot;RAPA&quot;, &quot;noRAPA&quot;))
@@ -8178,7 +8176,7 @@ abline(h=8.5)</code></pre>
 <pre class="r"><code>sampleDistMatrix &lt;- as.matrix(distance)
 
 #colors for plotting heatmap
-colors &lt;- colorRampPalette( rev(brewer.pal(9, &quot;Blues&quot;)) )(255)
+colors &lt;- colorRampPalette(brewer.pal(9, &quot;Spectral&quot;))(255)
 
 cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
 names(cellcol) = levels(SampleInfo$CellLine)
@@ -8208,6 +8206,7 @@ pheatmap(sampleDistMatrix,
          clustering_distance_rows = distance,
          clustering_distance_cols = distance,
          clustering_method = &quot;ward.D2&quot;,
+         scale =&quot;row&quot;,
          border_color = NA, 
          annotation_row = labels,
          annotation_col = labels,
@@ -8247,15 +8246,12 @@ rsconnect::setAccountInfo(name=&#39;molgenlab&#39;,
 rsconnect::deployApp(paste0(home, &quot;/analysis/MDSplots&quot;))</code></pre>
 <pre><code>Preparing to deploy application...DONE
 Uploading bundle for application: 3794945...DONE
-Deploying bundle: 4466220 for application: 3794945 ...
-Waiting for task: 910369910
-  building: Processing bundle: 4466220
-  building: Parsing manifest
-  building: Building image: 5125135
+Deploying bundle: 4469388 for application: 3794945 ...
+Waiting for task: 910851750
   building: Fetching packages
   building: Installing packages
   building: Installing files
-  building: Pushing image: 5125135
+  building: Pushing image: 5129539
   deploying: Starting instances
   rollforward: Activating new instances
   terminating: Stopping old instances
