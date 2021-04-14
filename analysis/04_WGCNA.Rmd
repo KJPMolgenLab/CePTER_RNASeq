@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-reanalyze=F
+reanalyze=T
 home = getwd()
 output= paste0(home, "/output/")
 
@@ -158,7 +158,7 @@ save(ddsMat, file=paste0(output,"/dds_matrix.RData"))
 ## Heatmaps MEs
 ```{r heatmap,  fig.height=20, fig.width=15}
 #colors for plotting heatmap
-colors <- colorRampPalette(brewer.pal(9, "Blues"))(255)
+colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
 
 cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
 names(cellcol) = levels(SampleInfo$CellLine)

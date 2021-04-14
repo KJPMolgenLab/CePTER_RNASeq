@@ -143,7 +143,7 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
   rownames(dataset) = names(GOIsEntrez)
   
   #colors for plotting heatmap
-  colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+  colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
   
   
   gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
@@ -172,6 +172,7 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
   pheatmap(dataset, 
            cluster_rows = F,
            cluster_cols = F,
+           col = colors,
            scale = "row", 
            annotation_col = labels,
            annotation_colors = ann_colors, 

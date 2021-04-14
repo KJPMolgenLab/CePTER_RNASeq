@@ -71,7 +71,6 @@ Ntot= nrow(Countdata)
 
 #merge non unique annotations
 if(length(unique(rownames(Countdata))) != Ntot){
-  
   Countdata = Countdata %>% group_by(row.names(Countdata)) %>% summarise_each(sum)
   Ntot= nrow(Countdata)
 }
@@ -112,9 +111,9 @@ SampleInfo$gRNA = relevel(SampleInfo$gRNA,ref="sgNTC" )
 SampleInfo$KO = factor(SampleInfo$KO, levels=c(T,F), labels=c("KO", "WT"))
 SampleInfo$KO = relevel(SampleInfo$KO,ref="WT" )
 
-SampleInfo$DIFF = factor(SampleInfo$DIFF, levels=c(T,F), 
+SampleInfo$DIFF = factor(SampleInfo$DIFF, levels=c(TRUE,FALSE), 
                          labels=c("DIFF", "noDIFF"))
-SampleInfo$DIFF = relevel(SampleInfo$DIFF,ref="noDIFF" )
+SampleInfo$DIFF = relevel(SampleInfo$DIFF,ref="noDIFF")
 
 SampleInfo$RAPA = factor(SampleInfo$RAPA, levels=c(T,F), 
                          labels=c("RAPA", "noRAPA"))
@@ -277,7 +276,7 @@ abline(h=8.5)
 sampleDistMatrix <- as.matrix(distance)
 
 #colors for plotting heatmap
-colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
 
 cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
 names(cellcol) = levels(SampleInfo$CellLine)
@@ -307,6 +306,7 @@ pheatmap(sampleDistMatrix,
          clustering_distance_rows = distance,
          clustering_distance_cols = distance,
          clustering_method = "ward.D2",
+         scale ="row",
          border_color = NA, 
          annotation_row = labels,
          annotation_col = labels,

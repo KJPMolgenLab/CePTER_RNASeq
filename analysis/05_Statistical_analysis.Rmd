@@ -8,7 +8,7 @@ output: html_document
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=F
+reanalyze=T
 home = getwd()
 output= paste0(home, "/output/")
 
