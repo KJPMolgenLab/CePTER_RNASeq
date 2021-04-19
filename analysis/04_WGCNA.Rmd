@@ -232,7 +232,7 @@ pheatmap(t(MEs),
          col = colors, 
          main = "Distances  normalized log2 counts")
 ```
-```{r fig.height=50, fig.width=10}
+```{r}
 
 gene_univers = rownames(ddsMat)
 
