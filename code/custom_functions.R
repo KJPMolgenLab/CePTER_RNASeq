@@ -2,7 +2,7 @@ require("kableExtra")
 require("tidyverse")
 require("compareGroups")
 require("RColorBrewer")
-
+require("stringr")
 
 
 Dark8 = brewer.pal(8, "Dark2")
@@ -86,3 +86,37 @@ getGOresults = function(geneset, genereference){
   }
 }
 
+
+GOplot = function(GOtable, N, Title="GO plot"){
+  if(nrow(GOtable)<N){N=nrow(GOtable)}
+  GOtable = GOtable[GOtable$parents!="character(0)",]
+  Tabtoplot=GOtable[order(GOtable$p_value, decreasing = F)[1:N],]
+  Tabtoplot$log10pvalue=-log10(Tabtoplot$p_value)
+  Tabtoplot$genperc=Tabtoplot$intersection_size/Tabtoplot$effective_domain_size
+
+  wrapit = function(long_phrase, cutoff){
+    if(nchar(long_phrase) > cutoff){
+      cutpos=ceiling(str_count(long_phrase, pattern = " ")/2)
+      modx = gsub(paste0("(([^ ]* ){",cutpos,"})([^ ]*)"), "\\1\n\\3", long_phrase)
+      return(modx)
+    } else {
+      return(long_phrase)}
+
+  }
+
+  Tabtoplot$term_name = sapply(Tabtoplot$term_name, wrapit, cutoff=40)
+
+  ggplot(Tabtoplot) + geom_point(aes(x =log10pvalue,
+                                     y = N:1,
+                                     size=precision,
+                                     colour=genperc),
+                                 alpha=0.7) +
+    scale_colour_gradient(low="#00FF33", high ="#FF0000", guide = "colourbar")+
+    labs(colour="genomic cov", size="precision")+
+    xlab("- log10(p-value)") + ylab("GO term")+
+    scale_size(range = c(3, 8))+
+    theme_bw(base_size = 12) + ggtitle(Title)+
+    theme(plot.title = element_text(hjust = 0.5))+
+    scale_y_continuous(breaks=N:1,
+                     labels=Tabtoplot$term_name)
+  }

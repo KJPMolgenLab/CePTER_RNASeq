@@ -153,15 +153,17 @@ collabels = SamplesSet[,c("CellLine","gRNA")] %>%
 
 rownames(collabels)=SamplesSet$label_rep
 
-pheatmap(plotmatrix,
+idx=order(SamplesSet$gRNA, SamplesSet$CellLine)
+
+pheatmap(plotmatrix[,idx],
          border_color = NA, 
-         annotation_col = collabels,
+         annotation_col = collabels[idx,],
          annotation_colors = ann_colors,
          clustering_method = "ward.D2",
+         cluster_cols = F,
          col = colors, 
          scale = "row",
          main = "Normalized log2 counts PROLIF noRAPA")
-
 
 prolif_KO_genes = hits
 
@@ -170,9 +172,7 @@ prolif_KO_genes = hits
 ### replicated KO effect in DIFF noRAPA
 ```{r DIFF_noRAPA,  fig.height=20, fig.width=15}
 
-
 geneids=rownames(restab_D244_sgNTC_sg2.1_DIFF_noRAPA)
-
 
 pvalrep=  restab_D62_sgNTC_sg2.1_DIFF_noRAPA$padj<mypval &
           restab_D62_sgNTC_sg2.2_DIFF_noRAPA$padj<mypval&
@@ -180,7 +180,6 @@ pvalrep=  restab_D62_sgNTC_sg2.1_DIFF_noRAPA$padj<mypval &
           restab_D244_sgNTC_sg2.2_DIFF_noRAPA$padj<mypval&
           restab_ReN_sgNTC_sg2.1_DIFF_noRAPA$padj<mypval &
           restab_ReN_sgNTC_sg2.2_DIFF_noRAPA$padj<mypval
-
 
 betarep = apply(cbind(restab_D62_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
                 restab_D62_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
@@ -228,11 +227,14 @@ collabels = SamplesSet[,c("CellLine","gRNA")] %>%
 
 rownames(collabels)=SamplesSet$label_rep
 
-pheatmap(plotmatrix,
+idx=order(SamplesSet$gRNA, SamplesSet$CellLine)
+
+pheatmap(plotmatrix[,idx],
          border_color = NA, 
-         annotation_col = collabels,
+         annotation_col = collabels[idx,],
          annotation_colors = ann_colors,
          clustering_method = "ward.D2",
+         cluster_cols = F,
          col = colors, 
          scale = "row",
          main = "Normalized log2 counts DIFF noRAPA")
