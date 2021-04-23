@@ -15,7 +15,7 @@
 <title>Statistical analysis</title>
 
 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -36,13 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="site_libs/plotly-binding-4.9.3/plotly.js"></script>
-<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="site_libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="site_libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -383,7 +376,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-22
+<strong>Last updated:</strong> 2021-04-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -474,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreec251400c3d6b91eb490353291585684aabc8946dtargetblankc251400a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/c251400c3d6b91eb490353291585684aabc8946d" target="_blank">c251400</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree20007f10d693c68e15467f9eab453334bb3c1ed0targetblank20007f1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/20007f10d693c68e15467f9eab453334bb3c1ed0" target="_blank">20007f1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreec251400c3d6b91eb490353291585684aabc8946dtargetblankc251400a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree20007f10d693c68e15467f9eab453334bb3c1ed0targetblank20007f1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/c251400c3d6b91eb490353291585684aabc8946d" target="_blank">c251400</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/20007f10d693c68e15467f9eab453334bb3c1ed0" target="_blank">20007f1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -505,7 +498,6 @@ Untracked files:
 
 Unstaged changes:
     Deleted:    Wrappter.sh
-    Modified:   analysis/04_WGCNA.Rmd
     Modified:   analysis/MDSplots/rsconnect/shinyapps.io/molgenlab/mdsplots.dcf
     Modified:   output/GOresWGCNA.xlsx
     Modified:   output/dds_matrix.RData
@@ -754,16 +746,23 @@ Genes_of_interset = list(prolif_KO_genes, diff_KO_genes)
 
 gostres = getGOresults(Genes_of_interset, gene_univers)</code></pre>
 <pre><code>Lade nötiges Paket: gprofiler2</code></pre>
-<pre class="r"><code>gostplot(gostres, capped = TRUE, interactive = T)</code></pre>
-<div id="htmlwidget-d41833e8f54a3e4c944c" style="width:4500px;height:3500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d41833e8f54a3e4c944c">{"x":{"data":[{"x":[125.187098667857],"y":[2.38015649455679],"text":"KEGG:04974 (45) <br> Protein digestion and absorption <br> 4.167e-03","key":["KEGG:04974"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(221,68,119,1)","opacity":0.8,"size":17.1421753925017,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(221,68,119,1)"}},"hoveron":"points","set":"SharedData1a9fd068","name":"KEGG","legendgroup":"KEGG","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","_isSimpleKey":true,"_isNestedKey":false,"frame":null},{"x":[125.187098667857],"y":[2.38015649455679],"text":"KEGG:04974 (45) <br> Protein digestion and absorption <br> 4.167e-03","key":["KEGG:04974"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(221,68,119,1)","opacity":0.8,"size":17.1421753925017,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(221,68,119,1)"}},"hoveron":"points","set":"SharedData1a9fd068","name":"KEGG","legendgroup":"KEGG","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","_isSimpleKey":true,"_isNestedKey":false,"frame":null},{"x":[2,31.8454897620365],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(220,57,18,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2,31.8454897620365],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(220,57,18,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[34.2804648588821,45.147758716104],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(16,150,24,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[34.2804648588821,45.147758716104],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(16,150,24,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[47.5827338129496,121.822689540675],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(255,153,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[47.5827338129496,121.822689540675],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(255,153,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[124.257664637521,125.582291090205],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(221,68,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[124.257664637521,125.582291090205],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(221,68,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[128.01726618705,155.086884338683],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(85,116,166,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[128.01726618705,155.086884338683],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(85,116,166,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[157.521859435529,159.055893746541],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(102,51,204,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[157.521859435529,159.055893746541],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(102,51,204,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[161.490868843387,200.002434975097],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(153,0,153,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[161.490868843387,200.002434975097],"y":[-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":11.3385826771654,"color":"rgba(153,0,153,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[180],"y":[16.2],"text":"values above this threshold are capped","hovertext":"","textfont":{"size":7.55905511811024,"color":"rgba(190,190,190,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[180],"y":[16.2],"text":"values above this threshold are capped","hovertext":"","textfont":{"size":7.55905511811024,"color":"rgba(190,190,190,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[0,210],"y":[16,16],"text":"","type":"scatter","mode":"lines","line":{"width":0.755905511811024,"color":"rgba(190,190,190,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,210],"y":[16,16],"text":"","type":"scatter","mode":"lines","line":{"width":0.755905511811024,"color":"rgba(190,190,190,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":29.2835201328352,"r":6.6417600664176,"b":52.8419329656007,"l":61.0377750103778},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,210],"tickmode":"array","ticktext":["GO:MF","GO:CC","GO:BP","KEGG","TF","HPA","HP"],"tickvals":[16.9227448810183,39.7141117874931,84.7027116768124,124.919977863863,141.552075262867,158.288876591035,180.746651909242],"categoryorder":"array","categoryarray":["GO:MF","GO:CC","GO:BP","KEGG","TF","HPA","HP"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":10.6268161062682},"tickangle":-45,"showline":true,"linecolor":"rgba(190,190,190,1)","linewidth":0.132835201328352,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"yaxis":{"domain":[0.503816514064598,1],"automargin":true,"type":"linear","autorange":false,"range":[-1,18.5],"tickmode":"array","ticktext":["0","2","4","6","8","10","12","14",">16"],"tickvals":[0,2,4,6,8,10,12,14,16],"categoryorder":"array","categoryarray":["0","2","4","6","8","10","12","14",">16"],"nticks":null,"ticks":"outside","tickcolor":"rgba(190,190,190,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(190,190,190,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"annotations":[{"text":"-log10(p-adj)","x":-0.00231908122319081,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":13.2835201328352},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis"},{"text":"query_1","x":0.5,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(169,169,169,1)","family":"","size":13.2835201328352},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"query_2","x":0.5,"y":0.496183485935402,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(169,169,169,1)","family":"","size":13.2835201328352},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.503816514064598,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":24.9730178497302,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":0.496183485935402},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":24.9730178497302,"yanchor":0.496183485935402,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[0,210],"tickmode":"array","ticktext":["GO:MF","GO:CC","GO:BP","KEGG","TF","HPA","HP"],"tickvals":[16.9227448810183,39.7141117874931,84.7027116768124,124.919977863863,141.552075262867,158.288876591035,180.746651909242],"categoryorder":"array","categoryarray":["GO:MF","GO:CC","GO:BP","KEGG","TF","HPA","HP"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":10.6268161062682},"tickangle":-45,"showline":true,"linecolor":"rgba(190,190,190,1)","linewidth":0.132835201328352,"showgrid":false,"domain":[0,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[-1,18.5],"tickmode":"array","ticktext":["0","2","4","6","8","10","12","14",">16"],"tickvals":[0,2,4,6,8,10,12,14,16],"categoryorder":"array","categoryarray":["0","2","4","6","8","10","12","14",">16"],"nticks":null,"ticks":"outside","tickcolor":"rgba(190,190,190,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(190,190,190,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0,0.496183485935402],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative","dragmode":"zoom"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"500878fa3c7b":{"colour":{},"size":{},"alpha":{},"key":{},"x":{},"y":{},"text":{},"type":"scatter"},"50081b2b67fa":{"x":{},"xend":{},"y":{},"yend":{}},"500859b077f5":{"x":{},"xend":{},"y":{},"yend":{}},"50087a047aa6":{"x":{},"xend":{},"y":{},"yend":{}},"500868787719":{"x":{},"xend":{},"y":{},"yend":{}},"5008666dbf3":{"x":{},"xend":{},"y":{},"yend":{}},"500867854530":{"x":{},"xend":{},"y":{},"yend":{}},"50087d4d691a":{"x":{},"xend":{},"y":{},"yend":{}},"50086d223dd0":{"x":{},"y":{}},"50082a68140a":{"yintercept":{}}},"cur_data":"500878fa3c7b","visdat":{"500878fa3c7b":["function (y) ","x"],"50081b2b67fa":["function (y) ","x"],"500859b077f5":["function (y) ","x"],"50087a047aa6":["function (y) ","x"],"500868787719":["function (y) ","x"],"5008666dbf3":["function (y) ","x"],"500867854530":["function (y) ","x"],"50087d4d691a":["function (y) ","x"],"50086d223dd0":["function (y) ","x"],"50082a68140a":["function (y) ","x"]},"highlight":{"on":"plotly_click","off":"plotly_doubleclick","persistent":false,"dynamic":false,"color":null,"selectize":false,"defaultValues":null,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0,"ctGroups":["SharedData1a9fd068"]},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>p = gostplot(gostres, capped = TRUE, interactive = F)
+<pre class="r"><code>toptab = gostres$result
 
-toptab = gostres$result
+write.xlsx2(toptab, file = paste0(output, &quot;/GOres_Comparisons.xlsx&quot;), sheetName = &quot;GO_enrichment&quot;)
 
-pp = publish_gostplot(p, filename = paste0(home,&quot;/output/gostres.pdf&quot;))</code></pre>
-<pre><code>The image is saved to \\KJP-DC01/Daten/KJP_Biolabor/Projekte/CePTER/CePTER_RNASeq/output/gostres.pdf</code></pre>
-<pre class="r"><code>write.xlsx2(toptab, file = paste0(output, &quot;/GOres_Comparisons.xlsx&quot;), sheetName = &quot;GO_enrichment&quot;)</code></pre>
+
+for (module in names(Genes_of_interset)){
+  idx = toptab$query==module &amp; grepl(&quot;GO&quot;, toptab$source)
+  if(!any(idx)){
+    p = ggplot() + annotate(&quot;text&quot;, x = 4, y = 25, size=4, 
+                            label = &quot;no significant GO term&quot;) + 
+      ggtitle(module)+theme_void()+
+      theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    p=GOplot(toptab[idx, ], 10, Title =module)
+  }
+  print(p)
+}</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -808,47 +807,46 @@ other attached packages:
 loaded via a namespace (and not attached):
   [1] readxl_1.3.1           uuid_0.1-4             backports_1.2.1       
   [4] Hmisc_4.5-0            systemfonts_1.0.1      lazyeval_0.2.2        
-  [7] splines_4.0.4          crosstalk_1.1.1        BiocParallel_1.24.1   
- [10] digest_0.6.27          foreach_1.5.1          htmltools_0.5.1.1     
- [13] GO.db_3.12.1           fansi_0.4.2            checkmate_2.0.0       
- [16] magrittr_2.0.1         Rsolnp_1.16            memoise_2.0.0         
- [19] cluster_2.1.1          doParallel_1.0.16      annotate_1.68.0       
- [22] modelr_0.1.8           officer_0.3.17         svglite_2.0.0         
- [25] jpeg_0.1-8.1           colorspace_2.0-0       blob_1.2.1            
- [28] rvest_1.0.0            haven_2.3.1            xfun_0.21             
- [31] crayon_1.4.1           RCurl_1.98-1.2         jsonlite_1.7.2        
- [34] genefilter_1.72.1      impute_1.64.0          survival_3.2-9        
- [37] iterators_1.0.13       glue_1.4.2             gtable_0.3.0          
- [40] zlibbioc_1.36.0        XVector_0.30.0         webshot_0.5.2         
- [43] DelayedArray_0.16.2    scales_1.1.1           DBI_1.1.1             
- [46] Rcpp_1.0.6             htmlTable_2.1.0        viridisLite_0.3.0     
- [49] xtable_1.8-4           foreign_0.8-81         bit_4.0.4             
- [52] preprocessCore_1.52.1  Formula_1.2-4          truncnorm_1.0-8       
- [55] htmlwidgets_1.5.3      httr_1.4.2             ellipsis_0.3.1        
- [58] mice_3.13.0            farver_2.1.0           rJava_0.9-13          
- [61] pkgconfig_2.0.3        XML_3.99-0.5           nnet_7.3-15           
- [64] sass_0.3.1             dbplyr_2.1.0           locfit_1.5-9.4        
- [67] utf8_1.1.4             tidyselect_1.1.0       rlang_0.4.10          
- [70] later_1.1.0.1          AnnotationDbi_1.52.0   munsell_0.5.0         
- [73] cellranger_1.1.0       tools_4.0.4            cachem_1.0.4          
- [76] cli_2.3.1              generics_0.1.0         RSQLite_2.2.4         
- [79] broom_0.7.5            evaluate_0.14          fastmap_1.1.0         
- [82] yaml_2.2.1             bit64_4.0.5            fs_1.5.0              
- [85] zip_2.1.1              mime_0.10              xml2_1.3.2            
- [88] compiler_4.0.4         rstudioapi_0.13        plotly_4.9.3          
- [91] png_0.1-7              reprex_1.0.0           geneplotter_1.68.0    
- [94] bslib_0.2.4            stringi_1.5.3          HardyWeinberg_1.7.1   
- [97] highr_0.8              ps_1.6.0               gdtools_0.2.3         
-[100] lattice_0.20-41        Matrix_1.3-2           vctrs_0.3.6           
-[103] pillar_1.5.1           lifecycle_1.0.0        jquerylib_0.1.3       
-[106] data.table_1.14.0      bitops_1.0-6           flextable_0.6.4       
-[109] httpuv_1.5.5           R6_2.5.0               latticeExtra_0.6-29   
-[112] promises_1.2.0.1       gridExtra_2.3          writexl_1.3.1         
-[115] codetools_0.2-18       assertthat_0.2.1       xlsxjars_0.6.1        
-[118] chron_2.3-56           rprojroot_2.0.2        withr_2.4.1           
-[121] GenomeInfoDbData_1.2.4 hms_1.0.0              rpart_4.1-15          
-[124] grid_4.0.4             rmarkdown_2.7          git2r_0.28.0          
-[127] shiny_1.6.0            lubridate_1.7.10       base64enc_0.1-3       </code></pre>
+  [7] splines_4.0.4          BiocParallel_1.24.1    digest_0.6.27         
+ [10] foreach_1.5.1          htmltools_0.5.1.1      GO.db_3.12.1          
+ [13] fansi_0.4.2            checkmate_2.0.0        magrittr_2.0.1        
+ [16] Rsolnp_1.16            memoise_2.0.0          cluster_2.1.1         
+ [19] doParallel_1.0.16      annotate_1.68.0        modelr_0.1.8          
+ [22] officer_0.3.17         svglite_2.0.0          jpeg_0.1-8.1          
+ [25] colorspace_2.0-0       blob_1.2.1             rvest_1.0.0           
+ [28] haven_2.3.1            xfun_0.21              crayon_1.4.1          
+ [31] RCurl_1.98-1.2         jsonlite_1.7.2         genefilter_1.72.1     
+ [34] impute_1.64.0          survival_3.2-9         iterators_1.0.13      
+ [37] glue_1.4.2             gtable_0.3.0           zlibbioc_1.36.0       
+ [40] XVector_0.30.0         webshot_0.5.2          DelayedArray_0.16.2   
+ [43] scales_1.1.1           DBI_1.1.1              Rcpp_1.0.6            
+ [46] htmlTable_2.1.0        viridisLite_0.3.0      xtable_1.8-4          
+ [49] foreign_0.8-81         bit_4.0.4              preprocessCore_1.52.1 
+ [52] Formula_1.2-4          truncnorm_1.0-8        htmlwidgets_1.5.3     
+ [55] httr_1.4.2             ellipsis_0.3.1         mice_3.13.0           
+ [58] farver_2.1.0           rJava_0.9-13           pkgconfig_2.0.3       
+ [61] XML_3.99-0.5           nnet_7.3-15            sass_0.3.1            
+ [64] dbplyr_2.1.0           locfit_1.5-9.4         utf8_1.1.4            
+ [67] tidyselect_1.1.0       rlang_0.4.10           later_1.1.0.1         
+ [70] AnnotationDbi_1.52.0   munsell_0.5.0          cellranger_1.1.0      
+ [73] tools_4.0.4            cachem_1.0.4           cli_2.3.1             
+ [76] generics_0.1.0         RSQLite_2.2.4          broom_0.7.5           
+ [79] evaluate_0.14          fastmap_1.1.0          yaml_2.2.1            
+ [82] bit64_4.0.5            fs_1.5.0               zip_2.1.1             
+ [85] xml2_1.3.2             compiler_4.0.4         rstudioapi_0.13       
+ [88] plotly_4.9.3           png_0.1-7              reprex_1.0.0          
+ [91] geneplotter_1.68.0     bslib_0.2.4            stringi_1.5.3         
+ [94] HardyWeinberg_1.7.1    highr_0.8              ps_1.6.0              
+ [97] gdtools_0.2.3          lattice_0.20-41        Matrix_1.3-2          
+[100] vctrs_0.3.6            pillar_1.5.1           lifecycle_1.0.0       
+[103] jquerylib_0.1.3        data.table_1.14.0      bitops_1.0-6          
+[106] flextable_0.6.4        httpuv_1.5.5           R6_2.5.0              
+[109] latticeExtra_0.6-29    promises_1.2.0.1       gridExtra_2.3         
+[112] writexl_1.3.1          codetools_0.2-18       assertthat_0.2.1      
+[115] xlsxjars_0.6.1         chron_2.3-56           rprojroot_2.0.2       
+[118] withr_2.4.1            GenomeInfoDbData_1.2.4 hms_1.0.0             
+[121] rpart_4.1-15           grid_4.0.4             rmarkdown_2.7         
+[124] git2r_0.28.0           lubridate_1.7.10       base64enc_0.1-3       </code></pre>
 </div>
 </div>
 </div>
