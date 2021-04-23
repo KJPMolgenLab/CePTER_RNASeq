@@ -254,13 +254,26 @@ Genes_of_interset = list(prolif_KO_genes, diff_KO_genes)
 
 gostres = getGOresults(Genes_of_interset, gene_univers)
 
-gostplot(gostres, capped = TRUE, interactive = T)
-p = gostplot(gostres, capped = TRUE, interactive = F)
 
 toptab = gostres$result
 
-pp = publish_gostplot(p, filename = paste0(home,"/output/gostres.pdf"))
 write.xlsx2(toptab, file = paste0(output, "/GOres_Comparisons.xlsx"), sheetName = "GO_enrichment")
+
+
+for (module in names(Genes_of_interset)){
+  idx = toptab$query==module & grepl("GO", toptab$source)
+  if(!any(idx)){
+    p = ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                            label = "no significant GO term") + 
+      ggtitle(module)+theme_void()+
+      theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    p=GOplot(toptab[idx, ], 10, Title =module)
+  }
+  print(p)
+}
+
+
 
 ```
 

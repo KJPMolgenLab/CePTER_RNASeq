@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-reanalyze=F
+reanalyze=T
 home = getwd()
 output= paste0(home, "/output/")
 
@@ -184,7 +184,7 @@ ann_colors = list(
   CellLine=cellcol,
   cluster = clustcol)
 
-idx=order(SampleInfo$gRNA, SampleInfo$CellLine)
+idx=order(SampleInfo$gRNA, SampleInfo$CellLine, SampleInfo$DIFF,SampleInfo$RAPA)
 WGCNA_matrix_sorted=WGCNA_matrix[SampleInfo$label_rep[idx], order(colors_new)]
 
 collabels = SampleInfo[idx,c("CellLine","gRNA","DIFF", "RAPA")] %>%  
