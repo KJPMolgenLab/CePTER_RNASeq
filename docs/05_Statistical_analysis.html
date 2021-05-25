@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7579c80d11f52903b2de4c178936c2f625ceb825targetblank7579c80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7579c80d11f52903b2de4c178936c2f625ceb825" target="_blank">7579c80</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreee38e8e037c1330f1e66f6f9f7182c896f98304fdtargetblanke38e8e0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/e38e8e037c1330f1e66f6f9f7182c896f98304fd" target="_blank">e38e8e0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7579c80d11f52903b2de4c178936c2f625ceb825targetblank7579c80a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreee38e8e037c1330f1e66f6f9f7182c896f98304fdtargetblanke38e8e0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7579c80d11f52903b2de4c178936c2f625ceb825" target="_blank">7579c80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/e38e8e037c1330f1e66f6f9f7182c896f98304fd" target="_blank">e38e8e0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -488,6 +488,8 @@ Ignored files:
     Ignored:    data/Countmatrix.RData
     Ignored:    oldcode/
     Ignored:    output/GOres_Comparisons.xlsx
+    Ignored:    output/GOres_D62noDIFFnoRAPA.xlsx
+    Ignored:    output/GOres_ReNnoDIFFnoRAPA.xlsx
     Ignored:    output/ResTabs_KO.RData
     Ignored:    output/WGCNA_adj_TOM.RData
 
@@ -498,7 +500,6 @@ Untracked files:
 
 Unstaged changes:
     Deleted:    Wrappter.sh
-    Modified:   analysis/MDSplots/mdsplots.RData
     Modified:   analysis/MDSplots/rsconnect/shinyapps.io/molgenlab/mdsplots.dcf
     Modified:   data/Sample_info_CePTER_RNASeq.csv
     Modified:   output/GOresWGCNA.xlsx
@@ -525,10 +526,11 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 </div>
 <div id="statistical-analysis" class="section level1">
 <h1>Statistical analysis</h1>
-<div id="q1-which-genes-are-differentially-regualted-upon-ko-of-depdc5" class="section level2">
-<h2>Q1 Which genes are differentially regualted upon KO of DEPDC5</h2>
-<div id="modelling-the-ko-in-all-different-combinations" class="section level3">
-<h3>Modelling the KO in all different combinations</h3>
+</div>
+<div id="q1-which-genes-are-differentially-regualted-upon-ko-of-depdc5" class="section level1">
+<h1>Q1 Which genes are differentially regualted upon KO of DEPDC5</h1>
+<div id="modelling-the-ko-in-all-different-combinations" class="section level2">
+<h2>Modelling the KO in all different combinations</h2>
 <pre class="r"><code>if(reanalyze | !file.exists(paste0(home,&quot;/output/ResTabs_KO.RData&quot;))){
   # calculate all combinations 
   
@@ -537,8 +539,6 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
   Differentiation=c(&quot;noDIFF&quot;, &quot;DIFF&quot;)
   Type_sgRNA&lt;-list(c(&quot;sgNTC&quot;,&quot;sg2.1&quot;),c(&quot;sgNTC&quot;,&quot;sg2.2&quot;))
   target=&quot;KO&quot;
-  
-  
   # no random effects included 
   for(r in Rapamycin){
     Rapafilter = SampleInfo$RAPA %in% r
@@ -588,183 +588,172 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 [1] &quot;restab_D62_sgNTC_sg2.2_DIFF_RAPA&quot;
 [1] &quot;restab_D244_sgNTC_sg2.2_DIFF_RAPA&quot;
 [1] &quot;restab_ReN_sgNTC_sg2.2_DIFF_RAPA&quot;</code></pre>
-</div>
-<div id="replicated-ko-effect-in-nodiff-norapa" class="section level3">
-<h3>replicated KO effect in noDIFF noRAPA</h3>
-<pre class="r"><code>mypval=0.05
-
-
-geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
-
-
-pvalrep=  restab_D62_sgNTC_sg2.1_noDIFF_noRAPA$padj&lt;mypval &amp;
-          restab_D62_sgNTC_sg2.2_noDIFF_noRAPA$padj&lt;mypval&amp;
-          restab_D244_sgNTC_sg2.1_noDIFF_noRAPA$padj&lt;mypval&amp;
-          restab_D244_sgNTC_sg2.2_noDIFF_noRAPA$padj&lt;mypval&amp;
-          restab_ReN_sgNTC_sg2.1_noDIFF_noRAPA$padj&lt;mypval &amp;
-          restab_ReN_sgNTC_sg2.2_noDIFF_noRAPA$padj&lt;mypval
-
-
-samesign &lt;- function(x) {abs(sum(sign(x)))==length(x)}
-
-
-betarep = apply(cbind(restab_D62_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
-                restab_D62_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
-                restab_D244_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
-                restab_D244_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
-                restab_ReN_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
-                restab_ReN_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange), 1,
-                samesign)
-
-hits=geneids[betarep &amp; pvalrep]
-
-
+<pre class="r"><code>samesign &lt;- function(x) {abs(sum(sign(x)))==length(x)}
+mypval=0.05
 colors &lt;- rev(colorRampPalette(brewer.pal(9, &quot;Spectral&quot;))(255))
 
-cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
-names(cellcol) = levels(SampleInfo$CellLine)
 
-gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
-names(gRNAcol) = levels(SampleInfo$gRNA)
+getlinmodoutput = function(targetline, 
+                           targetdiff, 
+                           targetrapa){
+  
+  
+  samplesincl = SampleInfo$DIFF==targetdiff &amp; 
+    SampleInfo$RAPA==targetrapa &amp;
+    SampleInfo$CellLine== targetline
+  
 
-diffcol = brewer.pal(3,&quot;Set1&quot;)[1:nlevels(SampleInfo$DIFF)]
-names(diffcol) = levels(SampleInfo$DIFF)
-
-rapacol = brewer.pal(3,&quot;Set2&quot;)[1:nlevels(SampleInfo$RAPA)]
-names(rapacol) = levels(SampleInfo$RAPA)
-
-
-SamplesSet=SampleInfo[SampleInfo$DIFF==&quot;noDIFF&quot; &amp; SampleInfo$RAPA==&quot;noRAPA&quot;,]
-
-plotmatrix = log_2cpm[hits,rownames(SamplesSet)]
-
-rownames(SamplesSet)=SamplesSet$label_rep
-
-colnames(plotmatrix)=SamplesSet$label_rep
-rownames(plotmatrix)=rowData(ddsMat)[hits,&quot;hgnc&quot;]     
-
-ann_colors = list(
-  DIFF = diffcol, 
-  RAPA = rapacol,
-  gRNA = gRNAcol,
-  CellLine=cellcol)
-
-collabels = SamplesSet[,c(&quot;CellLine&quot;,&quot;gRNA&quot;)] %&gt;%  
-  mutate_all(as.character) %&gt;% as.data.frame()
-
-rownames(collabels)=SamplesSet$label_rep
-
-idx=order(SamplesSet$gRNA, SamplesSet$CellLine)
-
-pheatmap(plotmatrix[,idx],
-         border_color = NA, 
-         annotation_col = collabels[idx,],
-         annotation_colors = ann_colors,
-         clustering_method = &quot;ward.D2&quot;,
-         cluster_cols = F,
-         col = colors, 
-         scale = &quot;row&quot;,
-         main = &quot;Normalized log2 counts PROLIF noRAPA&quot;)</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-1.png" width="7500" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>prolif_KO_genes = hits</code></pre>
-</div>
-<div id="replicated-ko-effect-in-diff-norapa" class="section level3">
-<h3>replicated KO effect in DIFF noRAPA</h3>
-<pre class="r"><code>geneids=rownames(restab_D244_sgNTC_sg2.1_DIFF_noRAPA)
-
-pvalrep=  restab_D62_sgNTC_sg2.1_DIFF_noRAPA$padj&lt;mypval &amp;
-          restab_D62_sgNTC_sg2.2_DIFF_noRAPA$padj&lt;mypval&amp;
-          restab_D244_sgNTC_sg2.1_DIFF_noRAPA$padj&lt;mypval&amp;
-          restab_D244_sgNTC_sg2.2_DIFF_noRAPA$padj&lt;mypval&amp;
-          restab_ReN_sgNTC_sg2.1_DIFF_noRAPA$padj&lt;mypval &amp;
-          restab_ReN_sgNTC_sg2.2_DIFF_noRAPA$padj&lt;mypval
-
-betarep = apply(cbind(restab_D62_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
-                restab_D62_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
-                restab_D244_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
-                restab_D244_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
-                restab_ReN_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
-                restab_ReN_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange), 1,
-                samesign)
-
-hits=geneids[betarep &amp; pvalrep]
-
-
-colors &lt;- rev(colorRampPalette(brewer.pal(9, &quot;Spectral&quot;))(255))
-
-cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
-names(cellcol) = levels(SampleInfo$CellLine)
-
-gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
-names(gRNAcol) = levels(SampleInfo$gRNA)
-
-diffcol = brewer.pal(3,&quot;Set1&quot;)[1:nlevels(SampleInfo$DIFF)]
-names(diffcol) = levels(SampleInfo$DIFF)
-
-rapacol = brewer.pal(3,&quot;Set2&quot;)[1:nlevels(SampleInfo$RAPA)]
-names(rapacol) = levels(SampleInfo$RAPA)
-
-
-SamplesSet=SampleInfo[SampleInfo$DIFF==&quot;DIFF&quot; &amp; SampleInfo$RAPA==&quot;noRAPA&quot;,]
-
-plotmatrix = log_2cpm[hits,rownames(SamplesSet)]
-
-rownames(SamplesSet)=SamplesSet$label_rep
-
-colnames(plotmatrix)=SamplesSet$label_rep
-rownames(plotmatrix)=rowData(ddsMat)[hits,&quot;hgnc&quot;]     
-
-ann_colors = list(
-  DIFF = diffcol, 
-  RAPA = rapacol,
-  gRNA = gRNAcol,
-  CellLine=cellcol)
-
-collabels = SamplesSet[,c(&quot;CellLine&quot;,&quot;gRNA&quot;)] %&gt;%  
-  mutate_all(as.character) %&gt;% as.data.frame()
-
-rownames(collabels)=SamplesSet$label_rep
-
-idx=order(SamplesSet$gRNA, SamplesSet$CellLine)
-
-pheatmap(plotmatrix[,idx],
-         border_color = NA, 
-         annotation_col = collabels[idx,],
-         annotation_colors = ann_colors,
-         clustering_method = &quot;ward.D2&quot;,
-         cluster_cols = F,
-         col = colors, 
-         scale = &quot;row&quot;,
-         main = &quot;Normalized log2 counts DIFF noRAPA&quot;)</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA-1.png" width="7500" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>diff_KO_genes = hits</code></pre>
-</div>
-</div>
-<div id="go-term-analysis" class="section level2">
-<h2>GO-term analysis</h2>
-<pre class="r"><code>gene_univers = rownames(ddsMat)
-
-Genes_of_interset = list(prolif_KO_genes, diff_KO_genes)
-
-gostres = getGOresults(Genes_of_interset, gene_univers)</code></pre>
-<pre><code>Lade nötiges Paket: gprofiler2</code></pre>
-<pre class="r"><code>toptab = gostres$result
-
-write.xlsx2(toptab, file = paste0(output, &quot;/GOres_Comparisons.xlsx&quot;), sheetName = &quot;GO_enrichment&quot;)
-
-
-for (module in names(Genes_of_interset)){
-  idx = toptab$query==module &amp; grepl(&quot;GO&quot;, toptab$source)
+  pvalrep=  get(paste0(&quot;restab_&quot;, targetline, &quot;_sgNTC_sg2.1_&quot;, targetdiff, &quot;_&quot; , targetrapa))$padj&lt;mypval &amp;
+    get(paste0(&quot;restab_&quot;, targetline, &quot;_sgNTC_sg2.2_&quot;, targetdiff, &quot;_&quot; , targetrapa))$padj&lt;mypval
+  
+  betarep = apply(cbind(get(paste0(&quot;restab_&quot;, targetline, &quot;_sgNTC_sg2.1_&quot;, targetdiff, &quot;_&quot; , targetrapa))$log2FoldChange,
+                        get(paste0(&quot;restab_&quot;, targetline, &quot;_sgNTC_sg2.2_&quot;, targetdiff, &quot;_&quot; , targetrapa))$log2FoldChange), 1,
+                  samesign)
+  
+  hits=geneids[betarep &amp; pvalrep]
+  
+  
+  SamplesSet=SampleInfo[samplesincl,]
+  
+  plotmatrix = log_2cpm[hits,rownames(SamplesSet)]
+  
+  rownames(SamplesSet)=SamplesSet$label_rep
+  
+  colnames(plotmatrix)=SamplesSet$label_rep
+  rownames(plotmatrix)=rowData(ddsMat)[hits,&quot;hgnc&quot;]     
+  
+  cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+  names(cellcol) = levels(SampleInfo$CellLine)
+  cellcol = cellcol[as.character(unique(SamplesSet$CellLine))]
+  
+  gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+  names(gRNAcol) = levels(SampleInfo$gRNA)
+  gRNAcol = gRNAcol[as.character(unique(SamplesSet$gRNA))]
+  
+  diffcol = brewer.pal(3,&quot;Set1&quot;)[1:nlevels(SampleInfo$DIFF)]
+  names(diffcol) = levels(SampleInfo$DIFF)
+  diffcol = diffcol[as.character(unique(SamplesSet$DIFF))]
+  
+  rapacol = brewer.pal(3,&quot;Set2&quot;)[1:nlevels(SampleInfo$RAPA)]
+  names(rapacol) = levels(SampleInfo$RAPA)
+  rapacol = rapacol[as.character(unique(SamplesSet$RAPA))]
+  
+  ann_colors = list(
+    DIFF = diffcol, 
+    RAPA = rapacol,
+    gRNA = gRNAcol,
+    CellLine=cellcol)
+  
+  collabels = SamplesSet[,c(&quot;CellLine&quot;,&quot;DIFF&quot;,&quot;RAPA&quot;, &quot;gRNA&quot;)] %&gt;%  
+    mutate_all(as.character) %&gt;% as.data.frame()
+  
+  rownames(collabels)=SamplesSet$label_rep
+  
+  idx=order(SamplesSet$gRNA)
+  
+  
+  pheatmap(plotmatrix[,idx],
+           border_color = NA, 
+           annotation_col = collabels[idx,],
+           annotation_colors = ann_colors,
+           clustering_method = &quot;ward.D2&quot;,
+           cluster_cols = F,
+           col = colors, 
+           scale = &quot;row&quot;,
+           main = &quot;Normalized log2 counts PROLIF noRAPA&quot;)
+  
+  
+  gene_univers = rownames(ddsMat)
+  
+  gostres = getGOresults(hits, gene_univers)
+  
+  toptab = gostres$result
+  
+  
+  write.xlsx2(toptab, file = paste0(output, &quot;/GOres_&quot;,targetline,targetdiff,targetrapa,&quot;.xlsx&quot;), sheetName = &quot;GO_enrichment&quot;)
+  
+  idx = grepl(&quot;GO|KEGG&quot;, toptab$source)
+  titlename = paste(targetline,targetdiff,targetrapa)
   if(!any(idx)){
     p = ggplot() + annotate(&quot;text&quot;, x = 4, y = 25, size=4, 
                             label = &quot;no significant GO term&quot;) + 
-      ggtitle(module)+theme_void()+
+      ggtitle(titlename)+theme_void()+
       theme(plot.title = element_text(hjust = 0.5))
   } else {
-    p=GOplot(toptab[idx, ], 10, Title =module)
+    p=GOplot(toptab[idx, ], 10, Title = titlename)
   }
   print(p)
-}</code></pre>
+}
+
+
+
+geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
+</div>
+<div id="ko-effect-in-nodiff-norapa" class="section level2">
+<h2>KO effect in noDIFF noRAPA</h2>
+<div id="d62" class="section level3">
+<h3>D62</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
+<pre><code>Lade nötiges Paket: gprofiler2</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /> ### D244</p>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ren" class="section level3">
+<h3>ReN</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="ko-effect-in-diff-norapa" class="section level2">
+<h2>KO effect in DIFF noRAPA</h2>
+<div id="d62-1" class="section level3">
+<h3>D62</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+<div id="d244" class="section level3">
+<h3>D244</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ren-1" class="section level3">
+<h3>ReN</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="ko-effect-in-nodiff-rapa" class="section level2">
+<h2>KO effect in noDIFF RAPA</h2>
+<div id="d62-2" class="section level3">
+<h3>D62</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /> ### D244</p>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ren-2" class="section level3">
+<h3>ReN</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="ko-effect-in-diff-rapa" class="section level2">
+<h2>KO effect in DIFF RAPA</h2>
+<div id="d62-3" class="section level3">
+<h3>D62</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+<div id="d244-1" class="section level3">
+<h3>D244</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ren-3" class="section level3">
+<h3>ReN</h3>
+<pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -829,26 +818,28 @@ loaded via a namespace (and not attached):
  [58] farver_2.1.0           rJava_0.9-13           pkgconfig_2.0.3       
  [61] XML_3.99-0.5           nnet_7.3-15            sass_0.3.1            
  [64] dbplyr_2.1.0           locfit_1.5-9.4         utf8_1.1.4            
- [67] tidyselect_1.1.0       rlang_0.4.10           later_1.1.0.1         
- [70] AnnotationDbi_1.52.0   munsell_0.5.0          cellranger_1.1.0      
- [73] tools_4.0.4            cachem_1.0.4           cli_2.3.1             
- [76] generics_0.1.0         RSQLite_2.2.4          broom_0.7.5           
- [79] evaluate_0.14          fastmap_1.1.0          yaml_2.2.1            
- [82] bit64_4.0.5            fs_1.5.0               zip_2.1.1             
- [85] xml2_1.3.2             compiler_4.0.4         rstudioapi_0.13       
- [88] plotly_4.9.3           png_0.1-7              reprex_1.0.0          
- [91] geneplotter_1.68.0     bslib_0.2.4            stringi_1.5.3         
- [94] HardyWeinberg_1.7.1    highr_0.8              ps_1.6.0              
- [97] gdtools_0.2.3          lattice_0.20-41        Matrix_1.3-2          
-[100] vctrs_0.3.6            pillar_1.5.1           lifecycle_1.0.0       
-[103] jquerylib_0.1.3        data.table_1.14.0      bitops_1.0-6          
-[106] flextable_0.6.4        httpuv_1.5.5           R6_2.5.0              
-[109] latticeExtra_0.6-29    promises_1.2.0.1       gridExtra_2.3         
-[112] writexl_1.3.1          codetools_0.2-18       assertthat_0.2.1      
-[115] xlsxjars_0.6.1         chron_2.3-56           rprojroot_2.0.2       
-[118] withr_2.4.1            GenomeInfoDbData_1.2.4 hms_1.0.0             
-[121] rpart_4.1-15           grid_4.0.4             rmarkdown_2.7         
-[124] git2r_0.28.0           lubridate_1.7.10       base64enc_0.1-3       </code></pre>
+ [67] labeling_0.4.2         tidyselect_1.1.0       rlang_0.4.10          
+ [70] later_1.1.0.1          AnnotationDbi_1.52.0   munsell_0.5.0         
+ [73] cellranger_1.1.0       tools_4.0.4            cachem_1.0.4          
+ [76] cli_2.3.1              generics_0.1.0         RSQLite_2.2.4         
+ [79] broom_0.7.5            evaluate_0.14          fastmap_1.1.0         
+ [82] yaml_2.2.1             bit64_4.0.5            fs_1.5.0              
+ [85] zip_2.1.1              xml2_1.3.2             compiler_4.0.4        
+ [88] rstudioapi_0.13        plotly_4.9.3           png_0.1-7             
+ [91] reprex_1.0.0           geneplotter_1.68.0     bslib_0.2.4           
+ [94] stringi_1.5.3          HardyWeinberg_1.7.1    highr_0.8             
+ [97] ps_1.6.0               gdtools_0.2.3          lattice_0.20-41       
+[100] Matrix_1.3-2           vctrs_0.3.6            pillar_1.5.1          
+[103] lifecycle_1.0.0        jquerylib_0.1.3        data.table_1.14.0     
+[106] bitops_1.0-6           flextable_0.6.4        httpuv_1.5.5          
+[109] R6_2.5.0               latticeExtra_0.6-29    promises_1.2.0.1      
+[112] gridExtra_2.3          writexl_1.3.1          codetools_0.2-18      
+[115] assertthat_0.2.1       xlsxjars_0.6.1         chron_2.3-56          
+[118] rprojroot_2.0.2        withr_2.4.1            GenomeInfoDbData_1.2.4
+[121] hms_1.0.0              rpart_4.1-15           grid_4.0.4            
+[124] rmarkdown_2.7          git2r_0.28.0           lubridate_1.7.10      
+[127] base64enc_0.1-3       </code></pre>
+</div>
 </div>
 </div>
 </div>
