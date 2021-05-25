@@ -376,7 +376,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-23
+<strong>Last updated:</strong> 2021-05-25
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree20007f10d693c68e15467f9eab453334bb3c1ed0targetblank20007f1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/20007f10d693c68e15467f9eab453334bb3c1ed0" target="_blank">20007f1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7579c80d11f52903b2de4c178936c2f625ceb825targetblank7579c80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7579c80d11f52903b2de4c178936c2f625ceb825" target="_blank">7579c80</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree20007f10d693c68e15467f9eab453334bb3c1ed0targetblank20007f1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7579c80d11f52903b2de4c178936c2f625ceb825targetblank7579c80a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/20007f10d693c68e15467f9eab453334bb3c1ed0" target="_blank">20007f1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7579c80d11f52903b2de4c178936c2f625ceb825" target="_blank">7579c80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -498,7 +498,9 @@ Untracked files:
 
 Unstaged changes:
     Deleted:    Wrappter.sh
+    Modified:   analysis/MDSplots/mdsplots.RData
     Modified:   analysis/MDSplots/rsconnect/shinyapps.io/molgenlab/mdsplots.dcf
+    Modified:   data/Sample_info_CePTER_RNASeq.csv
     Modified:   output/GOresWGCNA.xlsx
     Modified:   output/dds_matrix.RData
     Modified:   output/gostres.pdf
@@ -530,83 +532,98 @@ SampleInfo = SampleInfo %&gt;% dplyr::arrange(CellLine, desc(gRNA), desc(DIFF), 
 # image(SampleInfo %&gt;% select( CellLine, gRNA, DIFF, RAPA) %&gt;% mutate_all(as.numeric) %&gt;% as.matrix)
 
 GOIsEntrez=c(DEPDC5=&quot;9681&quot;,
-  C_MYC=&quot;4609&quot;,
-  P53=&quot;7157&quot;,
-  PIK3CA=&quot;5290&quot;,
-  REDD1=&quot;54541&quot;,
-  BNIP3=&quot;664&quot;,
-  HRAS =&quot;3265&quot;,
-  KRAS=&quot;3845&quot;,
-  NRAS=&quot;4893&quot;,
-  AKT=&quot;207&quot;,
-  TSC1=&quot;7248&quot;,
-  TSC2=&quot;7249&quot;,
-  MTOR=&quot;2475&quot;,
-  RPS6=&quot;6194&quot;,
-  RPTOR=&quot;57521&quot;,
-  RAG_A=&quot;10670&quot;,
-  RAG_B=&quot;10325&quot;,
-  RAG_C=&quot;64121&quot;,
-  RAG_D=&quot;58528&quot;,
-  DEPTOR=&quot;64798&quot;,
-  RHEB=&quot;6009&quot;,
-  MAPK=&quot;5594&quot;,
-  NPRL2=&quot;10641&quot;,
-  NPRL3=&quot;8131&quot;,
-  CASTOR1=&quot;652968&quot;,
-  CASTOR2=&quot;729438&quot;,
-  CASTOR3=&quot;352954&quot;,
-  SESTRIN_1=&quot;27244&quot;,
-  SESTRIN_2=&quot;83667&quot;,
-  SESTRIN_3=&quot;143686&quot;,
-  NCAM1=&quot;4684&quot;,
-  EGF=&quot;1950&quot;,
-  EGFR=&quot;1956&quot;,
-  FGFR1=&quot;2260&quot;,
-  FGFR2=&quot;2263&quot;,
-  FGFR3=&quot;2261&quot;,
-  FGFR4=&quot;2264&quot;,
-  FGF1=&quot;2246&quot;,
-  FGF2=&quot;2247&quot;,
-  TRKC=&quot;4916&quot;,
-  NT3=&quot;4908&quot;,
-  TRKB=&quot;4915&quot;,
-  NGFR=&quot;4804&quot;,
-  PRKACA=&quot;5566&quot;,
-  PRKACB=&quot;5567&quot;,
-  PRKAR1A=&quot;5573&quot;,
-  PRKAR2B=&quot;5577&quot;,
-  PRKCA=&quot;5578&quot;,
-  OCT4 =&quot;5460&quot;,
-  NANOG=&quot;79923&quot;,
-  MSI1=&quot;4440&quot;,
-  SOX1=&quot;6656&quot;,
-  MASH1_ASCL1=&quot;429&quot;,
-  HES5=&quot;388585&quot;,
-  PAX6=&quot;5080&quot;,
-  SOX2=&quot;6657&quot;,
-  NESTIN=&quot;10763&quot;,
-  GFAP=&quot;2670&quot;,
-  S100B=&quot;6285&quot;,
-  AQP4=&quot;361&quot;,
-  SOX9=&quot;6662&quot;,
-  CX3CR1=&quot;1524&quot;,
-  OLIG2=&quot;10215&quot;,
-  GLAST_SLC1A3=&quot;6507&quot;,
-  GLUL=&quot;2752&quot;,
-  DCX=&quot;1641&quot;,
-  MAP2=&quot;4133&quot;,
-  TUBB3=&quot;10381&quot;,
-  NEUN=&quot;146713&quot;,
-  PSD95=&quot;1742&quot;,
-  HOMER1=&quot;9456&quot;,
-  TH=&quot;7054&quot;,
-  SYNAPTOPHYSIN=&quot;6855&quot;,
-  GAP_43=&quot;2596&quot;,
-  BASSOON=&quot;8927&quot;,
-  STXBP1=&quot;6812&quot;,
-  STX1A=&quot;6804&quot;)
-
+             C_MYC=&quot;4609&quot;,
+             P53=&quot;7157&quot;,
+             PIK3CA=&quot;5290&quot;,
+             REDD1=&quot;54541&quot;,
+             BNIP3=&quot;664&quot;,
+             HRAS=&quot;3265&quot;,
+             KRAS=&quot;3845&quot;,
+             NRAS=&quot;4893&quot;,
+             AKT=&quot;207&quot;,
+             TSC1=&quot;7248&quot;,
+             TSC2=&quot;7249&quot;,
+             MTOR=&quot;2475&quot;,
+             RPS6=&quot;6194&quot;,
+             RPTOR=&quot;57521&quot;,
+             RAG_A=&quot;10670&quot;,
+             RAG_B=&quot;10325&quot;,
+             RAG_C=&quot;64121&quot;,
+             RAG_D=&quot;58528&quot;,
+             DEPTOR=&quot;64798&quot;,
+             RHEB=&quot;6009&quot;,
+             MAPK=&quot;5594&quot;,
+             NPRL2=&quot;10641&quot;,
+             NPRL3=&quot;8131&quot;,
+             CASTOR1=&quot;652968&quot;,
+             CASTOR2=&quot;729438&quot;,
+             CASTOR3=&quot;352954&quot;,
+             SESTRIN_1=&quot;27244&quot;,
+             SESTRIN_2=&quot;83667&quot;,
+             SESTRIN_3=&quot;143686&quot;,
+             NCAM1=&quot;4684&quot;,
+             EGF=&quot;1950&quot;,
+             EGFR=&quot;1956&quot;,
+             FGFR1=&quot;2260&quot;,
+             FGFR2=&quot;2263&quot;,
+             FGFR3=&quot;2261&quot;,
+             FGFR4=&quot;2264&quot;,
+             FGF1=&quot;2246&quot;,
+             FGF2=&quot;2247&quot;,
+             TRKC=&quot;4916&quot;,
+             NT3=&quot;4908&quot;,
+             TRKB=&quot;4915&quot;,
+             NGFR=&quot;4804&quot;,
+             PRKACA=&quot;5566&quot;,
+             PRKACB=&quot;5567&quot;,
+             PRKAR1A=&quot;5573&quot;,
+             PRKAR2B=&quot;5577&quot;,
+             PRKCA=&quot;5578&quot;,
+             OCT4=&quot;5460&quot;,
+             NANOG=&quot;79923&quot;,
+             MSI1=&quot;4440&quot;,
+             SOX1=&quot;6656&quot;,
+             TBR1=  &quot;10716&quot;,
+             TBR2=  &quot;8320&quot;,
+             MASH1_ASCL1=&quot;429&quot;,
+             HES5=&quot;388585&quot;,
+             PAX6=&quot;5080&quot;,
+             SOX2=&quot;6657&quot;,
+             NESTIN=&quot;10763&quot;,
+             GFAP=&quot;2670&quot;,
+             S100B=&quot;6285&quot;,
+             AQP4=&quot;361&quot;,
+             SOX9=&quot;6662&quot;,
+             CX3CR1=&quot;1524&quot;,
+             OLIG2=&quot;10215&quot;,
+             GRIA2=&quot;2891&quot;,
+             GRIN1  =&quot;2902&quot;,
+             GRM1=&quot;2911&quot;,
+             GRIN2A=&quot;2903&quot;,
+             VGLUT1=&quot;57030&quot;,
+             GLAST_SLC1A3=&quot;6507&quot;,
+             GLUL=&quot;2752&quot;,
+             GAD1=&quot;2571&quot;,   
+             GAT1=  &quot;6529&quot;, 
+             ENO2=  &quot;2026&quot;, 
+             MAPT=  &quot;4137&quot;, 
+             DCX=&quot;1641&quot;,
+             MAP2=&quot;4133&quot;,
+             TUBB3=&quot;10381&quot;,
+             NEUN=&quot;146713&quot;,
+             PSD95=&quot;1742&quot;,
+             HOMER1=&quot;9456&quot;,
+             ACHE=  &quot;43&quot;,
+             HPRT1= &quot;3251&quot;,
+             NET1=  &quot;10276&quot;,
+             POU3F2=    &quot;5454&quot;,
+             TH=&quot;7054&quot;,
+             SYNAPTOPHYSIN=&quot;6855&quot;,
+             GAP_43=&quot;2596&quot;,
+             BASSOON=&quot;8927&quot;,
+             STXBP1=&quot;6812&quot;,
+             STX1A=&quot;6804&quot;,
+             SNCA=&quot;6622&quot;)
 
 
 CellID = c(&quot;ReN&quot;)
@@ -625,7 +642,7 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
   rownames(dataset) = names(GOIsEntrez)
   
   #colors for plotting heatmap
-  colors &lt;- colorRampPalette(brewer.pal(9, &quot;Spectral&quot;))(255)
+  colors &lt;- rev(colorRampPalette(brewer.pal(9, &quot;Spectral&quot;))(255))
   
   
   gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]

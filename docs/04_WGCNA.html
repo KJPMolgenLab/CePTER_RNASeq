@@ -376,7 +376,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-23
+<strong>Last updated:</strong> 2021-05-25
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree20007f10d693c68e15467f9eab453334bb3c1ed0targetblank20007f1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/20007f10d693c68e15467f9eab453334bb3c1ed0" target="_blank">20007f1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7579c80d11f52903b2de4c178936c2f625ceb825targetblank7579c80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7579c80d11f52903b2de4c178936c2f625ceb825" target="_blank">7579c80</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree20007f10d693c68e15467f9eab453334bb3c1ed0targetblank20007f1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree7579c80d11f52903b2de4c178936c2f625ceb825targetblank7579c80a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/20007f10d693c68e15467f9eab453334bb3c1ed0" target="_blank">20007f1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/7579c80d11f52903b2de4c178936c2f625ceb825" target="_blank">7579c80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -498,7 +498,9 @@ Untracked files:
 
 Unstaged changes:
     Deleted:    Wrappter.sh
+    Modified:   analysis/MDSplots/mdsplots.RData
     Modified:   analysis/MDSplots/rsconnect/shinyapps.io/molgenlab/mdsplots.dcf
+    Modified:   data/Sample_info_CePTER_RNASeq.csv
     Modified:   output/GOresWGCNA.xlsx
     Modified:   output/dds_matrix.RData
     Modified:   output/gostres.pdf
@@ -549,22 +551,22 @@ sft = pickSoftThreshold(WGCNA_matrix, powerVector = powers, verbose = 5)</code><
    ..working on genes 6605 through 9906 of 13548
    ..working on genes 9907 through 13208 of 13548
    ..working on genes 13209 through 13548 of 13548
-   Power SFT.R.sq   slope truncated.R.sq  mean.k. median.k. max.k.
-1      1 0.000278 -0.0362          0.913 2560.000  2.52e+03 4570.0
-2      2 0.468000 -1.2400          0.907  785.000  7.09e+02 2220.0
-3      3 0.687000 -1.5600          0.946  311.000  2.44e+02 1270.0
-4      4 0.771000 -1.6900          0.965  145.000  9.52e+01  803.0
-5      5 0.809000 -1.7300          0.974   75.400  4.05e+01  538.0
-6      6 0.826000 -1.7400          0.979   42.700  1.84e+01  377.0
-7      7 0.833000 -1.7500          0.978   25.800  8.73e+00  274.0
-8      8 0.851000 -1.7400          0.985   16.400  4.36e+00  204.0
-9      9 0.858000 -1.7200          0.986   10.800  2.23e+00  155.0
-10    10 0.870000 -1.7100          0.990    7.390  1.16e+00  120.0
-11    12 0.872000 -1.6900          0.982    3.740  3.46e-01   76.4
-12    14 0.874000 -1.6900          0.985    2.060  1.10e-01   51.9
-13    16 0.872000 -1.7000          0.986    1.210  3.77e-02   36.7
-14    18 0.877000 -1.6800          0.991    0.748  1.33e-02   26.8
-15    20 0.870000 -1.6800          0.984    0.483  4.80e-03   20.1</code></pre>
+   Power SFT.R.sq  slope truncated.R.sq  mean.k. median.k. max.k.
+1      1 0.000357 -0.041          0.912 2560.000  2.52e+03 4570.0
+2      2 0.468000 -1.240          0.908  784.000  7.09e+02 2220.0
+3      3 0.688000 -1.560          0.946  310.000  2.43e+02 1270.0
+4      4 0.772000 -1.690          0.965  144.000  9.51e+01  802.0
+5      5 0.810000 -1.730          0.975   75.300  4.03e+01  538.0
+6      6 0.827000 -1.750          0.979   42.600  1.83e+01  377.0
+7      7 0.834000 -1.750          0.978   25.700  8.71e+00  273.0
+8      8 0.849000 -1.750          0.984   16.300  4.34e+00  204.0
+9      9 0.859000 -1.730          0.989   10.800  2.22e+00  155.0
+10    10 0.869000 -1.710          0.989    7.350  1.16e+00  120.0
+11    12 0.873000 -1.700          0.982    3.710  3.44e-01   76.5
+12    14 0.876000 -1.700          0.990    2.040  1.10e-01   52.0
+13    16 0.874000 -1.700          0.987    1.200  3.75e-02   36.8
+14    18 0.878000 -1.690          0.992    0.741  1.32e-02   26.9
+15    20 0.854000 -1.710          0.983    0.479  4.77e-03   20.1</code></pre>
 <pre class="r"><code>par(mfrow = c(1,2))
 cex1 = 0.9;
 plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
@@ -632,23 +634,23 @@ dynamicColors = labels2colors(dynamicMods)
 table(dynamicColors)</code></pre>
 <pre><code>dynamicColors
           black            blue           brown            cyan       darkgreen 
-            493            1498             812             299             167 
+            526            1076             932             287             164 
        darkgrey     darkmagenta  darkolivegreen      darkorange         darkred 
-            152             103             107             140             177 
+            143              95              96             141             180 
   darkturquoise           green     greenyellow            grey          grey60 
-            153             755             352             212             246 
+            143             577             305             204             262 
           ivory       lightcyan      lightcyan1      lightgreen lightsteelblue1 
-             55             254              58             242              75 
+             50             272              61             255              68 
     lightyellow         magenta   mediumpurple3    midnightblue          orange 
-            221             362              79             286             146 
+            215             346              77             282             141 
      orangered4   paleturquoise            pink           plum1          purple 
-             79             116             473              81             354 
+             80             114             405              83             332 
             red       royalblue     saddlebrown          salmon         sienna3 
-            741             187             132             316              99 
+            542             208             127             291              94 
         skyblue        skyblue3       steelblue             tan       turquoise 
-            137              87             121             327            1717 
+            130              91             127             291            2802 
          violet           white          yellow     yellowgreen 
-            112             138             791              96 </code></pre>
+            102             134             605              92 </code></pre>
 <pre class="r"><code>plotDendroAndColors(geneTree, dynamicColors, &quot;Dynamic Tree Cut&quot;, 
                     dendroLabels = FALSE, hang = 0.03, 
                     addGuide = TRUE, 
@@ -787,7 +789,7 @@ for (module in names(Genes_of_interset)){
   }
   print(p)
 }</code></pre>
-<p><img src="figure/04_WGCNA.Rmd/goresplots-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-2.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-3.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-4.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-5.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-6.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-7.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-8.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-9.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-10.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-11.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-12.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-13.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-14.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-15.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-16.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-17.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-18.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-19.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-20.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-21.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-22.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-23.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-24.png" width="4500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/04_WGCNA.Rmd/goresplots-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-2.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-3.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-4.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-5.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-6.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-7.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-8.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-9.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-10.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-11.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-12.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-13.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-14.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-15.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-16.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-17.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-18.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-19.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-20.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-21.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-22.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-23.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-24.png" width="4500" style="display: block; margin: auto;" /><img src="figure/04_WGCNA.Rmd/goresplots-25.png" width="4500" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
