@@ -65,7 +65,6 @@ comparison <- function(dds_object, samples, target, randomeffect){
     fit<- eBayes(fitDupCor)
     topTable(fit,n=dim(fit)[1])
   }
-
 }
 
 
