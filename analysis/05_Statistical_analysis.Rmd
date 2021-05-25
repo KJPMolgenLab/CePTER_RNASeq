@@ -118,7 +118,7 @@ betarep = apply(cbind(restab_D62_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
 hits=geneids[betarep & pvalrep]
 
 
-colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
+colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
 
 cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
 names(cellcol) = levels(SampleInfo$CellLine)
@@ -192,7 +192,7 @@ betarep = apply(cbind(restab_D62_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
 hits=geneids[betarep & pvalrep]
 
 
-colors <- colorRampPalette(brewer.pal(9, "Spectral"))(255)
+colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
 
 cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
 names(cellcol) = levels(SampleInfo$CellLine)

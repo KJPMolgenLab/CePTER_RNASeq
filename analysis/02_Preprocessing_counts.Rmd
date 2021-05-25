@@ -8,7 +8,6 @@ output: html_document
 ```{r setup, include=FALSE, echo=FALSE}
 secret="C:/Users/andreas_chiocchetti/OneDrive/personal/fuchs_credentials.R"
 
-
 home = getwd()
 output= paste0(home, "/output/")
 
@@ -97,8 +96,11 @@ if(all(row.names(Countdata) %in% rowdescription$entrez_gene)){
 
 
 # load and parse sample information 
-SampleInfo=read.csv2(paste0(home,"/data/Sample_info_CePTER_RNASeq_alt.csv"), 
+SampleInfo=read.csv2(paste0(home,"/data/Sample_info_CePTER_RNASeq.csv"), 
                      row.names = 1)
+
+SampleInfo$Row=gsub("[0-9]*","",SampleInfo$Position)
+SampleInfo$Col=as.numeric(gsub("[A-Z]*","",SampleInfo$Position))
 
 # set factors and relevel
 SampleInfo$CellLine = as.factor(SampleInfo$CellLine)
