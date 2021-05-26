@@ -198,6 +198,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
 getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ```
+
 ### D244
 
 ```{r noDIFF_noRAPA_D244,  fig.height=20, fig.width=15}
