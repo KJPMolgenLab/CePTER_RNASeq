@@ -44,9 +44,11 @@ comparison <- function(dds_object, samples, target, randomeffect){
   require(limma)
 
   if(length(samples)==0){
+    print("Sample length is 0 all samples included")
     samples = colnames(dds_object)
   }
-  designform = as.formula(paste0("~",target))
+
+  designform = as.formula(paste0("~ 1+",target))
   dds_filt = dds_object[,samples]
   ## no random effect
   if(length(randomeffect)==0){
