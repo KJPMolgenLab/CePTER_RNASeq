@@ -376,7 +376,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-09-15
+<strong>Last updated:</strong> 2021-09-16
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreecfec37b0bfd888ff1883190214ce78795886f24dtargetblankcfec37ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/cfec37b0bfd888ff1883190214ce78795886f24d" target="_blank">cfec37b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree95651631c128753b4857f4a2e976e7ee76518ae0targetblank9565163a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/95651631c128753b4857f4a2e976e7ee76518ae0" target="_blank">9565163</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreecfec37b0bfd888ff1883190214ce78795886f24dtargetblankcfec37ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtree95651631c128753b4857f4a2e976e7ee76518ae0targetblank9565163a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/cfec37b0bfd888ff1883190214ce78795886f24d" target="_blank">cfec37b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/95651631c128753b4857f4a2e976e7ee76518ae0" target="_blank">9565163</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -485,7 +485,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/Countmatrix.RData
     Ignored:    oldcode/
     Ignored:    output/GOres_Comparisons.xlsx
@@ -497,6 +496,7 @@ Ignored files:
     Ignored:    output/GOres_D62DIFFnoRAPA.xlsx
     Ignored:    output/GOres_D62noDIFFRAPA.xlsx
     Ignored:    output/GOres_D62noDIFFnoRAPA.xlsx
+    Ignored:    output/GOres_DIFFRAPA.xlsx
     Ignored:    output/GOres_ReNDIFFRAPA.xlsx
     Ignored:    output/GOres_ReNDIFFnoRAPA.xlsx
     Ignored:    output/GOres_ReNnoDIFFRAPA.xlsx
@@ -518,17 +518,16 @@ Ignored files:
     Ignored:    output/Restab_Repl_All_DIFF_RAPA.xlsx
     Ignored:    output/Restab_Repl_All_noDIFF_noRAPA.xlsx
     Ignored:    output/WGCNA_adj_TOM.RData
-    Ignored:    output/~$Restab_D244_DIFF_noRAPA.xlsx
-    Ignored:    output/~$Restab_D62_DIFF_RAPA.xlsx
-    Ignored:    output/~$Restab_D62_DIFF_noRAPA.xlsx
-    Ignored:    output/~$Restab_D62_noDIFF_RAPA.xlsx
-    Ignored:    output/~$Restab_D62_noDIFF_noRAPA.xlsx
 
 Untracked files:
     Untracked:  Wrapper.sh
     Untracked:  data/HumanM1 singlecellseq/
     Untracked:  mattson/
     Untracked:  wflow_helper.R
+
+Unstaged changes:
+    Modified:   analysis/MDSplots/rsconnect/shinyapps.io/molgenlab/mdsplots.dcf
+    Modified:   output/GOresWGCNA.xlsx
 
 </code></pre>
 <p>
@@ -552,8 +551,8 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <div id="statistical-analysis" class="section level1">
 <h1>Statistical analysis</h1>
 </div>
-<div id="q1-which-genes-are-differentially-regualted-upon-ko-of-depdc5" class="section level1">
-<h1>Q1 Which genes are differentially regualted upon KO of DEPDC5</h1>
+<div id="which-genes-are-differentially-regualted-upon-ko-of-depdc5" class="section level1">
+<h1>Which genes are differentially regualted upon KO of DEPDC5</h1>
 <div id="modelling-the-ko-in-all-different-combinations" class="section level2">
 <h2>Modelling the KO in all different combinations</h2>
 <pre class="r"><code>if(reanalyze | !file.exists(paste0(home,&quot;/output/ResTabs_KO.RData&quot;))){
@@ -4943,8 +4942,9 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 49      51050     PI15 -1.0151690 2.950165e-02 -1.3134282 3.229200e-03</code></pre>
 <p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
 </div>
-<div id="replicated-across-cell-lines" class="section level3">
-<h3>Replicated across cell lines</h3>
+</div>
+<div id="replicated-across-cell-lines" class="section level2">
+<h2>Replicated across cell lines</h2>
 <pre class="r"><code>getlinmodoutput_all = function(targetdiff, 
                                targetrapa){
   
@@ -5138,8 +5138,8 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
   }
   print(p)
 }</code></pre>
-<div id="nodiff-norapa" class="section level4">
-<h4>noDiff noRapa</h4>
+<div id="nodiff-norapa" class="section level3">
+<h3>noDiff noRapa</h3>
 <pre class="r"><code>getlinmodoutput_all(targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
 <pre><code>  entrezgene genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
 1     151887  CCDC80       0.8069456  2.122272e-15       0.7595701
@@ -5152,8 +5152,8 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 2      0.8591791 1.299630e-04      0.7804877 1.030234e-16</code></pre>
 <p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-2.png" width="7500" style="display: block; margin: auto;" /></p>
 </div>
-<div id="nodiff-rapa" class="section level4">
-<h4>noDiff Rapa</h4>
+<div id="nodiff-rapa" class="section level3">
+<h3>noDiff Rapa</h3>
 <pre class="r"><code>try(getlinmodoutput_all(targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;))</code></pre>
 <pre><code> [1] entrezgene      genname         D244_log2FC_2.1 D244_pval_2.1  
  [5] D244_log2FC_2.2 D244_pval_2.2   D62_log2FC_2.1  D62_pval_2.1   
@@ -5163,8 +5163,8 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 Error in mapply(setCellValue, cells[seq_len(nrow(cells)), colIndex[ic]],  : 
   Eingaben mit Länge 0 können nicht mit Eingaben anderer Länge gemischt werden</code></pre>
 </div>
-<div id="diff-norapa" class="section level4">
-<h4>Diff noRapa</h4>
+<div id="diff-norapa" class="section level3">
+<h3>Diff noRapa</h3>
 <pre class="r"><code>try(getlinmodoutput_all(targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;))</code></pre>
 <pre><code> [1] entrezgene      genname         D244_log2FC_2.1 D244_pval_2.1  
  [5] D244_log2FC_2.2 D244_pval_2.2   D62_log2FC_2.1  D62_pval_2.1   
@@ -5174,8 +5174,8 @@ Error in mapply(setCellValue, cells[seq_len(nrow(cells)), colIndex[ic]],  :
 Error in mapply(setCellValue, cells[seq_len(nrow(cells)), colIndex[ic]],  : 
   Eingaben mit Länge 0 können nicht mit Eingaben anderer Länge gemischt werden</code></pre>
 </div>
-<div id="diff-rapa" class="section level4">
-<h4>Diff Rapa</h4>
+<div id="diff-rapa" class="section level3">
+<h3>Diff Rapa</h3>
 <pre class="r"><code>try(getlinmodoutput_all(targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;))</code></pre>
 <pre><code>  entrezgene genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
 1       7044  LEFTY2      -1.3192934  3.280549e-18      -2.3110081
@@ -5281,7 +5281,6 @@ loaded via a namespace (and not attached):
 [118] withr_2.4.1            GenomeInfoDbData_1.2.4 hms_1.0.0             
 [121] rpart_4.1-15           grid_4.0.4             rmarkdown_2.9.7       
 [124] git2r_0.28.0           lubridate_1.7.10       base64enc_0.1-3       </code></pre>
-</div>
 </div>
 </div>
 </div>
