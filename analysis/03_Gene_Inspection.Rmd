@@ -8,7 +8,6 @@ output: html_document
 
 ```{r}
 home = getwd()
-
 ```
 
 # Differentiation mRNA Markers 
