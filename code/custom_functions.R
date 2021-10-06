@@ -7,6 +7,7 @@ require("pheatmap")
 require("DESeq2")
 
 
+
 Dark8 = brewer.pal(8, "Dark2")
 Dark8_50 = paste0(brewer.pal(8, "Dark2"), "7D")
 jetcolors = colorRampPalette(c("darkblue", "skyblue", "green",
@@ -175,4 +176,36 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
            main=paste(CellID, collapse=" "))
 
 }
+
+multiORplot = function(datatoplot=FALSE, Pval = "Pval", Padj = "Padj", SE = "SE", beta="beta", pheno = "pheno"){
+  starpval=convertpvaltostars(datatoplot[[Pval]])
+  starpval[datatoplot[[Padj]]<0.05]="adj.p**"
+  starpval[is.na(datatoplot[[beta]])]="n.a."
+  CIUpper = datatoplot[[beta]] +1.96*datatoplot[[SE]]
+  CILower = datatoplot[[beta]] -1.96*datatoplot[[SE]]
+  xlim=range(c(CIUpper, CILower), na.rm=T)*1.2
+  par(mar=c(5,12,5,3))
+  betas = datatoplot[[beta]]
+
+  plot(x=betas, y=1:length(betas),
+       type="n", panel.first = grid(ny=NA),
+       yaxt = "n", ylab="",
+       xlim=xlim,
+       xlab=expression(paste('log(OR)'%+-%95,"%CI")),
+       main=paste(pheno))
+  abline(v=0,col="black", lty=3)
+  axis(2, at=1:length(betas),
+       labels=base::rev(rownames(datatoplot)),
+       las=1)
+  arrows(x0=CILower, x1=CIUpper, y0=length(betas):1, y1=length(betas):1, col=rainbow(length(betas)), length=0, lwd=2,code = 3)
+  points(y=length(betas):1, x=betas, pch=18, col="black")
+  betas[is.na(betas)]=0
+  text(y=(length(betas):1)+0.5, x=betas, labels=starpval, cex=0.7)
+}
+
+
+convertpvaltostars=function(x){
+  sapply(x, function(x){ifelse(x<=0.01, "**", ifelse(x<=0.05, "*", ""))})
+}
+
 

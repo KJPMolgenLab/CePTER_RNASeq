@@ -12,7 +12,7 @@ home = getwd()
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=T
+reanalyze=F
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))
@@ -104,6 +104,15 @@ if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
 samesign <- function(x) {abs(sum(sign(x)))==length(x)}
 mypval=0.05
 colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
+
+
+genelists=lapply(list.files(paste0(home,"/data/genelists_to_test"), full.names = T), 
+                 function(x){read.table(x, header=T)})
+
+names(genelists) = gsub(".txt", "", list.files(paste0(home,"/data/genelists_to_test")))
+
+
+geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
 
 
 getlinmodoutput = function(targetline, 
@@ -211,8 +220,7 @@ getlinmodoutput = function(targetline,
            cluster_cols = F,
            col = colors, 
            scale = "row",
-           main = "Normalized log2 counts PROLIF noRAPA")
-  
+           main = paste("Normalized log2 counts", targetline, targetdiff, targetrapa))
   
   gene_univers = rownames(ddsMat)
   
@@ -234,18 +242,37 @@ getlinmodoutput = function(targetline,
     p=GOplot(toptab[idx, ], 10, Title = titlename)
   }
   print(p)
+  
+  ## enrichment test for genelist 
+  Resall=data.frame()
+  
+  for (gl in names(genelists)){
+    tmp=table(signif=geneids %in% hits, targetgene=geneids %in% genelists[[gl]]$ENTREZ_ID)
+    resfish=fisher.test(tmp)
+    res = c(resfish$estimate, unlist(resfish$conf.int), resfish$p.value)
+    Resall = rbind(Resall, res)
+  }
+  colnames(Resall)=c("OR", "CI95L", "CI95U", "P")
+  rownames(Resall)=names(genelists)
+  Resall$Beta = log(Resall$OR)
+  Resall$SE = (log(Resall$OR)-log(Resall$CI95L))/1.96
+  Resall$Padj=p.adjust(Resall$P, method = "bonferroni")
+  
+  print(Resall)
+  
+  multiORplot(Resall, Pval = "P", Padj = "Padj", beta="Beta",SE = "SE", 
+              pheno=paste(targetline, targetdiff, targetrapa))
 }
 
-
-
 geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
+
 
 ```
 
 ## KO effect in noDIFF noRAPA
 ### D62
 
-```{r noDIFF_noRAPA_D62,  fig.height=25, fig.width=15}
+```{r noDIFF_noRAPA_D62,  fig.height=20, fig.width=15}
 
 getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
@@ -419,53 +446,53 @@ getlinmodoutput_all = function(targetdiff,
     entrezgene = geneids[idx], 
     genname=rowData(ddsMat)[hits,"hgnc"],
     D244_log2FC_2.1 = get(paste0("restab_", 
-                            "D244_sgNTC_sg2.1_", 
-                            targetdiff, "_" , 
-                            targetrapa))$log2FoldChange[idx], 
+                                 "D244_sgNTC_sg2.1_", 
+                                 targetdiff, "_" , 
+                                 targetrapa))$log2FoldChange[idx], 
     D244_pval_2.1 = get(paste0("restab_", 
-                          "D244_sgNTC_sg2.1_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx], 
+                               "D244_sgNTC_sg2.1_", 
+                               targetdiff, "_" , 
+                               targetrapa))$padj[idx], 
     D244_log2FC_2.2 = get(paste0("restab_", 
-                            "D244_sgNTC_sg2.2_", 
-                            targetdiff, "_" , 
-                            targetrapa))$log2FoldChange[idx], 
+                                 "D244_sgNTC_sg2.2_", 
+                                 targetdiff, "_" , 
+                                 targetrapa))$log2FoldChange[idx], 
     D244_pval_2.2 = get(paste0("restab_", 
-                          "D244_sgNTC_sg2.2_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx], 
+                               "D244_sgNTC_sg2.2_", 
+                               targetdiff, "_" , 
+                               targetrapa))$padj[idx], 
     D62_log2FC_2.1 = get(paste0("restab_", 
-                            "D62_sgNTC_sg2.1_", 
-                            targetdiff, "_" , 
-                            targetrapa))$log2FoldChange[idx], 
+                                "D62_sgNTC_sg2.1_", 
+                                targetdiff, "_" , 
+                                targetrapa))$log2FoldChange[idx], 
     D62_pval_2.1 = get(paste0("restab_", 
-                          "D62_sgNTC_sg2.1_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx], 
+                              "D62_sgNTC_sg2.1_", 
+                              targetdiff, "_" , 
+                              targetrapa))$padj[idx], 
     D62_log2FC_2.2 = get(paste0("restab_", 
-                            "D62_sgNTC_sg2.2_", 
-                            targetdiff, "_" , 
-                            targetrapa))$log2FoldChange[idx], 
+                                "D62_sgNTC_sg2.2_", 
+                                targetdiff, "_" , 
+                                targetrapa))$log2FoldChange[idx], 
     D62_pval_2.2 = get(paste0("restab_", 
-                          "D62_sgNTC_sg2.2_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx], 
+                              "D62_sgNTC_sg2.2_", 
+                              targetdiff, "_" , 
+                              targetrapa))$padj[idx], 
     ReN_log2FC_2.1 = get(paste0("restab_", 
-                            "ReN_sgNTC_sg2.1_", 
-                            targetdiff, "_" , 
-                            targetrapa))$log2FoldChange[idx], 
+                                "ReN_sgNTC_sg2.1_", 
+                                targetdiff, "_" , 
+                                targetrapa))$log2FoldChange[idx], 
     ReN_pval_2.1 = get(paste0("restab_", 
-                          "ReN_sgNTC_sg2.1_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx], 
+                              "ReN_sgNTC_sg2.1_", 
+                              targetdiff, "_" , 
+                              targetrapa))$padj[idx], 
     ReN_log2FC_2.2 = get(paste0("restab_", 
-                            "ReN_sgNTC_sg2.2_", 
-                            targetdiff, "_" , 
-                            targetrapa))$log2FoldChange[idx], 
+                                "ReN_sgNTC_sg2.2_", 
+                                targetdiff, "_" , 
+                                targetrapa))$log2FoldChange[idx], 
     ReN_pval_2.2 = get(paste0("restab_", 
-                          "ReN_sgNTC_sg2.2_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx])
+                              "ReN_sgNTC_sg2.2_", 
+                              targetdiff, "_" , 
+                              targetrapa))$padj[idx])
   
   print(restab)
   write.xlsx(restab, file=paste0(output, "/Restab_", 
@@ -542,6 +569,27 @@ getlinmodoutput_all = function(targetdiff,
     p=GOplot(toptab[idx, ], 10, Title = titlename)
   }
   print(p)
+  
+  if(length(hits)>=1){
+    Resall=data.frame()
+    
+    for (gl in names(genelists)){
+      tmp=table(signif=geneids %in% hits, targetgene=geneids %in% genelists[[gl]]$ENTREZ_ID)
+      resfish=fisher.test(tmp)
+      res = c(resfish$estimate, unlist(resfish$conf.int), resfish$p.value)
+      Resall = rbind(Resall, res)
+    }
+    colnames(Resall)=c("OR", "CI95L", "CI95U", "P")
+    rownames(Resall)=names(genelists)
+    Resall$Beta = log(Resall$OR)
+    Resall$SE = (log(Resall$OR)-log(Resall$CI95L))/1.96
+    Resall$Padj=p.adjust(Resall$P, method = "bonferroni")
+    
+    print(Resall)
+    
+    multiORplot(Resall, Pval = "P", Padj = "Padj", beta="Beta",SE = "SE", 
+                pheno=paste(targetline, targetdiff, targetrapa))
+  }
 }
 
 ```
