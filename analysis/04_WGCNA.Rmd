@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-reanalyze=T
+reanalyze=F
 home = getwd()
 output= paste0(home, "/output/")
 

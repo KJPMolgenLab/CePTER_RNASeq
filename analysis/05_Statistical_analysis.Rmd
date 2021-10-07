@@ -588,7 +588,7 @@ getlinmodoutput_all = function(targetdiff,
     print(Resall)
     
     multiORplot(Resall, Pval = "P", Padj = "Padj", beta="Beta",SE = "SE", 
-                pheno=paste(targetline, targetdiff, targetrapa))
+                pheno=paste(targetdiff, targetrapa))
   }
 }
 
