@@ -637,12 +637,12 @@ try(getlinmodoutput_all(targetdiff = "DIFF",targetrapa = "RAPA"))
 
 ```{r}
 getlinmodoutput_D62D224 = function(targetdiff, 
-                               targetrapa){
+                               targetrapa, targetline){
   
   
   samplesincl = SampleInfo$DIFF==targetdiff & 
     SampleInfo$RAPA==targetrapa &
-    SampleInfo$CellLine %in% c("D62","D244")
+    SampleInfo$CellLine %in% targetline
   
   
   pvalrep=  get(paste0("restab_", 
@@ -827,7 +827,9 @@ getlinmodoutput_D62D224 = function(targetdiff,
 
 ```{r noDIFF_noRAPA_D62_D224,  fig.height=20, fig.width=15}
 
-try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "noRAPA"))
+try(getlinmodoutput_D62D224(targetdiff = "noDIFF",
+                            targetrapa = "noRAPA", 
+                            targetline=c("D62", "D224")))
 
 ```
 
@@ -836,7 +838,8 @@ try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "noRAPA"))
 
 ```{r noDIFF_RAPA_D62_D224,  fig.height=20, fig.width=15}
 
-try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "RAPA"))
+try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "RAPA", 
+                            targetline=c("D62", "D224")))
 
 ```
 
@@ -845,7 +848,8 @@ try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "RAPA"))
 
 ```{r DIFF_noRAPA_D62_D224,  fig.height=20, fig.width=15}
 
-try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "noRAPA"))
+try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "noRAPA", 
+                            targetline=c("D62", "D224")))
 
 ```
 
@@ -854,6 +858,7 @@ try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "noRAPA"))
 
 ```{r DIFF_RAPA_D62_D224,  fig.height=20, fig.width=15}
 
-try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "RAPA"))
+try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "RAPA",
+                            targetline=c("D62", "D224")))
 
 ```
