@@ -154,7 +154,7 @@ getlinmodoutput = function(targetline,
                             targetline, "_sgNTC_sg2.1_", 
                             targetdiff, "_" , 
                             targetrapa))$log2FoldChange[idx], 
-    pval_2.1 = get(paste0("restab_", 
+    fdr_2.1 = get(paste0("restab_", 
                           targetline, "_sgNTC_sg2.1_", 
                           targetdiff, "_" , 
                           targetrapa))$padj[idx], 
@@ -162,7 +162,7 @@ getlinmodoutput = function(targetline,
                             targetline, "_sgNTC_sg2.2_", 
                             targetdiff, "_" , 
                             targetrapa))$log2FoldChange[idx], 
-    pval_2.2 = get(paste0("restab_", 
+    fdr_2.2 = get(paste0("restab_", 
                           targetline, "_sgNTC_sg2.2_", 
                           targetdiff, "_" , 
                           targetrapa))$padj[idx])
@@ -214,12 +214,13 @@ getlinmodoutput = function(targetline,
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],
+           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = "ward.D2",
            cluster_cols = F,
            col = colors, 
            scale = "row",
+           
            main = paste("Normalized log2 counts", targetline, targetdiff, targetrapa))
   
   gene_univers = rownames(ddsMat)
@@ -272,7 +273,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
 ## KO effect in noDIFF noRAPA
 ### D62
 
-```{r noDIFF_noRAPA_D62,  fig.height=20, fig.width=15}
+```{r noDIFF_noRAPA_D62}
 
 getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
@@ -280,7 +281,7 @@ getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ### D244
 
-```{r noDIFF_noRAPA_D244,  fig.height=20, fig.width=15}
+```{r noDIFF_noRAPA_D244}
 
 getlinmodoutput(targetline = "D244",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
@@ -288,7 +289,7 @@ getlinmodoutput(targetline = "D244",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ### ReN
 
-```{r noDIFF_noRAPA_ReN,  fig.height=20, fig.width=15}
+```{r noDIFF_noRAPA_ReN}
 
 getlinmodoutput(targetline = "ReN",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
@@ -299,7 +300,7 @@ getlinmodoutput(targetline = "ReN",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ### D62
 
-```{r DIFF_noRAPA_D62,  fig.height=20, fig.width=15}
+```{r DIFF_noRAPA_D62}
 
 getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
 
@@ -307,7 +308,7 @@ getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
 
 ### D244
 
-```{r DIFF_noRAPA_D244,  fig.height=20, fig.width=15}
+```{r DIFF_noRAPA_D244}
 
 getlinmodoutput(targetline = "D244",targetdiff = "DIFF",targetrapa = "noRAPA")
 
@@ -315,7 +316,7 @@ getlinmodoutput(targetline = "D244",targetdiff = "DIFF",targetrapa = "noRAPA")
 
 ### ReN
 
-```{r DIFF_noRAPA_ReN,  fig.height=20, fig.width=15}
+```{r DIFF_noRAPA_ReN}
 
 getlinmodoutput(targetline = "ReN",targetdiff = "DIFF",targetrapa = "noRAPA")
 
@@ -325,14 +326,14 @@ getlinmodoutput(targetline = "ReN",targetdiff = "DIFF",targetrapa = "noRAPA")
 ## KO effect in noDIFF RAPA
 ### D62
 
-```{r noDIFF_RAPA_D62,  fig.height=20, fig.width=15}
+```{r noDIFF_RAPA_D62}
 
 getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
 
 ```
 ### D244
 
-```{r noDIFF_RAPA_D244,  fig.height=20, fig.width=15}
+```{r noDIFF_RAPA_D244}
 
 getlinmodoutput(targetline = "D244",targetdiff = "noDIFF",targetrapa = "RAPA")
 
@@ -340,7 +341,7 @@ getlinmodoutput(targetline = "D244",targetdiff = "noDIFF",targetrapa = "RAPA")
 
 ### ReN
 
-```{r noDIFF_RAPA_ReN,  fig.height=20, fig.width=15}
+```{r noDIFF_RAPA_ReN}
 
 getlinmodoutput(targetline = "ReN",targetdiff = "noDIFF",targetrapa = "RAPA")
 
@@ -351,7 +352,7 @@ getlinmodoutput(targetline = "ReN",targetdiff = "noDIFF",targetrapa = "RAPA")
 
 ### D62
 
-```{r DIFF_RAPA_D62,  fig.height=20, fig.width=15}
+```{r DIFF_RAPA_D62}
 
 getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
 
@@ -359,7 +360,7 @@ getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
 
 ### D244
 
-```{r DIFF_RAPA_D244,  fig.height=20, fig.width=15}
+```{r DIFF_RAPA_D244}
 
 getlinmodoutput(targetline = "D244",targetdiff = "DIFF",targetrapa = "RAPA")
 
@@ -367,7 +368,7 @@ getlinmodoutput(targetline = "D244",targetdiff = "DIFF",targetrapa = "RAPA")
 
 ### ReN
 
-```{r DIFF_RAPA_ReN,  fig.height=20, fig.width=15}
+```{r DIFF_RAPA_ReN}
 
 getlinmodoutput(targetline = "ReN",targetdiff = "DIFF",targetrapa = "RAPA")
 
@@ -449,7 +450,7 @@ getlinmodoutput_all = function(targetdiff,
                                  "D244_sgNTC_sg2.1_", 
                                  targetdiff, "_" , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.1 = get(paste0("restab_", 
+    D244_fdr_2.1 = get(paste0("restab_", 
                                "D244_sgNTC_sg2.1_", 
                                targetdiff, "_" , 
                                targetrapa))$padj[idx], 
@@ -457,7 +458,7 @@ getlinmodoutput_all = function(targetdiff,
                                  "D244_sgNTC_sg2.2_", 
                                  targetdiff, "_" , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.2 = get(paste0("restab_", 
+    D244_fdr_2.2 = get(paste0("restab_", 
                                "D244_sgNTC_sg2.2_", 
                                targetdiff, "_" , 
                                targetrapa))$padj[idx], 
@@ -465,7 +466,7 @@ getlinmodoutput_all = function(targetdiff,
                                 "D62_sgNTC_sg2.1_", 
                                 targetdiff, "_" , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.1 = get(paste0("restab_", 
+    D62_fdr_2.1 = get(paste0("restab_", 
                               "D62_sgNTC_sg2.1_", 
                               targetdiff, "_" , 
                               targetrapa))$padj[idx], 
@@ -473,7 +474,7 @@ getlinmodoutput_all = function(targetdiff,
                                 "D62_sgNTC_sg2.2_", 
                                 targetdiff, "_" , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.2 = get(paste0("restab_", 
+    D62_fdr_2.2 = get(paste0("restab_", 
                               "D62_sgNTC_sg2.2_", 
                               targetdiff, "_" , 
                               targetrapa))$padj[idx], 
@@ -481,7 +482,7 @@ getlinmodoutput_all = function(targetdiff,
                                 "ReN_sgNTC_sg2.1_", 
                                 targetdiff, "_" , 
                                 targetrapa))$log2FoldChange[idx], 
-    ReN_pval_2.1 = get(paste0("restab_", 
+    ReN_fdr_2.1 = get(paste0("restab_", 
                               "ReN_sgNTC_sg2.1_", 
                               targetdiff, "_" , 
                               targetrapa))$padj[idx], 
@@ -489,7 +490,7 @@ getlinmodoutput_all = function(targetdiff,
                                 "ReN_sgNTC_sg2.2_", 
                                 targetdiff, "_" , 
                                 targetrapa))$log2FoldChange[idx], 
-    ReN_pval_2.2 = get(paste0("restab_", 
+    ReN_fdr_2.2 = get(paste0("restab_", 
                               "ReN_sgNTC_sg2.2_", 
                               targetdiff, "_" , 
                               targetrapa))$padj[idx])
@@ -541,7 +542,7 @@ getlinmodoutput_all = function(targetdiff,
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],
+           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = "ward.D2",
            cluster_cols = F,
@@ -598,7 +599,7 @@ getlinmodoutput_all = function(targetdiff,
 
 ### noDiff noRapa
 
-```{r noDIFF_noRAPA,  fig.height=20, fig.width=15}
+```{r noDIFF_noRAPA}
 
 getlinmodoutput_all(targetdiff = "noDIFF",targetrapa = "noRAPA")
 
@@ -607,7 +608,7 @@ getlinmodoutput_all(targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ### noDiff Rapa
 
-```{r noDIFF_RAPA,  fig.height=20, fig.width=15}
+```{r noDIFF_RAPA}
 
 try(getlinmodoutput_all(targetdiff = "noDIFF",targetrapa = "RAPA"))
 
@@ -616,7 +617,7 @@ try(getlinmodoutput_all(targetdiff = "noDIFF",targetrapa = "RAPA"))
 
 ### Diff noRapa
 
-```{r DIFF_noRAPA,  fig.height=20, fig.width=15}
+```{r DIFF_noRAPA}
 
 try(getlinmodoutput_all(targetdiff = "DIFF",targetrapa = "noRAPA"))
 
@@ -625,7 +626,7 @@ try(getlinmodoutput_all(targetdiff = "DIFF",targetrapa = "noRAPA"))
 
 ### Diff Rapa
 
-```{r DIFF_RAPA,  fig.height=20, fig.width=15}
+```{r DIFF_RAPA}
 
 try(getlinmodoutput_all(targetdiff = "DIFF",targetrapa = "RAPA"))
 
@@ -692,7 +693,7 @@ getlinmodoutput_D62D224 = function(targetdiff,
                                  "D244_sgNTC_sg2.1_", 
                                  targetdiff, "_" , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.1 = get(paste0("restab_", 
+    D244_fdr_2.1 = get(paste0("restab_", 
                                "D244_sgNTC_sg2.1_", 
                                targetdiff, "_" , 
                                targetrapa))$padj[idx], 
@@ -700,7 +701,7 @@ getlinmodoutput_D62D224 = function(targetdiff,
                                  "D244_sgNTC_sg2.2_", 
                                  targetdiff, "_" , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.2 = get(paste0("restab_", 
+    D244_fdr_2.2 = get(paste0("restab_", 
                                "D244_sgNTC_sg2.2_", 
                                targetdiff, "_" , 
                                targetrapa))$padj[idx], 
@@ -708,7 +709,7 @@ getlinmodoutput_D62D224 = function(targetdiff,
                                 "D62_sgNTC_sg2.1_", 
                                 targetdiff, "_" , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.1 = get(paste0("restab_", 
+    D62_fdr_2.1 = get(paste0("restab_", 
                               "D62_sgNTC_sg2.1_", 
                               targetdiff, "_" , 
                               targetrapa))$padj[idx], 
@@ -716,7 +717,7 @@ getlinmodoutput_D62D224 = function(targetdiff,
                                 "D62_sgNTC_sg2.2_", 
                                 targetdiff, "_" , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.2 = get(paste0("restab_", 
+    D62_fdr_2.2 = get(paste0("restab_", 
                               "D62_sgNTC_sg2.2_", 
                               targetdiff, "_" , 
                               targetrapa))$padj[idx])
@@ -768,7 +769,7 @@ getlinmodoutput_D62D224 = function(targetdiff,
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],
+           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = "ward.D2",
            cluster_cols = F,
@@ -825,7 +826,7 @@ getlinmodoutput_D62D224 = function(targetdiff,
 
 ### noDiff noRapa
 
-```{r noDIFF_noRAPA_D62_D224,  fig.height=20, fig.width=15}
+```{r noDIFF_noRAPA_D62_D224}
 
 try(getlinmodoutput_D62D224(targetdiff = "noDIFF",
                             targetrapa = "noRAPA", 
@@ -836,7 +837,7 @@ try(getlinmodoutput_D62D224(targetdiff = "noDIFF",
 
 ### noDiff Rapa
 
-```{r noDIFF_RAPA_D62_D224,  fig.height=20, fig.width=15}
+```{r noDIFF_RAPA_D62_D224}
 
 try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "RAPA", 
                             targetline=c("D62", "D224")))
@@ -846,7 +847,7 @@ try(getlinmodoutput_D62D224(targetdiff = "noDIFF",targetrapa = "RAPA",
 
 ### Diff noRapa
 
-```{r DIFF_noRAPA_D62_D224,  fig.height=20, fig.width=15}
+```{r DIFF_noRAPA_D62_D224}
 
 try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "noRAPA", 
                             targetline=c("D62", "D224")))
@@ -856,7 +857,7 @@ try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "noRAPA",
 
 ### Diff Rapa
 
-```{r DIFF_RAPA_D62_D224,  fig.height=20, fig.width=15}
+```{r DIFF_RAPA_D62_D224}
 
 try(getlinmodoutput_D62D224(targetdiff = "DIFF",targetrapa = "RAPA",
                             targetline=c("D62", "D224")))

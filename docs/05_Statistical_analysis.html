@@ -358,7 +358,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -367,7 +367,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -376,10 +376,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-10-18
+<strong>Last updated:</strong> 2021-10-22
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>CePTER_RNASeq/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -395,12 +395,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -467,16 +467,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreea73c3a8bb382ab97b33c9bf9cf009f7d8c1e2293targetblanka73c3a8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/a73c3a8bb382ab97b33c9bf9cf009f7d8c1e2293" target="_blank">a73c3a8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreed619a785ff27174ac8762b4754e2816c884cd8d7targetblankd619a78a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/d619a785ff27174ac8762b4754e2816c884cd8d7" target="_blank">d619a78</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreea73c3a8bb382ab97b33c9bf9cf009f7d8c1e2293targetblanka73c3a8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabCePTERRNASeqtreed619a785ff27174ac8762b4754e2816c884cd8d7targetblankd619a78a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/a73c3a8bb382ab97b33c9bf9cf009f7d8c1e2293" target="_blank">a73c3a8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/CePTER_RNASeq/tree/d619a785ff27174ac8762b4754e2816c884cd8d7" target="_blank">d619a78</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -485,6 +485,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/Countmatrix.RData
     Ignored:    oldcode/
     Ignored:    output/GOres_Comparisons.xlsx
@@ -533,6 +534,7 @@ Untracked files:
     Untracked:  wflow_helper.R
 
 Unstaged changes:
+    Modified:   analysis/05_Statistical_analysis.Rmd
     Modified:   analysis/MDSplots/rsconnect/shinyapps.io/molgenlab/mdsplots.dcf
     Modified:   output/GOresWGCNA.xlsx
 
@@ -658,7 +660,7 @@ getlinmodoutput = function(targetline,
                             targetline, &quot;_sgNTC_sg2.1_&quot;, 
                             targetdiff, &quot;_&quot; , 
                             targetrapa))$log2FoldChange[idx], 
-    pval_2.1 = get(paste0(&quot;restab_&quot;, 
+    fdr_2.1 = get(paste0(&quot;restab_&quot;, 
                           targetline, &quot;_sgNTC_sg2.1_&quot;, 
                           targetdiff, &quot;_&quot; , 
                           targetrapa))$padj[idx], 
@@ -666,7 +668,7 @@ getlinmodoutput = function(targetline,
                             targetline, &quot;_sgNTC_sg2.2_&quot;, 
                             targetdiff, &quot;_&quot; , 
                             targetrapa))$log2FoldChange[idx], 
-    pval_2.2 = get(paste0(&quot;restab_&quot;, 
+    fdr_2.2 = get(paste0(&quot;restab_&quot;, 
                           targetline, &quot;_sgNTC_sg2.2_&quot;, 
                           targetdiff, &quot;_&quot; , 
                           targetrapa))$padj[idx])
@@ -718,12 +720,13 @@ getlinmodoutput = function(targetline,
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],
+           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = &quot;ward.D2&quot;,
            cluster_cols = F,
            col = colors, 
            scale = &quot;row&quot;,
+           
            main = paste(&quot;Normalized log2 counts&quot;, targetline, targetdiff, targetrapa))
   
   gene_univers = rownames(ddsMat)
@@ -775,7 +778,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 <div id="d62" class="section level3">
 <h3>D62</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>    entrezgene    genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>    entrezgene    genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1        64856       VWA1  1.0887369 3.357074e-12  0.7289010 3.093542e-06
 2        26038       CHD5  2.6317640 1.274240e-07  1.4617556 1.601009e-02
 3         3925      STMN1 -0.8137179 4.487672e-11 -0.4038794 1.435877e-04
@@ -1013,8 +1016,8 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 235       1641        DCX -0.8995534 1.452689e-07 -0.7023485 1.328081e-05
 236       5358       PLS3  0.6066581 1.358155e-02  0.7933757 5.554753e-08
 237      10178      TENM1 -1.2340255 5.833969e-04 -1.1143038 2.019523e-05</code></pre>
-<pre><code>Lade nötiges Paket: gprofiler2</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<pre><code>Loading required package: gprofiler2</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L    CI95U           P
 01_all_EpilepsyGene          1.0615534 0.41907282 2.244720 0.840940948
 02_high_conf_EpilepsyGene    0.9200612 0.10953205 3.432846 1.000000000
@@ -1047,12 +1050,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.35675900 0.3481198 1.000000000
 14_Cocchi_Pruning             1.20981783 0.5915287 0.311350186
 15_Epi25_dataset             -0.35551902 1.8840367 1.000000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="d244" class="section level3">
 <h3>D244</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>     entrezgene    genname log2FC_2.1      pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>     entrezgene    genname log2FC_2.1       fdr_2.1 log2FC_2.2      fdr_2.2
 1         54587      MXRA8  0.6447968  2.417795e-04  0.8182123 8.068229e-09
 2         29101      SSU72 -0.9173927  2.763334e-03 -1.1082136 3.902258e-04
 3          6497        SKI -0.8845508  3.016017e-07 -0.6570484 1.356475e-03
@@ -2316,7 +2319,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 1261       2316       FLNA  0.4895471  2.194210e-04  0.3709100 1.352675e-02
 1262       2010        EMD  0.8932399  9.310564e-07  0.8302233 8.241662e-06
 1263       7411       VBP1 -0.7364146  6.114222e-03 -0.4752162 4.356118e-02</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR     CI95L    CI95U            P
 01_all_EpilepsyGene          1.2232596 0.8608799 1.699740 2.425478e-01
 02_high_conf_EpilepsyGene    1.1406076 0.5870818 2.039154 6.405796e-01
@@ -2349,12 +2352,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.23417599 0.1547004 1.000000e+00
 14_Cocchi_Pruning             0.67123588 0.3222870 3.974024e-01
 15_Epi25_dataset              0.06428339 0.4485426 1.000000e+00</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D244-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ren" class="section level3">
 <h3>ReN</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>   entrezgene  genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>   entrezgene  genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1       55920     RCC2 -0.7709626 4.129780e-05 -0.2645249 3.812275e-02
 2        2152       F3 -1.6052562 4.812020e-05 -1.1057348 6.860234e-03
 3      116496   NIBAN1 -0.8567869 2.608034e-02 -0.9061142 1.725769e-07
@@ -2409,7 +2412,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 52       1289   COL5A1 -1.5101448 7.312207e-03 -1.1785048 4.211205e-07
 53       4539  MT-ND4L  0.4547687 1.940962e-02  0.2676648 4.270763e-03
 54      92745  SLC38A5  1.3495871 6.273324e-07  0.8102770 4.087766e-06</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L     CI95U            P
 01_all_EpilepsyGene          1.3418222 0.15775609  5.130774 0.6634089148
 02_high_conf_EpilepsyGene    2.0509246 0.05057317 12.147996 0.3919490878
@@ -2442,7 +2445,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.4495818 0.8238207 1.000000000
 14_Cocchi_Pruning                  -Inf       NaN 1.000000000
 15_Epi25_dataset                   -Inf       NaN 1.000000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_ReN-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="ko-effect-in-diff-norapa" class="section level2">
@@ -2450,7 +2453,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 <div id="d62-1" class="section level3">
 <h3>D62</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>    entrezgene     genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>    entrezgene     genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1        51150        SDF4 -0.4955025 2.579359e-03 -0.5953468 1.781040e-04
 2        64856        VWA1 -0.5621746 3.771578e-03 -1.4107532 1.828404e-14
 3         1953       MEGF6 -1.0425165 1.794545e-02 -2.6466407 8.328495e-05
@@ -3003,7 +3006,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 550       2316        FLNA -0.6232515 9.169656e-07 -0.5112294 1.768206e-03
 551       8270       LAGE3 -0.5859079 2.326138e-02 -0.8720007 3.940762e-03
 552       2539        G6PD -0.5578078 4.406929e-02 -0.8467634 9.657304e-03</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L    CI95U            P
 01_all_EpilepsyGene          1.1121355 0.63584989 1.823161 6.910190e-01
 02_high_conf_EpilepsyGene    1.4137717 0.55347557 3.026237 3.559290e-01
@@ -3036,12 +3039,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN          -0.11379263 0.2754021 1.000000e+00
 14_Cocchi_Pruning             1.39771001 0.3472894 1.025277e-03
 15_Epi25_dataset             -0.51989815 1.0872272 1.000000e+00</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="d244-1" class="section level3">
 <h3>D244</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>    entrezgene   genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>    entrezgene   genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1         4237     MFAP2 -1.1043692 7.672135e-03 -1.2811560 2.995447e-02
 2        57134    MAN1C1  0.5990502 7.965530e-03  0.9212493 1.543752e-03
 3         6272     SORT1  0.4443084 1.768453e-02  0.5998305 4.210823e-02
@@ -3193,7 +3196,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 149       5354      PLP1 -1.7840245 1.631697e-04 -2.3895645 3.266449e-05
 150      10857    PGRMC1  1.5465723 1.470735e-25  1.0576200 2.522925e-06
 151        633       BGN -2.7382586 5.058178e-19 -1.7534538 9.522607e-05</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L    CI95U            P
 01_all_EpilepsyGene          1.1957650 0.38028788 2.880076 0.6162925837
 02_high_conf_EpilepsyGene    2.2237529 0.44720014 6.782833 0.1606467358
@@ -3226,12 +3229,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.096777155 0.5223467 1.000000000
 14_Cocchi_Pruning            -0.003156519 1.8846102 1.000000000
 15_Epi25_dataset              0.104125912 1.8852379 1.000000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D244-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ren-1" class="section level3">
 <h3>ReN</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>    entrezgene   genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>    entrezgene   genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1          473      RERE -0.5118111 2.837468e-04 -0.5727503 1.267634e-02
 2        56998  CTNNBIP1 -0.9224672 6.378644e-06 -0.6898244 2.600186e-02
 3        57190   SELENON  0.7388231 2.242220e-03  0.9922930 3.648510e-03
@@ -3437,7 +3440,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 203      55859      BEX1 -0.5562600 7.400299e-08 -0.4944181 4.493398e-02
 204       1641       DCX -0.9825873 1.428037e-16 -0.8743527 2.709261e-07
 205       5358      PLS3 -1.4726799 1.578490e-24 -0.8123603 4.874364e-04</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L    CI95U            P
 01_all_EpilepsyGene          0.8693106 0.27755694 2.081081 1.000000e+00
 02_high_conf_EpilepsyGene    2.1927566 0.58223629 5.849217 1.189359e-01
@@ -3470,7 +3473,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN          -0.06263842 0.4742900 1.000000e+00
 14_Cocchi_Pruning             1.12075978 0.6797064 7.137200e-01
 15_Epi25_dataset              0.50324766 1.0893912 1.000000e+00</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_ReN-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="ko-effect-in-nodiff-rapa" class="section level2">
@@ -3478,7 +3481,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 <div id="d62-2" class="section level3">
 <h3>D62</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
-<pre><code>   entrezgene  genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>   entrezgene  genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1       64856     VWA1  0.7961187 1.591361e-02  0.8468392 2.620357e-02
 2        3925    STMN1 -0.5685577 5.368831e-03 -0.6224295 1.905328e-02
 3        9077   DIRAS3  1.9775503 6.473752e-17  1.5404231 2.797022e-07
@@ -3535,7 +3538,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 54      56548    CHST7  1.0768094 4.713142e-04  1.1190497 2.965233e-03
 55       5358     PLS3  1.0340243 6.595231e-04  1.2931225 1.535983e-06
 56      10178    TENM1 -1.3363992 8.536899e-05 -1.3832123 7.013857e-03</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L     CI95U           P
 01_all_EpilepsyGene          1.9797878 0.39393523  6.152519 0.205117104
 02_high_conf_EpilepsyGene    1.9760607 0.04875929 11.678747 0.403073240
@@ -3568,9 +3571,9 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.71983494 0.6841636 1.00000000
 14_Cocchi_Pruning             1.00709860 1.8902594 1.00000000
 15_Epi25_dataset                    -Inf       NaN 1.00000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-3.png" width="7500" style="display: block; margin: auto;" /> ### D244</p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62-3.png" width="4500" style="display: block; margin: auto;" /> ### D244</p>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
-<pre><code>     entrezgene    genname log2FC_2.1      pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>     entrezgene    genname log2FC_2.1       fdr_2.1 log2FC_2.2      fdr_2.2
 1          9636      ISG15  1.5824388  1.484743e-04  1.2829492 4.189665e-04
 2         51150       SDF4  0.3756765  5.723901e-03  0.7747854 3.597778e-08
 3         54587      MXRA8  0.5977314  1.411991e-03  0.7833115 7.754367e-07
@@ -4685,7 +4688,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 1112       2010        EMD  0.6855411  4.443434e-03  0.7763575 6.254644e-03
 1113        537    ATP6AP1 -0.6037523  4.768119e-03 -0.6004954 1.650399e-02
 1114       6192     RPS4Y1 -6.3220505  1.983734e-02 -6.1293881 2.943702e-02</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR     CI95L    CI95U            P
 01_all_EpilepsyGene          0.9611605 0.6354413 1.405705 9.243670e-01
 02_high_conf_EpilepsyGene    0.7680892 0.3230734 1.570135 6.209493e-01
@@ -4718,12 +4721,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.19785778 0.1664538 1.000000e+00
 14_Cocchi_Pruning             0.44442455 0.3762635 1.000000e+00
 15_Epi25_dataset              0.20276133 0.4486716 1.000000e+00</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D244-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ren-2" class="section level3">
 <h3>ReN</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
-<pre><code>   entrezgene  genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>   entrezgene  genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1         477   ATP1A2   1.220208 3.413380e-03  1.4114570 5.720993e-08
 2        1116   CHI3L1  -8.526972 6.249375e-06 -3.4445448 3.594290e-04
 3      283131    NEAT1  -3.020307 1.549094e-02 -2.6088409 2.202376e-03
@@ -4738,7 +4741,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 12        148   ADRA1A   1.225387 2.497271e-02  1.6096956 3.510562e-08
 13        793    CALB1  -1.195628 2.325343e-03 -1.4001215 7.414265e-13
 14       9568   GABBR2   1.236450 1.521923e-04  0.8179580 5.197383e-05</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L    CI95U           P
 01_all_EpilepsyGene           9.565320 1.70653483 36.43408 0.006238071
 02_high_conf_EpilepsyGene    18.301000 1.96933619 83.57568 0.007036976
@@ -4771,7 +4774,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN          0.7166544 1.9139748 1.00000000
 14_Cocchi_Pruning                 -Inf       NaN 1.00000000
 15_Epi25_dataset                  -Inf       NaN 1.00000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_ReN-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="ko-effect-in-diff-rapa" class="section level2">
@@ -4779,7 +4782,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 <div id="d62-3" class="section level3">
 <h3>D62</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D62&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
-<pre><code>    entrezgene  genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>    entrezgene  genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1         2048    EPHB2 -0.5826101 1.678683e-02 -0.9117379 1.313340e-03
 2         2537     IFI6 -0.6988523 7.989899e-03 -0.7770059 3.125215e-02
 3         7802   DNALI1  1.1560264 7.989899e-03  1.1151275 2.698021e-02
@@ -4919,7 +4922,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 137       4129     MAOB  1.2838784 2.040953e-05  1.0111052 1.111439e-02
 138       1641      DCX  3.7333360 1.413819e-18  5.0056019 2.802915e-51
 139       1069    CETN2  0.6735559 1.149142e-02  0.9817983 9.286896e-05</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L     CI95U           P
 01_all_EpilepsyGene          1.3040385 0.41418064  3.147179 0.443395489
 02_high_conf_EpilepsyGene    2.4223469 0.48662600  7.400112 0.134908974
@@ -4952,12 +4955,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.3478983 0.4775076 1.00000000
 14_Cocchi_Pruning             1.7659263 0.5949119 0.03469404
 15_Epi25_dataset                   -Inf       NaN 1.00000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="d244-2" class="section level3">
 <h3>D244</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;D244&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
-<pre><code>    entrezgene   genname log2FC_2.1      pval_2.1 log2FC_2.2      pval_2.2
+<pre><code>    entrezgene   genname log2FC_2.1       fdr_2.1 log2FC_2.2       fdr_2.2
 1         1969     EPHA2 -0.4156436  1.786505e-03 -0.4614548  1.856825e-02
 2         4237     MFAP2 -1.8799463  1.408076e-06 -1.3745964  4.624004e-04
 3       644068       nan -0.3590070  2.869457e-02 -0.4807850  1.104913e-02
@@ -5224,7 +5227,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 264      10857    PGRMC1  0.8842565  3.302791e-07  0.5478687  3.603326e-03
 265       6170     RPL39 -0.2996484  4.105697e-04 -0.3137189  1.464648e-04
 266        633       BGN -2.9029508  4.191791e-25 -1.8005635  3.737921e-11</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L    CI95U            P
 01_all_EpilepsyGene          0.6630122 0.21220963 1.581249 4.539375e-01
 02_high_conf_EpilepsyGene    0.8171989 0.09734763 3.045438 1.000000e+00
@@ -5257,12 +5260,12 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           0.2332861 0.3472786 1.0000000000
 14_Cocchi_Pruning             0.8511666 0.6786085 1.0000000000
 15_Epi25_dataset                   -Inf       NaN 1.0000000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D244-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ren-3" class="section level3">
 <h3>ReN</h3>
 <pre class="r"><code>getlinmodoutput(targetline = &quot;ReN&quot;,targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;)</code></pre>
-<pre><code>   entrezgene  genname log2FC_2.1     pval_2.1 log2FC_2.2     pval_2.2
+<pre><code>   entrezgene  genname log2FC_2.1      fdr_2.1 log2FC_2.2      fdr_2.2
 1       25932    CLIC4 -1.3586050 3.608772e-02 -1.8215486 8.231305e-03
 2        6281  S100A10 -1.1420986 1.572252e-04 -0.8493016 4.721390e-02
 3       10485 MIR9-1HG  3.7161701 3.294323e-30  2.2183209 1.409849e-07
@@ -5312,7 +5315,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 47       1278   COL1A2 -3.8996895 2.345305e-07 -3.5277248 2.940563e-06
 48       4747     NEFL -2.0357376 2.370999e-05 -2.6024981 4.420266e-06
 49      51050     PI15 -1.0151690 2.950165e-02 -1.3134282 3.229200e-03</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                     OR      CI95L     CI95U          P
 01_all_EpilepsyGene           1.4850928 0.17407594  5.708719 0.39879098
 02_high_conf_EpilepsyGene     0.0000000 0.00000000  8.556545 1.00000000
@@ -5345,7 +5348,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN           1.1125948 0.6006808 0.47330475
 14_Cocchi_Pruning             2.3073105 0.8333416 0.06283171
 15_Epi25_dataset                   -Inf       NaN 1.00000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_ReN-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="replicated-across-cell-lines" class="section level2">
@@ -5422,7 +5425,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
                                  &quot;D244_sgNTC_sg2.1_&quot;, 
                                  targetdiff, &quot;_&quot; , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.1 = get(paste0(&quot;restab_&quot;, 
+    D244_fdr_2.1 = get(paste0(&quot;restab_&quot;, 
                                &quot;D244_sgNTC_sg2.1_&quot;, 
                                targetdiff, &quot;_&quot; , 
                                targetrapa))$padj[idx], 
@@ -5430,7 +5433,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
                                  &quot;D244_sgNTC_sg2.2_&quot;, 
                                  targetdiff, &quot;_&quot; , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.2 = get(paste0(&quot;restab_&quot;, 
+    D244_fdr_2.2 = get(paste0(&quot;restab_&quot;, 
                                &quot;D244_sgNTC_sg2.2_&quot;, 
                                targetdiff, &quot;_&quot; , 
                                targetrapa))$padj[idx], 
@@ -5438,7 +5441,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
                                 &quot;D62_sgNTC_sg2.1_&quot;, 
                                 targetdiff, &quot;_&quot; , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.1 = get(paste0(&quot;restab_&quot;, 
+    D62_fdr_2.1 = get(paste0(&quot;restab_&quot;, 
                               &quot;D62_sgNTC_sg2.1_&quot;, 
                               targetdiff, &quot;_&quot; , 
                               targetrapa))$padj[idx], 
@@ -5446,7 +5449,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
                                 &quot;D62_sgNTC_sg2.2_&quot;, 
                                 targetdiff, &quot;_&quot; , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.2 = get(paste0(&quot;restab_&quot;, 
+    D62_fdr_2.2 = get(paste0(&quot;restab_&quot;, 
                               &quot;D62_sgNTC_sg2.2_&quot;, 
                               targetdiff, &quot;_&quot; , 
                               targetrapa))$padj[idx], 
@@ -5454,7 +5457,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
                                 &quot;ReN_sgNTC_sg2.1_&quot;, 
                                 targetdiff, &quot;_&quot; , 
                                 targetrapa))$log2FoldChange[idx], 
-    ReN_pval_2.1 = get(paste0(&quot;restab_&quot;, 
+    ReN_fdr_2.1 = get(paste0(&quot;restab_&quot;, 
                               &quot;ReN_sgNTC_sg2.1_&quot;, 
                               targetdiff, &quot;_&quot; , 
                               targetrapa))$padj[idx], 
@@ -5462,7 +5465,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
                                 &quot;ReN_sgNTC_sg2.2_&quot;, 
                                 targetdiff, &quot;_&quot; , 
                                 targetrapa))$log2FoldChange[idx], 
-    ReN_pval_2.2 = get(paste0(&quot;restab_&quot;, 
+    ReN_fdr_2.2 = get(paste0(&quot;restab_&quot;, 
                               &quot;ReN_sgNTC_sg2.2_&quot;, 
                               targetdiff, &quot;_&quot; , 
                               targetrapa))$padj[idx])
@@ -5514,7 +5517,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],
+           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = &quot;ward.D2&quot;,
            cluster_cols = F,
@@ -5567,16 +5570,16 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 <div id="nodiff-norapa" class="section level3">
 <h3>noDiff noRapa</h3>
 <pre class="r"><code>getlinmodoutput_all(targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;noRAPA&quot;)</code></pre>
-<pre><code>  entrezgene genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
-1     151887  CCDC80       0.8069456  2.122272e-15       0.7595701
-2       9568  GABBR2       1.0262131  4.391028e-02       1.8380988
-  D244_pval_2.2 D62_log2FC_2.1 D62_pval_2.1 D62_log2FC_2.2 D62_pval_2.2
-1  3.271995e-14      0.7861593 3.884032e-08       0.544454 5.158658e-06
-2  4.032745e-07      1.8836534 3.992926e-19       1.770097 1.993618e-26
-  ReN_log2FC_2.1 ReN_pval_2.1 ReN_log2FC_2.2 ReN_pval_2.2
-1      1.3269840 1.910378e-09      0.5349808 2.674684e-06
-2      0.8591791 1.299630e-04      0.7804877 1.030234e-16</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<pre><code>  entrezgene genname D244_log2FC_2.1 D244_fdr_2.1 D244_log2FC_2.2 D244_fdr_2.2
+1     151887  CCDC80       0.8069456 2.122272e-15       0.7595701 3.271995e-14
+2       9568  GABBR2       1.0262131 4.391028e-02       1.8380988 4.032745e-07
+  D62_log2FC_2.1  D62_fdr_2.1 D62_log2FC_2.2  D62_fdr_2.2 ReN_log2FC_2.1
+1      0.7861593 3.884032e-08       0.544454 5.158658e-06      1.3269840
+2      1.8836534 3.992926e-19       1.770097 1.993618e-26      0.8591791
+   ReN_fdr_2.1 ReN_log2FC_2.2  ReN_fdr_2.2
+1 1.910378e-09      0.5349808 2.674684e-06
+2 1.299630e-04      0.7804877 1.030234e-16</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                   OR     CI95L     CI95U         P     Beta
 01_all_EpilepsyGene           0.00000 0.0000000  185.8149 1.0000000     -Inf
 02_high_conf_EpilepsyGene     0.00000 0.0000000  574.6152 1.0000000     -Inf
@@ -5609,51 +5612,51 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)</code></pre>
 13_Fromer_SCZ_FunDN              NaN    1
 14_Cocchi_Pruning                NaN    1
 15_Epi25_dataset                 NaN    1</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="nodiff-rapa" class="section level3">
 <h3>noDiff Rapa</h3>
 <pre class="r"><code>try(getlinmodoutput_all(targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;))</code></pre>
-<pre><code> [1] entrezgene      genname         D244_log2FC_2.1 D244_pval_2.1  
- [5] D244_log2FC_2.2 D244_pval_2.2   D62_log2FC_2.1  D62_pval_2.1   
- [9] D62_log2FC_2.2  D62_pval_2.2    ReN_log2FC_2.1  ReN_pval_2.1   
-[13] ReN_log2FC_2.2  ReN_pval_2.2   
-&lt;0 Zeilen&gt; (oder row.names mit Länge 0)
+<pre><code> [1] entrezgene      genname         D244_log2FC_2.1 D244_fdr_2.1   
+ [5] D244_log2FC_2.2 D244_fdr_2.2    D62_log2FC_2.1  D62_fdr_2.1    
+ [9] D62_log2FC_2.2  D62_fdr_2.2     ReN_log2FC_2.1  ReN_fdr_2.1    
+[13] ReN_log2FC_2.2  ReN_fdr_2.2    
+&lt;0 rows&gt; (or 0-length row.names)
 Error in mapply(setCellValue, cells[seq_len(nrow(cells)), colIndex[ic]],  : 
   Eingaben mit Länge 0 können nicht mit Eingaben anderer Länge gemischt werden</code></pre>
 </div>
 <div id="diff-norapa" class="section level3">
 <h3>Diff noRapa</h3>
 <pre class="r"><code>try(getlinmodoutput_all(targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;))</code></pre>
-<pre><code> [1] entrezgene      genname         D244_log2FC_2.1 D244_pval_2.1  
- [5] D244_log2FC_2.2 D244_pval_2.2   D62_log2FC_2.1  D62_pval_2.1   
- [9] D62_log2FC_2.2  D62_pval_2.2    ReN_log2FC_2.1  ReN_pval_2.1   
-[13] ReN_log2FC_2.2  ReN_pval_2.2   
-&lt;0 Zeilen&gt; (oder row.names mit Länge 0)
+<pre><code> [1] entrezgene      genname         D244_log2FC_2.1 D244_fdr_2.1   
+ [5] D244_log2FC_2.2 D244_fdr_2.2    D62_log2FC_2.1  D62_fdr_2.1    
+ [9] D62_log2FC_2.2  D62_fdr_2.2     ReN_log2FC_2.1  ReN_fdr_2.1    
+[13] ReN_log2FC_2.2  ReN_fdr_2.2    
+&lt;0 rows&gt; (or 0-length row.names)
 Error in mapply(setCellValue, cells[seq_len(nrow(cells)), colIndex[ic]],  : 
   Eingaben mit Länge 0 können nicht mit Eingaben anderer Länge gemischt werden</code></pre>
 </div>
 <div id="diff-rapa" class="section level3">
 <h3>Diff Rapa</h3>
 <pre class="r"><code>try(getlinmodoutput_all(targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;))</code></pre>
-<pre><code>  entrezgene genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
-1       7044  LEFTY2      -1.3192934  3.280549e-18      -2.3110081
-2       3488  IGFBP5      -1.4790171  1.730247e-60      -1.3238131
-3       1295  COL8A1      -2.5667320  1.117183e-51      -2.8067329
-4       9547  CXCL14      -0.5235165  1.148369e-10      -0.4632759
-  D244_pval_2.2 D62_log2FC_2.1 D62_pval_2.1 D62_log2FC_2.2 D62_pval_2.2
-1  5.751049e-64      -1.146146 0.0151783820      -2.510127 2.217413e-06
-2  6.039310e-53      -1.204226 0.0014575086      -1.284033 3.354261e-03
-3  2.533751e-78      -4.547185 0.0071613815      -3.737934 2.815452e-02
-4  1.335559e-07      -0.806434 0.0007756694      -1.501844 1.611197e-09
-  ReN_log2FC_2.1 ReN_pval_2.1 ReN_log2FC_2.2 ReN_pval_2.2
-1      -1.133009 2.120245e-02      -1.309900 7.931635e-03
-2      -1.545275 8.161597e-08      -1.454664 3.094511e-06
-3      -3.107591 1.715765e-06      -2.821508 6.250435e-08
-4      -2.565140 1.134080e-06      -2.227980 5.293257e-04</code></pre>
+<pre><code>  entrezgene genname D244_log2FC_2.1 D244_fdr_2.1 D244_log2FC_2.2 D244_fdr_2.2
+1       7044  LEFTY2      -1.3192934 3.280549e-18      -2.3110081 5.751049e-64
+2       3488  IGFBP5      -1.4790171 1.730247e-60      -1.3238131 6.039310e-53
+3       1295  COL8A1      -2.5667320 1.117183e-51      -2.8067329 2.533751e-78
+4       9547  CXCL14      -0.5235165 1.148369e-10      -0.4632759 1.335559e-07
+  D62_log2FC_2.1  D62_fdr_2.1 D62_log2FC_2.2  D62_fdr_2.2 ReN_log2FC_2.1
+1      -1.146146 0.0151783820      -2.510127 2.217413e-06      -1.133009
+2      -1.204226 0.0014575086      -1.284033 3.354261e-03      -1.545275
+3      -4.547185 0.0071613815      -3.737934 2.815452e-02      -3.107591
+4      -0.806434 0.0007756694      -1.501844 1.611197e-09      -2.565140
+   ReN_fdr_2.1 ReN_log2FC_2.2  ReN_fdr_2.2
+1 2.120245e-02      -1.309900 7.931635e-03
+2 8.161597e-08      -1.454664 3.094511e-06
+3 1.715765e-06      -2.821508 6.250435e-08
+4 1.134080e-06      -2.227980 5.293257e-04</code></pre>
 <pre><code>No results to show
 Please make sure that the organism is correct or set significant = FALSE</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA-1.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>[1] &quot;no significant results&quot;</code></pre>
 <pre><code>                             OR CI95L     CI95U P Beta  SE Padj
 01_all_EpilepsyGene           0     0  52.91556 1 -Inf NaN    1
@@ -5673,7 +5676,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 15_Epi25_dataset              0     0 254.55798 1 -Inf NaN    1</code></pre>
 <pre><code>Warning in min(x): kein nicht-fehlendes Argument für min; gebe Inf zurück</code></pre>
 <pre><code>Warning in max(x): kein nicht-fehlendes Argument für max; gebe -Inf zurück</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA-2.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA-2.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA-3.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>Error in plot.window(...) : endliche &#39;xlim&#39; Werte nötig</code></pre>
 </div>
 </div>
@@ -5735,7 +5738,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
                                  &quot;D244_sgNTC_sg2.1_&quot;, 
                                  targetdiff, &quot;_&quot; , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.1 = get(paste0(&quot;restab_&quot;, 
+    D244_fdr_2.1 = get(paste0(&quot;restab_&quot;, 
                                &quot;D244_sgNTC_sg2.1_&quot;, 
                                targetdiff, &quot;_&quot; , 
                                targetrapa))$padj[idx], 
@@ -5743,7 +5746,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
                                  &quot;D244_sgNTC_sg2.2_&quot;, 
                                  targetdiff, &quot;_&quot; , 
                                  targetrapa))$log2FoldChange[idx], 
-    D244_pval_2.2 = get(paste0(&quot;restab_&quot;, 
+    D244_fdr_2.2 = get(paste0(&quot;restab_&quot;, 
                                &quot;D244_sgNTC_sg2.2_&quot;, 
                                targetdiff, &quot;_&quot; , 
                                targetrapa))$padj[idx], 
@@ -5751,7 +5754,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
                                 &quot;D62_sgNTC_sg2.1_&quot;, 
                                 targetdiff, &quot;_&quot; , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.1 = get(paste0(&quot;restab_&quot;, 
+    D62_fdr_2.1 = get(paste0(&quot;restab_&quot;, 
                               &quot;D62_sgNTC_sg2.1_&quot;, 
                               targetdiff, &quot;_&quot; , 
                               targetrapa))$padj[idx], 
@@ -5759,7 +5762,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
                                 &quot;D62_sgNTC_sg2.2_&quot;, 
                                 targetdiff, &quot;_&quot; , 
                                 targetrapa))$log2FoldChange[idx], 
-    D62_pval_2.2 = get(paste0(&quot;restab_&quot;, 
+    D62_fdr_2.2 = get(paste0(&quot;restab_&quot;, 
                               &quot;D62_sgNTC_sg2.2_&quot;, 
                               targetdiff, &quot;_&quot; , 
                               targetrapa))$padj[idx])
@@ -5811,7 +5814,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],
+           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = &quot;ward.D2&quot;,
            cluster_cols = F,
@@ -5866,7 +5869,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 <pre class="r"><code>try(getlinmodoutput_D62D224(targetdiff = &quot;noDIFF&quot;,
                             targetrapa = &quot;noRAPA&quot;, 
                             targetline=c(&quot;D62&quot;, &quot;D224&quot;)))</code></pre>
-<pre><code>   entrezgene genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
+<pre><code>   entrezgene genname D244_log2FC_2.1  D244_fdr_2.1 D244_log2FC_2.2
 1        2633    GBP1       2.0297059  2.515639e-02       2.0883616
 2       10763     NES       0.3475318  2.516866e-03       0.6871561
 3        4811    NID1      -0.7110318  4.728859e-02      -1.2334604
@@ -5904,45 +5907,45 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 35       4571     nan       3.4044633 2.362771e-119       2.8563893
 36      27286   SRPX2       0.9507795  5.249112e-07       0.7486537
 37       1641     DCX      -0.8457536  7.306344e-03      -0.9610581
-   D244_pval_2.2 D62_log2FC_2.1 D62_pval_2.1 D62_log2FC_2.2 D62_pval_2.2
-1   2.907452e-02      4.3469675 1.478239e-04      4.0111487 9.206477e-05
-2   1.662445e-11      0.7597404 9.985796e-14      0.4268953 7.990741e-07
-3   3.579051e-03     -1.5148942 1.904365e-03     -1.0105930 2.296366e-02
-4   1.758357e-02      1.1765193 1.364798e-03      0.7725283 3.557110e-02
-5   5.268446e-03      1.2624849 1.664143e-27      0.3302487 9.754474e-03
-6   9.204256e-06      0.6720729 4.176205e-05      0.3624504 1.186010e-02
-7   2.779479e-05      0.7195505 1.391368e-07      0.3608222 8.928172e-04
-8   1.170221e-06     -1.7172025 2.028184e-05     -1.0867269 7.910845e-04
-9   3.609831e-03      0.6518976 3.394949e-02      1.0425253 7.502761e-12
-10  2.922212e-02      1.6169697 1.508787e-22      0.7278730 4.458761e-07
-11  5.894301e-03     -0.5333552 6.646735e-03     -0.2828075 2.579931e-02
-12  1.011060e-02     -0.9535097 1.971245e-06     -0.5774088 6.881405e-04
-13  2.647084e-05      0.8491433 5.692768e-12      0.3481626 7.808378e-03
-14  4.453646e-09      0.3240090 2.195959e-03      0.2517174 1.169403e-02
-15  3.664330e-25      2.0354059 3.708190e-20      1.2386377 5.932062e-11
-16  2.306262e-04      1.5019300 2.885492e-09      1.1144906 4.741474e-06
-17  4.626470e-07     -1.7911145 3.646131e-03     -1.1136392 3.778682e-03
-18  9.299289e-07      0.6962166 2.508668e-05      0.3635890 4.886965e-02
-19  1.761040e-10     -0.6122840 2.104394e-03     -0.6171374 3.496026e-05
-20  1.121250e-02     -1.0508060 2.599907e-12     -0.4931137 1.022821e-05
-21  3.271995e-14      0.7861593 3.884032e-08      0.5444540 5.158658e-06
-22  1.558741e-07      0.9202739 4.176205e-05      0.6135539 8.415630e-03
-23  1.285023e-03     -2.6030063 5.882622e-03     -1.5811041 1.989404e-02
-24  2.069884e-30     -0.9547393 5.308860e-08     -0.4376841 5.750365e-04
-25  4.750404e-07      1.4844042 6.295374e-19      1.8282513 1.823991e-53
-26  8.081783e-03     -0.7067496 1.619655e-07     -0.4982645 2.218205e-05
-27  1.924487e-04      0.5202967 1.478111e-02      0.4275719 3.689260e-02
-28  4.182359e-23     -3.2952996 5.370178e-03     -1.0156297 2.414624e-06
-29  5.325344e-06      0.9411454 1.543927e-04      0.4827715 4.565178e-02
-30  4.230156e-08      1.7451782 3.284453e-77      0.8937057 6.528518e-32
-31  2.159632e-06      0.4073207 4.502692e-02      0.4391435 1.254131e-02
-32  3.622400e-07      0.8469458 2.974890e-07      0.4754517 4.349091e-03
-33  2.737931e-03      0.6341170 6.617167e-18      0.3197075 7.692471e-10
-34  4.032745e-07      1.8836534 3.992926e-19      1.7700974 1.993618e-26
-35  1.746726e-69      0.9819432 6.551433e-07      0.8385856 2.779733e-06
-36  6.254085e-04      6.4021162 4.092541e-03      6.4458707 7.808378e-03
-37  5.303766e-03     -0.8995534 1.452689e-07     -0.7023485 1.328081e-05</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62_D224-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62_D224-2.png" width="7500" style="display: block; margin: auto;" /></p>
+   D244_fdr_2.2 D62_log2FC_2.1  D62_fdr_2.1 D62_log2FC_2.2  D62_fdr_2.2
+1  2.907452e-02      4.3469675 1.478239e-04      4.0111487 9.206477e-05
+2  1.662445e-11      0.7597404 9.985796e-14      0.4268953 7.990741e-07
+3  3.579051e-03     -1.5148942 1.904365e-03     -1.0105930 2.296366e-02
+4  1.758357e-02      1.1765193 1.364798e-03      0.7725283 3.557110e-02
+5  5.268446e-03      1.2624849 1.664143e-27      0.3302487 9.754474e-03
+6  9.204256e-06      0.6720729 4.176205e-05      0.3624504 1.186010e-02
+7  2.779479e-05      0.7195505 1.391368e-07      0.3608222 8.928172e-04
+8  1.170221e-06     -1.7172025 2.028184e-05     -1.0867269 7.910845e-04
+9  3.609831e-03      0.6518976 3.394949e-02      1.0425253 7.502761e-12
+10 2.922212e-02      1.6169697 1.508787e-22      0.7278730 4.458761e-07
+11 5.894301e-03     -0.5333552 6.646735e-03     -0.2828075 2.579931e-02
+12 1.011060e-02     -0.9535097 1.971245e-06     -0.5774088 6.881405e-04
+13 2.647084e-05      0.8491433 5.692768e-12      0.3481626 7.808378e-03
+14 4.453646e-09      0.3240090 2.195959e-03      0.2517174 1.169403e-02
+15 3.664330e-25      2.0354059 3.708190e-20      1.2386377 5.932062e-11
+16 2.306262e-04      1.5019300 2.885492e-09      1.1144906 4.741474e-06
+17 4.626470e-07     -1.7911145 3.646131e-03     -1.1136392 3.778682e-03
+18 9.299289e-07      0.6962166 2.508668e-05      0.3635890 4.886965e-02
+19 1.761040e-10     -0.6122840 2.104394e-03     -0.6171374 3.496026e-05
+20 1.121250e-02     -1.0508060 2.599907e-12     -0.4931137 1.022821e-05
+21 3.271995e-14      0.7861593 3.884032e-08      0.5444540 5.158658e-06
+22 1.558741e-07      0.9202739 4.176205e-05      0.6135539 8.415630e-03
+23 1.285023e-03     -2.6030063 5.882622e-03     -1.5811041 1.989404e-02
+24 2.069884e-30     -0.9547393 5.308860e-08     -0.4376841 5.750365e-04
+25 4.750404e-07      1.4844042 6.295374e-19      1.8282513 1.823991e-53
+26 8.081783e-03     -0.7067496 1.619655e-07     -0.4982645 2.218205e-05
+27 1.924487e-04      0.5202967 1.478111e-02      0.4275719 3.689260e-02
+28 4.182359e-23     -3.2952996 5.370178e-03     -1.0156297 2.414624e-06
+29 5.325344e-06      0.9411454 1.543927e-04      0.4827715 4.565178e-02
+30 4.230156e-08      1.7451782 3.284453e-77      0.8937057 6.528518e-32
+31 2.159632e-06      0.4073207 4.502692e-02      0.4391435 1.254131e-02
+32 3.622400e-07      0.8469458 2.974890e-07      0.4754517 4.349091e-03
+33 2.737931e-03      0.6341170 6.617167e-18      0.3197075 7.692471e-10
+34 4.032745e-07      1.8836534 3.992926e-19      1.7700974 1.993618e-26
+35 1.746726e-69      0.9819432 6.551433e-07      0.8385856 2.779733e-06
+36 6.254085e-04      6.4021162 4.092541e-03      6.4458707 7.808378e-03
+37 5.303766e-03     -0.8995534 1.452689e-07     -0.7023485 1.328081e-05</code></pre>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62_D224-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62_D224-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L     CI95U           P
 01_all_EpilepsyGene          4.2567249 1.09002652 12.056600 0.019065752
 02_high_conf_EpilepsyGene    6.2687831 0.72255483 24.878549 0.044942002
@@ -5975,33 +5978,33 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 13_Fromer_SCZ_FunDN          -0.3035889 1.8904773 1.00000000
 14_Cocchi_Pruning             2.1646562 1.1044524 0.37502642
 15_Epi25_dataset                   -Inf       NaN 1.00000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62_D224-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_noRAPA_D62_D224-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="nodiff-rapa-1" class="section level3">
 <h3>noDiff Rapa</h3>
 <pre class="r"><code>try(getlinmodoutput_D62D224(targetdiff = &quot;noDIFF&quot;,targetrapa = &quot;RAPA&quot;, 
                             targetline=c(&quot;D62&quot;, &quot;D224&quot;)))</code></pre>
-<pre><code>  entrezgene genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
-1       3709   ITPR2       1.0144843  3.199205e-03       1.0716091
-2      56963    RGMA       0.7056909  6.604404e-06       0.4876214
-3        361    AQP4       1.5656176  1.853286e-21       1.4074809
-4        348    APOE       1.1522867  2.550867e-12       1.1986122
-5       4852     NPY      -2.5012943  4.831459e-03      -4.1586786
-6      23089   PEG10       1.2813683  2.586992e-39       0.3492587
-7       1749    DLX5      -1.8207920  5.149658e-03      -9.1287072
-  D244_pval_2.2 D62_log2FC_2.1 D62_pval_2.1 D62_log2FC_2.2 D62_pval_2.2
-1  1.786538e-03      1.4682329 7.883463e-05      1.4707635 7.064746e-04
-2  1.364992e-02      1.1669346 1.509525e-08      1.0344198 3.851921e-03
-3  5.825739e-17      0.7543128 2.751680e-03      0.8155313 5.746483e-03
-4  8.038100e-11      1.0971097 6.637560e-05      1.0393426 2.965233e-03
-5  6.690797e-06     -1.9241887 7.017330e-08     -1.5819410 2.956766e-06
-6  1.840892e-02      0.7098065 2.053550e-03      0.7282390 8.417096e-03
-7  6.304782e-10     -2.2913973 7.064968e-05     -1.8533389 8.417096e-03</code></pre>
+<pre><code>  entrezgene genname D244_log2FC_2.1 D244_fdr_2.1 D244_log2FC_2.2 D244_fdr_2.2
+1       3709   ITPR2       1.0144843 3.199205e-03       1.0716091 1.786538e-03
+2      56963    RGMA       0.7056909 6.604404e-06       0.4876214 1.364992e-02
+3        361    AQP4       1.5656176 1.853286e-21       1.4074809 5.825739e-17
+4        348    APOE       1.1522867 2.550867e-12       1.1986122 8.038100e-11
+5       4852     NPY      -2.5012943 4.831459e-03      -4.1586786 6.690797e-06
+6      23089   PEG10       1.2813683 2.586992e-39       0.3492587 1.840892e-02
+7       1749    DLX5      -1.8207920 5.149658e-03      -9.1287072 6.304782e-10
+  D62_log2FC_2.1  D62_fdr_2.1 D62_log2FC_2.2  D62_fdr_2.2
+1      1.4682329 7.883463e-05      1.4707635 7.064746e-04
+2      1.1669346 1.509525e-08      1.0344198 3.851921e-03
+3      0.7543128 2.751680e-03      0.8155313 5.746483e-03
+4      1.0971097 6.637560e-05      1.0393426 2.965233e-03
+5     -1.9241887 7.017330e-08     -1.5819410 2.956766e-06
+6      0.7098065 2.053550e-03      0.7282390 8.417096e-03
+7     -2.2913973 7.064968e-05     -1.8533389 8.417096e-03</code></pre>
 <pre><code>No results to show
 Please make sure that the organism is correct or set significant = FALSE</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62_D224-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62_D224-1.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>[1] &quot;no significant results&quot;</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62_D224-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62_D224-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L     CI95U          P     Beta
 01_all_EpilepsyGene           0.000000 0.00000000  24.23466 1.00000000     -Inf
 02_high_conf_EpilepsyGene     0.000000 0.00000000  75.80669 1.00000000     -Inf
@@ -6034,49 +6037,49 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 13_Fromer_SCZ_FunDN               NaN 1.0000000
 14_Cocchi_Pruning            1.957879 0.6839203
 15_Epi25_dataset                  NaN 1.0000000</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62_D224-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/noDIFF_RAPA_D62_D224-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="diff-norapa-1" class="section level3">
 <h3>Diff noRapa</h3>
 <pre class="r"><code>try(getlinmodoutput_D62D224(targetdiff = &quot;DIFF&quot;,targetrapa = &quot;noRAPA&quot;, 
                             targetline=c(&quot;D62&quot;, &quot;D224&quot;)))</code></pre>
-<pre><code>   entrezgene   genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
-1       50486      G0S2      -1.4492217  3.370529e-32      -1.7927431
-2        7044    LEFTY2      -1.6863840  1.444934e-19      -2.6934841
-3         652      BMP4       1.4247389  3.501929e-09       1.1752283
-4        4804      NGFR      -2.1767618  3.267739e-23      -2.3203327
-5       56937    PMEPA1      -1.1739691  1.378185e-19      -1.1140883
-6       80781   COL18A1      -1.0190535  1.418955e-07      -1.0103524
-7        7869    SEMA3B      -1.3403981  3.060962e-05      -1.2301226
-8        7018        TF      -1.7913566  9.804860e-08      -2.1881714
-9       57537    SORCS2      -1.1432855  4.392572e-07      -1.3209447
-10  100505738 MIR4458HG      -0.9544000  2.870460e-05      -0.9170490
-11      11346     SYNPO      -1.0320585  3.175806e-06      -0.8511356
-12       1843     DUSP1       1.8428072  9.089214e-06       1.7754384
-13       2697      GJA1       0.9786886  1.006861e-11       0.7103970
-14       5244     ABCB4      -1.3752686  2.416092e-05      -2.2432327
-15       3371       TNC       1.4093005  5.957962e-03       1.4983126
-   D244_pval_2.2 D62_log2FC_2.1 D62_pval_2.1 D62_log2FC_2.2 D62_pval_2.2
-1   4.532054e-17     -1.2769869 3.776809e-02     -3.7478581 2.744552e-36
-2   1.215175e-28     -1.8967514 2.076460e-02     -5.4919034 1.299317e-06
-3   3.095265e-03      3.4322241 2.358141e-02      3.9413514 1.737453e-02
-4   2.270876e-09     -1.8961919 1.638191e-04     -2.0647461 7.699124e-05
-5   6.627336e-09     -0.5230080 3.898929e-03     -0.9284119 2.782505e-07
-6   6.341399e-05     -0.6429705 4.185984e-03     -1.4012123 9.118276e-11
-7   4.896891e-03     -1.6475938 4.752961e-08     -1.4351780 2.091144e-04
-8   5.243374e-07     -3.3138202 4.725046e-35     -2.6201244 4.161319e-27
-9   1.875633e-06     -0.7871403 4.529303e-02     -1.6736831 1.240910e-04
-10  1.585138e-02     -0.6736466 4.960015e-04     -0.9792733 3.598272e-07
-11  7.015280e-03     -1.1973194 6.008782e-09     -1.1898142 1.055427e-05
-12  2.802331e-03      2.3389517 1.273281e-03      2.5638656 2.811444e-03
-13  2.802331e-03      0.7860628 1.505593e-09      0.6923602 6.978354e-08
-14  1.296467e-05     -0.7938959 1.121641e-02     -1.7461164 2.042689e-08
-15  4.016110e-02      1.4982035 2.413395e-02      2.0004229 2.211218e-03</code></pre>
+<pre><code>   entrezgene   genname D244_log2FC_2.1 D244_fdr_2.1 D244_log2FC_2.2
+1       50486      G0S2      -1.4492217 3.370529e-32      -1.7927431
+2        7044    LEFTY2      -1.6863840 1.444934e-19      -2.6934841
+3         652      BMP4       1.4247389 3.501929e-09       1.1752283
+4        4804      NGFR      -2.1767618 3.267739e-23      -2.3203327
+5       56937    PMEPA1      -1.1739691 1.378185e-19      -1.1140883
+6       80781   COL18A1      -1.0190535 1.418955e-07      -1.0103524
+7        7869    SEMA3B      -1.3403981 3.060962e-05      -1.2301226
+8        7018        TF      -1.7913566 9.804860e-08      -2.1881714
+9       57537    SORCS2      -1.1432855 4.392572e-07      -1.3209447
+10  100505738 MIR4458HG      -0.9544000 2.870460e-05      -0.9170490
+11      11346     SYNPO      -1.0320585 3.175806e-06      -0.8511356
+12       1843     DUSP1       1.8428072 9.089214e-06       1.7754384
+13       2697      GJA1       0.9786886 1.006861e-11       0.7103970
+14       5244     ABCB4      -1.3752686 2.416092e-05      -2.2432327
+15       3371       TNC       1.4093005 5.957962e-03       1.4983126
+   D244_fdr_2.2 D62_log2FC_2.1  D62_fdr_2.1 D62_log2FC_2.2  D62_fdr_2.2
+1  4.532054e-17     -1.2769869 3.776809e-02     -3.7478581 2.744552e-36
+2  1.215175e-28     -1.8967514 2.076460e-02     -5.4919034 1.299317e-06
+3  3.095265e-03      3.4322241 2.358141e-02      3.9413514 1.737453e-02
+4  2.270876e-09     -1.8961919 1.638191e-04     -2.0647461 7.699124e-05
+5  6.627336e-09     -0.5230080 3.898929e-03     -0.9284119 2.782505e-07
+6  6.341399e-05     -0.6429705 4.185984e-03     -1.4012123 9.118276e-11
+7  4.896891e-03     -1.6475938 4.752961e-08     -1.4351780 2.091144e-04
+8  5.243374e-07     -3.3138202 4.725046e-35     -2.6201244 4.161319e-27
+9  1.875633e-06     -0.7871403 4.529303e-02     -1.6736831 1.240910e-04
+10 1.585138e-02     -0.6736466 4.960015e-04     -0.9792733 3.598272e-07
+11 7.015280e-03     -1.1973194 6.008782e-09     -1.1898142 1.055427e-05
+12 2.802331e-03      2.3389517 1.273281e-03      2.5638656 2.811444e-03
+13 2.802331e-03      0.7860628 1.505593e-09      0.6923602 6.978354e-08
+14 1.296467e-05     -0.7938959 1.121641e-02     -1.7461164 2.042689e-08
+15 4.016110e-02      1.4982035 2.413395e-02      2.0004229 2.211218e-03</code></pre>
 <pre><code>No results to show
 Please make sure that the organism is correct or set significant = FALSE</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62_D224-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62_D224-1.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>[1] &quot;no significant results&quot;</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62_D224-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62_D224-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                   OR      CI95L     CI95U         P      Beta
 01_all_EpilepsyGene          0.000000 0.00000000  9.741362 1.0000000      -Inf
 02_high_conf_EpilepsyGene    0.000000 0.00000000 30.536195 1.0000000      -Inf
@@ -6109,13 +6112,13 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 13_Fromer_SCZ_FunDN               NaN    1
 14_Cocchi_Pruning                 NaN    1
 15_Epi25_dataset                  NaN    1</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62_D224-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_noRAPA_D62_D224-3.png" width="4500" style="display: block; margin: auto;" /></p>
 </div>
 <div id="diff-rapa-1" class="section level3">
 <h3>Diff Rapa</h3>
 <pre class="r"><code>try(getlinmodoutput_D62D224(targetdiff = &quot;DIFF&quot;,targetrapa = &quot;RAPA&quot;,
                             targetline=c(&quot;D62&quot;, &quot;D224&quot;)))</code></pre>
-<pre><code>   entrezgene  genname D244_log2FC_2.1 D244_pval_2.1 D244_log2FC_2.2
+<pre><code>   entrezgene  genname D244_log2FC_2.1  D244_fdr_2.1 D244_log2FC_2.2
 1        3491     CCN1       0.4678656  2.963636e-06       0.4105692
 2        8490     RGS5       0.7061001  9.243401e-03       0.5901435
 3       50486     G0S2      -2.0420221 9.635264e-145      -2.5996040
@@ -6138,7 +6141,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 20      23286     WWC1       1.5686248  3.671663e-06       1.4815662
 21       6424    SFRP4      -1.5686024  2.187938e-85      -1.7488886
 22      83543    AIF1L      -1.2388526  3.130862e-20      -0.5682422
-   D244_pval_2.2 D62_log2FC_2.1 D62_pval_2.1 D62_log2FC_2.2 D62_pval_2.2
+    D244_fdr_2.2 D62_log2FC_2.1  D62_fdr_2.1 D62_log2FC_2.2  D62_fdr_2.2
 1   9.041386e-05      0.9195214 7.581913e-06      0.7819251 2.641835e-02
 2   6.181386e-03      0.9423725 2.179796e-03      1.3297066 5.430918e-06
 3  2.301167e-217     -2.1437954 2.962521e-18     -2.7798517 3.914474e-23
@@ -6161,7 +6164,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 20  3.857516e-05      1.0141019 4.480737e-03      1.2974451 1.326571e-04
 21 8.250920e-100     -0.7815462 4.441654e-04     -1.3426635 1.190509e-07
 22  9.922051e-04     -0.9344874 1.208559e-03     -0.9029015 2.547855e-02</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62_D224-1.png" width="7500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62_D224-2.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62_D224-1.png" width="4500" style="display: block; margin: auto;" /><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62_D224-2.png" width="4500" style="display: block; margin: auto;" /></p>
 <pre><code>                                    OR      CI95L     CI95U P       Beta
 01_all_EpilepsyGene          0.0000000 0.00000000  6.377532 1       -Inf
 02_high_conf_EpilepsyGene    0.0000000 0.00000000 19.996585 1       -Inf
@@ -6194,7 +6197,7 @@ Please make sure that the organism is correct or set significant = FALSE</code><
 13_Fromer_SCZ_FunDN               NaN    1
 14_Cocchi_Pruning                 NaN    1
 15_Epi25_dataset                  NaN    1</code></pre>
-<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62_D224-3.png" width="7500" style="display: block; margin: auto;" /></p>
+<p><img src="figure/05_Statistical_analysis.Rmd/DIFF_RAPA_D62_D224-3.png" width="4500" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -6234,51 +6237,52 @@ other attached packages:
 [25] purrr_0.3.4                 readr_1.4.0                
 [27] tidyr_1.1.3                 tibble_3.1.0               
 [29] ggplot2_3.3.5               tidyverse_1.3.0            
-[31] kableExtra_1.3.4            workflowr_1.6.2            
+[31] kableExtra_1.3.4           
 
 loaded via a namespace (and not attached):
   [1] readxl_1.3.1           uuid_0.1-4             backports_1.2.1       
-  [4] Hmisc_4.5-0            systemfonts_1.0.1      lazyeval_0.2.2        
-  [7] splines_4.0.4          BiocParallel_1.24.1    digest_0.6.27         
- [10] foreach_1.5.1          htmltools_0.5.1.1      GO.db_3.12.1          
- [13] fansi_0.4.2            checkmate_2.0.0        magrittr_2.0.1        
- [16] Rsolnp_1.16            memoise_2.0.0          cluster_2.1.1         
- [19] doParallel_1.0.16      annotate_1.68.0        modelr_0.1.8          
- [22] officer_0.3.17         svglite_2.0.0          jpeg_0.1-8.1          
- [25] colorspace_2.0-0       blob_1.2.1             rvest_1.0.0           
- [28] haven_2.3.1            xfun_0.24              crayon_1.4.1          
- [31] RCurl_1.98-1.2         jsonlite_1.7.2         genefilter_1.72.1     
- [34] impute_1.64.0          survival_3.2-9         iterators_1.0.13      
- [37] glue_1.4.2             gtable_0.3.0           zlibbioc_1.36.0       
- [40] XVector_0.30.0         webshot_0.5.2          DelayedArray_0.16.2   
- [43] scales_1.1.1           DBI_1.1.1              Rcpp_1.0.6            
- [46] htmlTable_2.1.0        viridisLite_0.3.0      xtable_1.8-4          
- [49] foreign_0.8-81         bit_4.0.4              preprocessCore_1.52.1 
- [52] Formula_1.2-4          truncnorm_1.0-8        htmlwidgets_1.5.3     
- [55] httr_1.4.2             ellipsis_0.3.1         mice_3.13.0           
- [58] farver_2.1.0           rJava_0.9-13           pkgconfig_2.0.3       
- [61] XML_3.99-0.5           nnet_7.3-15            sass_0.3.1            
- [64] dbplyr_2.1.0           locfit_1.5-9.4         utf8_1.1.4            
- [67] labeling_0.4.2         tidyselect_1.1.0       rlang_0.4.10          
- [70] later_1.1.0.1          AnnotationDbi_1.52.0   munsell_0.5.0         
- [73] cellranger_1.1.0       tools_4.0.4            cachem_1.0.4          
- [76] cli_3.0.1              generics_0.1.0         RSQLite_2.2.4         
- [79] broom_0.7.5            evaluate_0.14          fastmap_1.1.0         
- [82] yaml_2.2.1             bit64_4.0.5            fs_1.5.0              
- [85] zip_2.1.1              xml2_1.3.2             compiler_4.0.4        
- [88] rstudioapi_0.13        plotly_4.9.3           png_0.1-7             
- [91] reprex_1.0.0           geneplotter_1.68.0     bslib_0.2.4           
- [94] stringi_1.7.3          HardyWeinberg_1.7.1    highr_0.9             
- [97] gdtools_0.2.3          lattice_0.20-41        Matrix_1.3-2          
-[100] vctrs_0.3.6            pillar_1.5.1           lifecycle_1.0.0       
-[103] jquerylib_0.1.3        data.table_1.14.0      bitops_1.0-6          
-[106] flextable_0.6.4        httpuv_1.5.5           R6_2.5.0              
-[109] latticeExtra_0.6-29    promises_1.2.0.1       gridExtra_2.3         
-[112] writexl_1.3.1          codetools_0.2-18       assertthat_0.2.1      
-[115] xlsxjars_0.6.1         chron_2.3-56           rprojroot_2.0.2       
-[118] withr_2.4.1            GenomeInfoDbData_1.2.4 hms_1.0.0             
-[121] rpart_4.1-15           grid_4.0.4             rmarkdown_2.9.7       
-[124] git2r_0.28.0           lubridate_1.7.10       base64enc_0.1-3       </code></pre>
+  [4] Hmisc_4.5-0            workflowr_1.6.2        systemfonts_1.0.1     
+  [7] lazyeval_0.2.2         splines_4.0.4          BiocParallel_1.24.1   
+ [10] digest_0.6.27          foreach_1.5.1          htmltools_0.5.1.1     
+ [13] GO.db_3.12.1           fansi_0.4.2            checkmate_2.0.0       
+ [16] magrittr_2.0.1         Rsolnp_1.16            memoise_2.0.0         
+ [19] cluster_2.1.1          doParallel_1.0.16      annotate_1.68.0       
+ [22] modelr_0.1.8           officer_0.3.17         svglite_2.0.0         
+ [25] jpeg_0.1-8.1           colorspace_2.0-0       blob_1.2.1            
+ [28] rvest_1.0.0            haven_2.3.1            xfun_0.24             
+ [31] crayon_1.4.1           RCurl_1.98-1.2         jsonlite_1.7.2        
+ [34] genefilter_1.72.1      impute_1.64.0          survival_3.2-9        
+ [37] iterators_1.0.13       glue_1.4.2             gtable_0.3.0          
+ [40] zlibbioc_1.36.0        XVector_0.30.0         webshot_0.5.2         
+ [43] DelayedArray_0.16.2    scales_1.1.1           DBI_1.1.1             
+ [46] Rcpp_1.0.6             htmlTable_2.1.0        viridisLite_0.3.0     
+ [49] xtable_1.8-4           foreign_0.8-81         bit_4.0.4             
+ [52] preprocessCore_1.52.1  Formula_1.2-4          truncnorm_1.0-8       
+ [55] htmlwidgets_1.5.3      httr_1.4.2             ellipsis_0.3.1        
+ [58] mice_3.13.0            farver_2.1.0           rJava_0.9-13          
+ [61] pkgconfig_2.0.3        XML_3.99-0.5           nnet_7.3-15           
+ [64] sass_0.3.1             dbplyr_2.1.0           locfit_1.5-9.4        
+ [67] utf8_1.1.4             labeling_0.4.2         tidyselect_1.1.0      
+ [70] rlang_0.4.10           later_1.1.0.1          AnnotationDbi_1.52.0  
+ [73] munsell_0.5.0          cellranger_1.1.0       tools_4.0.4           
+ [76] cachem_1.0.4           cli_3.0.1              generics_0.1.0        
+ [79] RSQLite_2.2.4          broom_0.7.5            evaluate_0.14         
+ [82] fastmap_1.1.0          yaml_2.2.1             bit64_4.0.5           
+ [85] fs_1.5.0               zip_2.1.1              xml2_1.3.2            
+ [88] compiler_4.0.4         rstudioapi_0.13        plotly_4.9.3          
+ [91] png_0.1-7              reprex_1.0.0           geneplotter_1.68.0    
+ [94] bslib_0.2.4            stringi_1.7.3          HardyWeinberg_1.7.1   
+ [97] highr_0.9              gdtools_0.2.3          lattice_0.20-41       
+[100] Matrix_1.3-2           vctrs_0.3.6            pillar_1.5.1          
+[103] lifecycle_1.0.0        jquerylib_0.1.3        data.table_1.14.0     
+[106] bitops_1.0-6           flextable_0.6.4        httpuv_1.5.5          
+[109] R6_2.5.0               latticeExtra_0.6-29    promises_1.2.0.1      
+[112] gridExtra_2.3          writexl_1.3.1          codetools_0.2-18      
+[115] assertthat_0.2.1       xlsxjars_0.6.1         chron_2.3-56          
+[118] rprojroot_2.0.2        withr_2.4.1            GenomeInfoDbData_1.2.4
+[121] hms_1.0.0              rpart_4.1-15           grid_4.0.4            
+[124] rmarkdown_2.9.7        git2r_0.28.0           lubridate_1.7.10      
+[127] base64enc_0.1-3       </code></pre>
 </div>
 </div>
 </div>
