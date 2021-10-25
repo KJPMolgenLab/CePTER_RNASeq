@@ -47,7 +47,6 @@ log_2cpm=log2(counts(ddsMat, normalize=T)+1)
 # WGCNA
 ## soft thresholding 
 ```{r softthreshold}
-
 allowWGCNAThreads()
 
 dds2 = DESeq(ddsMat)
@@ -144,7 +143,9 @@ TOMplot(dissTOM^4, geneTree, as.character(dynamicColors), main="weighted distanc
 #calculate eigengenes
 MEList = moduleEigengenes(WGCNA_matrix, colors = dynamicColors)
 MEs = MEList$eigengenes 
-plotEigengeneNetworks(MEs, "Eigengenes_before_merging", marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2))
+
+plotEigengeneNetworks(MEs, "Eigengenes_before_merging", 
+                      marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2))
 
 MEList_new = mergeCloseModules(WGCNA_matrix, colors = dynamicColors, MEs = MEs, cutHeight = 0.2)
 
@@ -153,7 +154,11 @@ plotEigengeneNetworks(MEList_new$newMEs, "Eigengenes_after_merging",
 
 MEs = MEList_new$newMEs
 
-colData(ddsMat) = colData(ddsMat) %>% cbind(MEs[ddsMat$label_rep,])
+coldata_all = colData(ddsMat) %>% as.data.frame() %>% 
+  select(-grep("ME", colnames(colData(ddsMat)), value = T)) %>% 
+  cbind(MEs[colnames(ddsMat),]) %>% DataFrame()
+
+colData(ddsMat) = coldata_all
 
 colors_new = MEList_new$colors
 
@@ -164,7 +169,7 @@ save(ddsMat, file=paste0(output,"/dds_matrix.RData"))
 ```
 
 ## Heatmaps MEs
-```{r heatmap,  fig.height=20, fig.width=15}
+```{r heatmap,  fig.height=7, fig.width=5}
 #colors for plotting heatmap
 colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
 
@@ -203,17 +208,17 @@ rownames(collabels)=SampleInfo$label_rep[idx]
 genlabels = data.frame(cluster = as.character(colors_new)[order(colors_new)])
 rownames(genlabels) = colnames(WGCNA_matrix_sorted)
 
-pheatmap(t(WGCNA_matrix_sorted),
-         cluster_rows= F,
-         cluster_cols = F,
-         border_color = NA, 
-         clustering_method = "ward.D2",
-         annotation_row = genlabels,
-         annotation_col = collabels,
-         annotation_colors = ann_colors,
-         col = colors, 
-         scale = "row",
-         main = "Distances  normalized log2 counts")
+# pheatmap(t(WGCNA_matrix_sorted),
+#          cluster_rows= F,
+#          cluster_cols = F,
+#          border_color = NA, show_rownames = F, show_colnames = F,
+#          clustering_method = "ward.D2",
+#          annotation_row = genlabels,
+#          annotation_col = collabels,
+#          annotation_colors = ann_colors,
+#          col = colors, 
+#          scale = "row",
+#          main = "Distances  normalized log2 counts")
 
 MElabels = data.frame(cluster = gsub("ME", "",colnames(MEs)))
 rownames(MElabels) = colnames(MEs)
@@ -233,13 +238,14 @@ rownames(MEs) = SampleInfo[rownames(MEs),"label_rep"]
 pheatmap(t(MEs[idx,]),
          border_color = NA, 
          annotation_row = MElabels,
-         cluster_cols = F,
+         cluster_cols = F,show_rownames = F, show_colnames = F,
          annotation_col = collabels,
          clustering_method = "ward.D2",
          annotation_colors = ann_colors,
          scale="row",
          col = colors, 
          main = "Distances  normalized log2 counts")
+
 
 ```
 
@@ -251,14 +257,17 @@ MEMat = SampleInfo[,grep("ME", colnames(SampleInfo))]
 
 
 comparisonME=function(SampleInfo, samples = Set, 
-                            target =target,randomeffect = c()){
+                      target =target,randomeffect = c()){
   if(length(randomeffect)==0){
     data = SampleInfo[samples,]
     res=list()
     for(i in grep("ME", colnames(data), value = T))
       res[i]=lm(as.formula(paste0(i,"~1+",target)), data)
   }
-                            }
+  return(res)
+}
+
+LMlist=
 
 
 
