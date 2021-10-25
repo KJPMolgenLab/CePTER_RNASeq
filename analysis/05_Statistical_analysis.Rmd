@@ -33,9 +33,7 @@ opts_chunk$set(echo = TRUE,
                message = TRUE,
                warning = TRUE,
                fig.align='center',
-               dpi=500
-)
-
+               dpi=500)
 
 load(paste0(output,"/dds_matrix.RData"))
 SampleInfo = as.data.frame(colData(ddsMat))
@@ -277,6 +275,7 @@ geneids=rownames(restab_D244_sgNTC_sg2.1_noDIFF_noRAPA)
 
 getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
+
 ```
 
 ### D244
@@ -331,6 +330,7 @@ getlinmodoutput(targetline = "ReN",targetdiff = "DIFF",targetrapa = "noRAPA")
 getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
 
 ```
+
 ### D244
 
 ```{r noDIFF_RAPA_D244}

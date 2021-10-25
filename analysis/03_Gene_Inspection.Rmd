@@ -178,10 +178,15 @@ GOIsEntrez=c(
   MAP2="4133",
   SYP="6855",
   SLC17A7="57030",
+  GRIA2="2891",
   GAD1="2571",
+  GABBR2="9568",
   SERT1="6532",
+  HTR2B=" 3357",
   CHAT="1103",
-  TH="7054")
+  CHRNA7="1139",
+  TH="7054",
+  DRD2="1813")
 
 geneheatmap(GOIsEntrez,ddsMat,CellID=c("D62","D244","ReN"))
 geneheatmap(GOIsEntrez,ddsMat,CellID="D62")

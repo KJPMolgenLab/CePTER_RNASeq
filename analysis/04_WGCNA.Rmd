@@ -5,9 +5,14 @@ date: "22 3 2021"
 output: html_document
 ---
 
+```{r}
+home = getwd()
+```
+
+
 ```{r setup, include=FALSE}
 reanalyze=F
-home = getwd()
+
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))
@@ -123,7 +128,10 @@ plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut",
                     main = "Gene dendrogram and module colors")
 
 diag(dissTOM) = NA;
+```
 
+
+```{r adjacency}
 #Visualize the Tom plot. Raise the dissimilarity matrix to the power of 4 to bring out the module structure
 TOMplot(dissTOM^4, geneTree, as.character(dynamicColors), main="weighted distance of Topological overlap Matrix")
 
@@ -234,6 +242,75 @@ pheatmap(t(MEs[idx,]),
          main = "Distances  normalized log2 counts")
 
 ```
+
+
+```{r test_ME_effects}
+
+SampleInfo = as.data.frame(colData(ddsMat))
+MEMat = SampleInfo[,grep("ME", colnames(SampleInfo))]
+
+
+comparisonME=function(SampleInfo, samples = Set, 
+                            target =target,randomeffect = c()){
+  if(length(randomeffect)==0){
+    data = SampleInfo[samples,]
+    res=list()
+    for(i in grep("ME", colnames(data), value = T))
+      res[i]=lm(as.formula(paste0(i,"~1+",target)), data)
+  }
+                            }
+
+
+
+if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
+  # calculate all combinations 
+  
+  CellLines=c("D62","D244","ReN")
+  Rapamycin=c("noRAPA", "RAPA")
+  Differentiation=c("noDIFF", "DIFF")
+  Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+  target="KO"
+  
+  r = Rapamycin[1]
+  Cl=CellLines[1]
+  d = Differentiation[1]
+  Tp = Type_sgRNA[[1]]
+  
+  
+  # no random effects included 
+  for(r in Rapamycin){
+    Rapafilter = SampleInfo$RAPA %in% r
+    for(d in Differentiation){
+      Difffilter = SampleInfo$DIFF %in% d
+      for(Tp in Type_sgRNA){
+        sgRNAfilter = SampleInfo$gRNA %in% Tp
+        vs_label=paste0(Tp, sep="", collapse="_")
+        for(Cl in CellLines){
+          Celllinefilter = SampleInfo$CellLine %in% Cl
+          
+          
+          Set = rownames(SampleInfo)[Rapafilter&Difffilter&
+                                       sgRNAfilter&Celllinefilter]
+          lab = paste("restab", Cl, vs_label, d,r, sep="_")
+          print(lab)
+          assign(lab, 
+                 
+        }
+      }
+    }
+  }
+  
+  comparisons= apropos("restab")
+  save(list = comparisons, file = paste0(home,"/output/ResTabs_KO.RData"))
+} else 
+  load(file = paste0(home,"/output/ResTabs_KO.RData"))
+
+
+
+
+
+```
+
 
 
 
