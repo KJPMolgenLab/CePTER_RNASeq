@@ -391,11 +391,31 @@ getWGCNAoutputs = function(targetline,targetdiff,targetrapa){
 
 ```
 
+## Eigengene plots all modules
 
+```{r}
 
+EigengenePlot(data=SampleInfo[,grep("ME", colnames(SampleInfo))],
+              Sampledata = SampleInfo, 
+              samplesincl=rep(T, nrow(SampleInfo)))
+
+```
+
+## WGCNA module plots only D62
+
+```{r}
+
+idx=SampleInfo$CellLine=="D62"
+EigengenePlot(data=SampleInfo[idx,grep("ME", colnames(SampleInfo))],
+              Sampledata = SampleInfo[idx,], 
+              samplesincl=idx)
+
+```
 
 
 ## KO effect in noDIFF noRAPA
+
+
 ### D62
 
 ```{r noDIFF_noRAPA_D62}

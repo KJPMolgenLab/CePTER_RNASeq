@@ -16,7 +16,6 @@ jetcolors = colorRampPalette(c("darkblue", "skyblue", "green",
 OBcolors = colorRampPalette(c("darkblue", "skyb lue",
                               "white",  "orange", "darkorange3"))
 
-
 display_tab = function(df){
   df %>% kbl(digits = 3,align = "l") %>%
     kable_classic(full_width = F, position = "left") %>%
@@ -70,7 +69,6 @@ comparison <- function(dds_object, samples, target, randomeffect){
     topTable(fit,n=dim(fit)[1])
   }
 }
-
 
 # go profiler function
 getGOresults = function(geneset, genereference){
@@ -205,31 +203,36 @@ multiORplot = function(datatoplot=FALSE, Pval = "Pval", Padj = "Padj", SE = "SE"
   text(y=(length(betas):1)+0.5, x=betas, labels=starpval, cex=0.7)
 }
 
-
 convertpvaltostars=function(x){
   sapply(x, function(x){ifelse(x<=0.01, "**", ifelse(x<=0.05, "*", ""))})
 }
 
-
+# plots eigenvalues of specified samples
 EigengenePlot=function(data, Sampledata, samplesincl){
   for (i in colnames(data)){
-    nf=layout(matrix(c(1:5)),
-              heights = c(15,1,1,1,1))
-    par(mar=c(0.2,4.1,3,2.1))
+    nf=layout(matrix(c(1:5,rep(6,5)),ncol=2),
+              heights = c(12,1,1,1,1),
+              widths = c(10,2))
+    par(mar=c(0.2,4.1,3,1))
     barplot(data[,i], col=gsub("ME", "", i),border = NA, main=i, ylab="ME expression")
-    par(mar=c(0.1,4.1,0,2.1))
+    par(mar=c(0.1,4.1,0,1))
     a=barplot(rep(1,length(data[,i])),border = NA,
               col=ann_colors[["gRNA"]][Sampledata[samplesincl,"gRNA"]], yaxt='n')
-    text(a,0.5, Sampledata[samplesincl,"gRNA"])
     a=barplot(rep(1,length(data[,i])),border = NA,
               col=ann_colors[["RAPA"]][Sampledata[samplesincl,"RAPA"]], yaxt='n')
-    text(a,0.5, Sampledata[samplesincl,"RAPA"])
     a=barplot(rep(1,length(data[,i])),border = NA,
               col=ann_colors[["DIFF"]][Sampledata[samplesincl,"DIFF"]], yaxt='n')
-    text(a,0.5, Sampledata[samplesincl,"DIFF"])
     a=barplot(rep(1,length(data[,i])), border = NA,
               col=ann_colors[["CellLine"]][Sampledata[samplesincl,"CellLine"]], yaxt='n')
-    text(a,0.5, Sampledata[samplesincl,"CellLine"])
+    par(mar=c(0,0,0,0))
+    plot.new()
+    legend(0,0.5, legend = names(ann_colors[["gRNA"]]),
+           fill = ann_colors[["gRNA"]], xpd=T,
+           bty = "n")
+    legend(0,0.375, legend = names(ann_colors[["RAPA"]]),fill = ann_colors[["RAPA"]], xpd=T,bty = "n")
+    legend(0,0.25, legend = names(ann_colors[["DIFF"]]),fill = ann_colors[["DIFF"]], xpd=T,bty = "n")
+    legend(0,0.125, legend = names(ann_colors[["CellLine"]]),fill = ann_colors[["CellLine"]], xpd=T,bty = "n")
+
   }
 }
 
