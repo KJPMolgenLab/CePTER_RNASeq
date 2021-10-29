@@ -111,7 +111,7 @@ dynamicMods = cutreeDynamic(dendro = geneTree,
                             cutHeight = 0.998,
                             minClusterSize = minModuleSize,
                             deepSplit=2, 
-                            pamRespectsDendro = FALSE)
+                            pamRespectsDendro = T)
 
 #the following command gives the module labels and the size of each module. Lable 0 is reserved for unassigned genes
 #table(dynamicMods)
@@ -127,10 +127,11 @@ plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut",
                     main = "Gene dendrogram and module colors")
 
 diag(dissTOM) = NA;
+
 ```
 
 
-```{r adjacency}
+```{r adjacency_TOMplot}
 #Visualize the Tom plot. Raise the dissimilarity matrix to the power of 4 to bring out the module structure
 TOMplot(dissTOM^4, geneTree, as.character(dynamicColors), main="weighted distance of Topological overlap Matrix")
 
@@ -162,7 +163,8 @@ colData(ddsMat) = coldata_all
 
 colors_new = MEList_new$colors
 
-mcols(ddsMat) = cbind(mcols(ddsMat), data.frame(cluster=colors_new))
+mcols(ddsMat) = cbind(mcols(ddsMat)%>% as.data.frame() %>% select(-contains("cluster")), data.frame(cluster=colors_new)) %>% DataFrame()
+
 
 save(ddsMat, file=paste0(output,"/dds_matrix.RData"))
 
@@ -238,14 +240,15 @@ rownames(MEs) = SampleInfo[rownames(MEs),"label_rep"]
 pheatmap(t(MEs[idx,]),
          border_color = NA, 
          annotation_row = MElabels,
-         cluster_cols = F,show_rownames = F, show_colnames = F,
          annotation_col = collabels,
+         cluster_cols = F,
+         show_rownames = F, show_colnames = F,
          clustering_method = "ward.D2",
          annotation_colors = ann_colors,
          scale="row",
+         breaks  = seq(-2, 2,length.out=255),
          col = colors, 
-         main = "Distances  normalized log2 counts")
-
+         main = "eigengene values")
 
 ```
 
@@ -256,71 +259,246 @@ SampleInfo = as.data.frame(colData(ddsMat))
 MEMat = SampleInfo[,grep("ME", colnames(SampleInfo))]
 
 
-comparisonME=function(SampleInfo, samples = Set, 
-                      target =target,randomeffect = c()){
-  if(length(randomeffect)==0){
-    data = SampleInfo[samples,]
-    res=list()
-    for(i in grep("ME", colnames(data), value = T))
-      res[i]=lm(as.formula(paste0(i,"~1+",target)), data)
+
+## herlper functions#test differences
+testit=function(Dataset, samples = Set, 
+                depvar){
+  data = Dataset[samples,]
+  res=list()
+  for(i in grep("ME", colnames(data), value = T)){
+    res[[i]]=lm(as.formula(paste0(i,"~1+",depvar)), data)
   }
   return(res)
 }
 
-LMlist=
 
 
+# extract coefficents
+getcoefff=function(x){
+  res = summary(x)$coefficients[2,]
+  return(res)
+}
 
-if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
-  # calculate all combinations 
-  
-  CellLines=c("D62","D244","ReN")
-  Rapamycin=c("noRAPA", "RAPA")
-  Differentiation=c("noDIFF", "DIFF")
-  Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
-  target="KO"
-  
-  r = Rapamycin[1]
-  Cl=CellLines[1]
-  d = Differentiation[1]
-  Tp = Type_sgRNA[[1]]
-  
-  
-  # no random effects included 
-  for(r in Rapamycin){
-    Rapafilter = SampleInfo$RAPA %in% r
-    for(d in Differentiation){
-      Difffilter = SampleInfo$DIFF %in% d
-      for(Tp in Type_sgRNA){
-        sgRNAfilter = SampleInfo$gRNA %in% Tp
-        vs_label=paste0(Tp, sep="", collapse="_")
-        for(Cl in CellLines){
-          Celllinefilter = SampleInfo$CellLine %in% Cl
-          
-          
-          Set = rownames(SampleInfo)[Rapafilter&Difffilter&
-                                       sgRNAfilter&Celllinefilter]
-          lab = paste("restab", Cl, vs_label, d,r, sep="_")
-          print(lab)
-          assign(lab, 
-                 
-        }
+# comparisonME
+comparisonME = function(SampleInfo, Set, target){
+  LMlist=testit(Dataset = SampleInfo, samples = Set, depvar=target)
+  coeff = as.data.frame(lapply(LMlist, getcoefff) %>% do.call(rbind, .))
+  coeff$padj = p.adjust(coeff$`Pr(>|t|)`, "bonferroni")
+  return(coeff)}
+
+CellLines=c("D62","D244","ReN")
+Rapamycin=c("noRAPA", "RAPA")
+Differentiation=c("noDIFF", "DIFF")
+Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+target="KO"
+
+r = Rapamycin[1]
+Cl=CellLines[1]
+d = Differentiation[1]
+Tp = Type_sgRNA[[1]]
+
+
+# no random effects included 
+for(r in Rapamycin){
+  Rapafilter = SampleInfo$RAPA %in% r
+  for(d in Differentiation){
+    Difffilter = SampleInfo$DIFF %in% d
+    for(Tp in Type_sgRNA){
+      sgRNAfilter = SampleInfo$gRNA %in% Tp
+      vs_label=paste0(Tp, sep="", collapse="_")
+      for(Cl in CellLines){
+        Celllinefilter = SampleInfo$CellLine %in% Cl
+        
+        
+        Set = rownames(SampleInfo)[Rapafilter&Difffilter&
+                                     sgRNAfilter&Celllinefilter]
+        lab = paste("restabWGCNA", Cl, vs_label, d,r, sep="_")
+        assign(lab, comparisonME(SampleInfo, Set, target))
       }
     }
   }
-  
-  comparisons= apropos("restab")
-  save(list = comparisons, file = paste0(home,"/output/ResTabs_KO.RData"))
-} else 
-  load(file = paste0(home,"/output/ResTabs_KO.RData"))
+}
 
 
-
+comparisons= apropos("restabWGCNA")
+save(list = comparisons, file = paste0(home,"/output/ResTabs_KO_WGCNA.RData"))
 
 
 ```
 
+```{r get_WGCNAoutputs}
 
+mypval=0.05
+MEIds = rownames(restabWGCNA_D62_sgNTC_sg2.1_noDIFF_noRAPA)
+
+getWGCNAoutputs = function(targetline,targetdiff,targetrapa){
+  
+  samplesincl = SampleInfo$DIFF==targetdiff & 
+    SampleInfo$RAPA==targetrapa &
+    SampleInfo$CellLine==targetline
+  
+  
+  pvalrep=  get(paste0("restabWGCNA_", 
+                       targetline, "_sgNTC_sg2.1_", 
+                       targetdiff, "_" , 
+                       targetrapa))$padj<=mypval &
+    get(paste0("restabWGCNA_", 
+               targetline, "_sgNTC_sg2.2_", 
+               targetdiff, "_" , 
+               targetrapa))$padj<=mypval
+  
+  betarep = apply(cbind(get(paste0("restabWGCNA_", 
+                                   targetline, "_sgNTC_sg2.1_", 
+                                   targetdiff, "_" , 
+                                   targetrapa))$Estimate,
+                        get(paste0("restabWGCNA_", 
+                                   targetline, "_sgNTC_sg2.2_", 
+                                   targetdiff, "_" , 
+                                   targetrapa))$Estimate), 1,
+                  samesign)
+  
+  idx=which(betarep & pvalrep)
+  hits=MEIds[idx]
+  
+  
+  restab=data.frame(
+    Module = MEIds, 
+    beta_2.1 = get(paste0("restabWGCNA_", 
+                          targetline, "_sgNTC_sg2.1_", 
+                          targetdiff, "_" , 
+                          targetrapa))$Estimate, 
+    bonferroni_2.1 = get(paste0("restabWGCNA_", 
+                                targetline, "_sgNTC_sg2.1_", 
+                                targetdiff, "_" , 
+                                targetrapa))$padj, 
+    beta_2.2 = get(paste0("restabWGCNA_", 
+                          targetline, "_sgNTC_sg2.2_", 
+                          targetdiff, "_" , 
+                          targetrapa))$Estimate, 
+    bonferroni_2.2 = get(paste0("restabWGCNA_", 
+                                targetline, "_sgNTC_sg2.2_", 
+                                targetdiff, "_" , 
+                                targetrapa))$padj)
+  
+  print(restab)
+  write.xlsx(restab, file=paste0(output, "/Restab_", 
+                                 targetline,"_", 
+                                 targetdiff, "_",
+                                 targetrapa, ".xlsx"))
+  SamplesSet=SampleInfo[samplesincl,] %>% select(all_of(hits))
+  EigengenePlot(SamplesSet, SampleInfo, samplesincl)
+}
+
+```
+
+
+
+
+
+## KO effect in noDIFF noRAPA
+### D62
+
+```{r noDIFF_noRAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
+
+```
+
+### D244
+
+```{r noDIFF_noRAPA_D244}
+
+getWGCNAoutputs(targetline = "D244",targetdiff = "noDIFF",targetrapa = "noRAPA")
+
+```
+
+### ReN
+
+```{r noDIFF_noRAPA_ReN}
+
+getWGCNAoutputs(targetline = "ReN",targetdiff = "noDIFF",targetrapa = "noRAPA")
+
+```
+
+
+## KO effect in DIFF noRAPA
+
+### D62
+
+```{r DIFF_noRAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
+
+```
+
+### D244
+
+```{r DIFF_noRAPA_D244}
+
+getWGCNAoutputs(targetline = "D244",targetdiff = "DIFF",targetrapa = "noRAPA")
+
+```
+
+### ReN
+
+```{r DIFF_noRAPA_ReN}
+
+getWGCNAoutputs(targetline = "ReN",targetdiff = "DIFF",targetrapa = "noRAPA")
+
+```
+
+
+## KO effect in noDIFF RAPA
+### D62
+
+```{r noDIFF_RAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
+
+```
+
+### D244
+
+```{r noDIFF_RAPA_D244}
+
+getWGCNAoutputs(targetline = "D244",targetdiff = "noDIFF",targetrapa = "RAPA")
+
+```
+
+### ReN
+
+```{r noDIFF_RAPA_ReN}
+
+getWGCNAoutputs(targetline = "ReN",targetdiff = "noDIFF",targetrapa = "RAPA")
+
+```
+
+
+## KO effect in DIFF RAPA
+
+### D62
+
+```{r DIFF_RAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
+
+```
+
+### D244
+
+```{r DIFF_RAPA_D244}
+
+getWGCNAoutputs(targetline = "D244",targetdiff = "DIFF",targetrapa = "RAPA")
+
+```
+
+### ReN
+
+```{r DIFF_RAPA_ReN}
+
+getWGCNAoutputs(targetline = "ReN",targetdiff = "DIFF",targetrapa = "RAPA")
+
+```
 
 
 ```{r goresplots}

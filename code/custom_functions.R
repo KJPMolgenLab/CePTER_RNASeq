@@ -17,7 +17,6 @@ OBcolors = colorRampPalette(c("darkblue", "skyb lue",
                               "white",  "orange", "darkorange3"))
 
 
-
 display_tab = function(df){
   df %>% kbl(digits = 3,align = "l") %>%
     kable_classic(full_width = F, position = "left") %>%
@@ -122,7 +121,7 @@ GOplot = function(GOtable, N, Title="GO plot"){
     theme_bw(base_size = 12) + ggtitle(Title)+
     theme(plot.title = element_text(hjust = 0.5))+
     scale_y_continuous(breaks=N:1,
-                     labels=Tabtoplot$term_name)
+                       labels=Tabtoplot$term_name)
 }
 
 geneheatmap=function(GOIsEntrez,exprobj,CellID){
@@ -167,6 +166,7 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
   rownames(labels)=colnames(dataset)
 
   pheatmap(dataset,
+           border_color = NA,
            cluster_rows = F,
            cluster_cols = F,
            col = colors,
@@ -177,6 +177,8 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
 
 }
 
+samesign <- function(x) {abs(sum(sign(x)))==length(x)}
+
 multiORplot = function(datatoplot=FALSE, Pval = "Pval", Padj = "Padj", SE = "SE", beta="beta", pheno = "pheno"){
   starpval=convertpvaltostars(datatoplot[[Pval]])
   starpval[datatoplot[[Padj]]<0.05]="adj.p**"
@@ -184,7 +186,7 @@ multiORplot = function(datatoplot=FALSE, Pval = "Pval", Padj = "Padj", SE = "SE"
   CIUpper = datatoplot[[beta]] +1.96*datatoplot[[SE]]
   CILower = datatoplot[[beta]] -1.96*datatoplot[[SE]]
   xlim=range(c(CIUpper, CILower), na.rm=T)*1.2
-  par(mar=c(5,12,5,3))
+  par(mar=c(5,16,5,2))
   betas = datatoplot[[beta]]
 
   plot(x=betas, y=1:length(betas),
@@ -208,4 +210,26 @@ convertpvaltostars=function(x){
   sapply(x, function(x){ifelse(x<=0.01, "**", ifelse(x<=0.05, "*", ""))})
 }
 
+
+EigengenePlot=function(data, Sampledata, samplesincl){
+  for (i in colnames(data)){
+    nf=layout(matrix(c(1:5)),
+              heights = c(15,1,1,1,1))
+    par(mar=c(0.2,4.1,3,2.1))
+    barplot(data[,i], col=gsub("ME", "", i),border = NA, main=i, ylab="ME expression")
+    par(mar=c(0.1,4.1,0,2.1))
+    a=barplot(rep(1,length(data[,i])),border = NA,
+              col=ann_colors[["gRNA"]][Sampledata[samplesincl,"gRNA"]], yaxt='n')
+    text(a,0.5, Sampledata[samplesincl,"gRNA"])
+    a=barplot(rep(1,length(data[,i])),border = NA,
+              col=ann_colors[["RAPA"]][Sampledata[samplesincl,"RAPA"]], yaxt='n')
+    text(a,0.5, Sampledata[samplesincl,"RAPA"])
+    a=barplot(rep(1,length(data[,i])),border = NA,
+              col=ann_colors[["DIFF"]][Sampledata[samplesincl,"DIFF"]], yaxt='n')
+    text(a,0.5, Sampledata[samplesincl,"DIFF"])
+    a=barplot(rep(1,length(data[,i])), border = NA,
+              col=ann_colors[["CellLine"]][Sampledata[samplesincl,"CellLine"]], yaxt='n')
+    text(a,0.5, Sampledata[samplesincl,"CellLine"])
+  }
+}
 
