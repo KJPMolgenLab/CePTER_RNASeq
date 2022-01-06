@@ -8,12 +8,21 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Preliminary Output page for CePTER RNA-SEQ Analysis 
+# CePTER RNA-SEQ Analysis 
 
 
-Individual Processing steps: 
+## All Samples  
 
 *  Preprocessing and QC [view](02_Preprocessing_counts.html)
 *  Gene inspection  [view](03_Gene_Inspection.html)
 *  WGCNA  [view](04_WGCNA.html)
 *  Group comparisons  [view](05_Statistical_analysis.html)
+
+
+
+## D62 Analysis only 
+
+*  D62 Preprocessing and QC [view](02_D62_Preprocessing_counts.html)
+*  D62 Gene inspection  [view](03_D62_Gene_Inspection.html)
+*  D62 WGCNA  [view](04_D62_WGCNA.html)
+*  D62 Group comparisons  [view](05_D62_Statistical_analysis.html)

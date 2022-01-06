@@ -1,0 +1,467 @@
+---
+title: "WGCNA"
+author: "AGC, AY"
+date: "22 3 2021"
+output: html_document
+---
+
+```{r}
+home = getwd()
+```
+
+
+```{r setup, include=FALSE}
+reanalyze=F
+
+output= paste0(home, "/output/")
+
+source(paste0(home,"/code/custom_functions.R"))
+
+library(DESeq2)
+library(knitr)
+library(tidyverse)
+library(pheatmap)
+library(WGCNA)
+library(flashClust)
+library(pheatmap)
+library(gprofiler2)
+library(xlsx)
+
+
+opts_chunk$set(echo = TRUE, 
+               fig.height = 7, 
+               fig.width = 9, 
+               message = TRUE,
+               warning = TRUE,
+               fig.align='center',
+               dpi=500
+)
+
+
+load(paste0(output,"/D62_dds_matrix.RData"))
+SampleInfo = as.data.frame(colData(ddsMat))
+log_2cpm=log2(counts(ddsMat, normalize=T)+1)
+
+```
+
+# WGCNA
+## soft thresholding 
+```{r softthreshold}
+allowWGCNAThreads()
+
+dds2 = DESeq(ddsMat)
+vsd = getVarianceStabilizedData(dds2)
+
+WGCNA_matrix <- t(log2(vsd+1)) #Need to transform for further calculations
+
+#s = abs(bicor(WGCNA_matrix)) #biweight mid-correlation
+powers = c(c(1:10), seq(from = 12, to=20, by=2))
+sft = pickSoftThreshold(WGCNA_matrix, powerVector = powers, verbose = 5)
+
+par(mfrow = c(1,2))
+cex1 = 0.9;
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit, signed R^2",
+     type="n", main = paste("Scale independence"));
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     labels=powers,cex=cex1,col="red");
+abline(h=0.80,col="red")
+
+plot(sft$fitIndices[,1], sft$fitIndices[,5],xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n",main = paste("Mean connectivity"))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+
+```
+
+## Identify Gene Modules
+
+```{r adjacency}
+softPower = 6; # The point where the curve flattens
+#calclute the adjacency matrix
+
+if(reanalyze | !file.exists(paste0(output,"/D62_WGCNA_adj_TOM.RData"))){
+  #adj= adjacency(WGCNA_matrix,type = "unsigned", power = softPower);
+  
+  #Converting adjacency matrix into To so that the noise could be reduced
+  TOM=TOMsimilarityFromExpr(WGCNA_matrix,networkType = "unsigned", 
+                            TOMType = "unsigned", power = softPower);
+  save(list = c(
+    #"adj", 
+    "TOM"), file=paste0(output,"/D62_WGCNA_adj_TOM.RData"))
+  
+} else {
+  load(paste0(output,"/D62_WGCNA_adj_TOM.RData"))
+}
+
+
+SubGeneNames<-colnames(WGCNA_matrix)
+
+colnames(TOM) =rownames(TOM) =SubGeneNames
+dissTOM=1-TOM
+diag(dissTOM) = 0
+
+#hierarchical clustering
+geneTree = flashClust(as.dist(dissTOM),method="average");
+
+#plot the resulting clustering tree (dendrogram)
+# plot(geneTree, xlab="", sub="",cex=0.3, main="Module clustering prio to merging");
+
+#Set the minimum module size
+minModuleSize = 50;
+
+#Module identification using dynamic tree cut
+dynamicMods = cutreeDynamic(dendro = geneTree, 
+                            distM = dissTOM, 
+                            cutHeight = 0.998,
+                            minClusterSize = minModuleSize,
+                            deepSplit=2, 
+                            pamRespectsDendro = T)
+
+#the following command gives the module labels and the size of each module. Lable 0 is reserved for unassigned genes
+#table(dynamicMods)
+
+#Plot the module assignment under the dendrogram; note: The grey color is reserved for unassigned genes
+dynamicColors = labels2colors(dynamicMods)
+table(dynamicColors)
+
+plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut", 
+                    dendroLabels = FALSE, hang = 0.03, 
+                    addGuide = TRUE, 
+                    guideHang = 0.05, 
+                    main = "Gene dendrogram and module colors")
+
+diag(dissTOM) = NA;
+
+```
+
+
+```{r adjacency_TOMplot}
+#Visualize the Tom plot. Raise the dissimilarity matrix to the power of 4 to bring out the module structure
+TOMplot(dissTOM^4, geneTree, as.character(dynamicColors), main="weighted distance of Topological overlap Matrix")
+
+```
+
+# Module eigengenes 
+## Identify and Merge correlated modules 
+
+```{r MEs,  fig.height=20, fig.width=15}
+#calculate eigengenes
+MEList = moduleEigengenes(WGCNA_matrix, colors = dynamicColors)
+MEs = MEList$eigengenes 
+
+plotEigengeneNetworks(MEs, "Eigengenes_before_merging", 
+                      marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2))
+
+MEList_new = mergeCloseModules(WGCNA_matrix, colors = dynamicColors, MEs = MEs, cutHeight = 0.05)
+
+plotEigengeneNetworks(MEList_new$newMEs, "Eigengenes_after_merging", 
+                      marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2))
+
+MEs = MEList_new$newMEs
+
+coldata_all = colData(ddsMat) %>% as.data.frame() %>% 
+  select(-grep("ME", colnames(colData(ddsMat)), value = T)) %>% 
+  cbind(MEs[colnames(ddsMat),]) %>% DataFrame()
+
+colData(ddsMat) = coldata_all
+
+colors_new = MEList_new$colors
+
+mcols(ddsMat) = cbind(mcols(ddsMat)%>% as.data.frame() %>% select(-contains("cluster")), data.frame(cluster=colors_new)) %>% DataFrame()
+
+
+save(ddsMat, file=paste0(output,"/D62_dds_matrix.RData"))
+
+```
+
+## Heatmaps MEs
+```{r heatmap,  fig.height=7, fig.width=5}
+#colors for plotting heatmap
+colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
+
+cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+names(cellcol) = levels(SampleInfo$CellLine)
+
+gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+names(gRNAcol) = levels(SampleInfo$gRNA)
+
+diffcol = brewer.pal(3,"Set1")[1:nlevels(SampleInfo$DIFF)]
+names(diffcol) = levels(SampleInfo$DIFF)
+
+rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
+names(rapacol) = levels(SampleInfo$RAPA)
+
+clustcol = gplots::col2hex(unique(as.character(colors_new)))
+names(clustcol) = unique(as.character(colors_new))
+
+rownames(WGCNA_matrix)=SampleInfo[rownames(WGCNA_matrix), "label_rep"]
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol,
+  CellLine=cellcol,
+  cluster = clustcol)
+
+idx=order(SampleInfo$gRNA, SampleInfo$CellLine, SampleInfo$DIFF,SampleInfo$RAPA)
+WGCNA_matrix_sorted=WGCNA_matrix[SampleInfo$label_rep[idx], order(colors_new)]
+
+collabels = SampleInfo[idx,c("CellLine","gRNA","DIFF", "RAPA")] %>%  
+  mutate_all(as.character) %>% as.data.frame()
+
+rownames(collabels)=SampleInfo$label_rep[idx]
+
+genlabels = data.frame(cluster = as.character(colors_new)[order(colors_new)])
+rownames(genlabels) = colnames(WGCNA_matrix_sorted)
+
+# pheatmap(t(WGCNA_matrix_sorted),
+#          cluster_rows= F,
+#          cluster_cols = F,
+#          border_color = NA, show_rownames = F, show_colnames = F,
+#          clustering_method = "ward.D2",
+#          annotation_row = genlabels,
+#          annotation_col = collabels,
+#          annotation_colors = ann_colors,
+#          col = colors, 
+#          scale = "row",
+#          main = "Distances  normalized log2 counts")
+
+MElabels = data.frame(cluster = gsub("ME", "",colnames(MEs)))
+rownames(MElabels) = colnames(MEs)
+
+clustcol = gplots::col2hex(unique(as.character(MElabels$cluster)))
+names(clustcol) = as.character(MElabels$cluster)
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol,
+  CellLine=cellcol,
+  cluster = clustcol)
+
+rownames(MEs) = SampleInfo[rownames(MEs),"label_rep"]
+
+pheatmap(t(MEs[idx,]),
+         border_color = NA, 
+         annotation_row = MElabels,
+         annotation_col = collabels,
+         cluster_cols = F,
+         show_rownames = F, show_colnames = F,
+         clustering_method = "ward.D2",
+         annotation_colors = ann_colors,
+         scale="row",
+         breaks  = seq(-2, 2,length.out=255),
+         col = colors, 
+         main = "eigengene values")
+
+```
+
+
+```{r test_ME_effects}
+
+SampleInfo = as.data.frame(colData(ddsMat))
+MEMat = SampleInfo[,grep("ME", colnames(SampleInfo))]
+
+
+
+## herlper functions#test differences
+testit=function(Dataset, samples = Set, 
+                depvar){
+  data = Dataset[samples,]
+  res=list()
+  for(i in grep("ME", colnames(data), value = T)){
+    res[[i]]=lm(as.formula(paste0(i,"~1+",depvar)), data)
+  }
+  return(res)
+}
+
+
+
+# extract coefficents
+getcoefff=function(x){
+  res = summary(x)$coefficients[2,]
+  return(res)
+}
+
+# comparisonME
+comparisonME = function(SampleInfo, Set, target){
+  LMlist=testit(Dataset = SampleInfo, samples = Set, depvar=target)
+  coeff = as.data.frame(lapply(LMlist, getcoefff) %>% do.call(rbind, .))
+  coeff$padj = p.adjust(coeff$`Pr(>|t|)`, "bonferroni")
+  return(coeff)}
+
+#CellLines=c("D62","D244","ReN")
+Rapamycin=c("noRAPA", "RAPA")
+Differentiation=c("noDIFF", "DIFF")
+Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+target="KO"
+
+r = Rapamycin[1]
+#Cl=CellLines[1]
+d = Differentiation[1]
+Tp = Type_sgRNA[[1]]
+
+
+# no random effects included 
+for(r in Rapamycin){
+  Rapafilter = SampleInfo$RAPA %in% r
+  for(d in Differentiation){
+    Difffilter = SampleInfo$DIFF %in% d
+    for(Tp in Type_sgRNA){
+      sgRNAfilter = SampleInfo$gRNA %in% Tp
+      vs_label=paste0(Tp, sep="", collapse="_")
+        Set = rownames(SampleInfo)[Rapafilter&Difffilter&
+                                     sgRNAfilter]
+        lab = paste("restabWGCNA", "D62", vs_label, d,r, sep="_")
+        assign(lab, comparisonME(SampleInfo, Set, target))
+    }
+  }
+}
+
+comparisons= apropos("restabWGCNA")
+save(list = comparisons, file = paste0(home,"/output/D62_ResTabs_KO_WGCNA.RData"))
+
+```
+
+```{r get_WGCNAoutputs}
+
+mypval=0.05
+MEIds = rownames(restabWGCNA_D62_sgNTC_sg2.1_noDIFF_noRAPA)
+
+getWGCNAoutputs = function(targetline="D62",targetdiff,targetrapa){
+  
+  samplesincl = SampleInfo$DIFF==targetdiff & 
+    SampleInfo$RAPA==targetrapa
+  
+  pvalrep=  get(paste0("restabWGCNA_", 
+                       targetline, "_sgNTC_sg2.1_", 
+                       targetdiff, "_" , 
+                       targetrapa))$padj<=mypval &
+    get(paste0("restabWGCNA_", 
+               targetline, "_sgNTC_sg2.2_", 
+               targetdiff, "_" , 
+               targetrapa))$padj<=mypval
+  
+  betarep = apply(cbind(get(paste0("restabWGCNA_", 
+                                   targetline, "_sgNTC_sg2.1_", 
+                                   targetdiff, "_" , 
+                                   targetrapa))$Estimate,
+                        get(paste0("restabWGCNA_", 
+                                   targetline, "_sgNTC_sg2.2_", 
+                                   targetdiff, "_" , 
+                                   targetrapa))$Estimate), 1,
+                  samesign)
+  
+  idx=which(betarep & pvalrep)
+  hits=MEIds[idx]
+  
+  
+  restab=data.frame(
+    Module = MEIds, 
+    beta_2.1 = get(paste0("restabWGCNA_", 
+                          targetline, "_sgNTC_sg2.1_", 
+                          targetdiff, "_" , 
+                          targetrapa))$Estimate, 
+    bonferroni_2.1 = get(paste0("restabWGCNA_", 
+                                targetline, "_sgNTC_sg2.1_", 
+                                targetdiff, "_" , 
+                                targetrapa))$padj, 
+    beta_2.2 = get(paste0("restabWGCNA_", 
+                          targetline, "_sgNTC_sg2.2_", 
+                          targetdiff, "_" , 
+                          targetrapa))$Estimate, 
+    bonferroni_2.2 = get(paste0("restabWGCNA_", 
+                                targetline, "_sgNTC_sg2.2_", 
+                                targetdiff, "_" , 
+                                targetrapa))$padj)
+  
+  print(restab)
+  write.xlsx(restab, file=paste0(output, "/Restab_", 
+                                 targetline,"_", 
+                                 targetdiff, "_",
+                                 targetrapa, ".xlsx"))
+  SamplesSet=SampleInfo[samplesincl,] %>% select(all_of(hits))
+  EigengenePlot(SamplesSet, SampleInfo, samplesincl)
+}
+
+```
+
+## Eigengene plots all modules
+
+```{r}
+
+EigengenePlot(data=SampleInfo[,grep("ME", colnames(SampleInfo))],
+              Sampledata = SampleInfo, 
+              samplesincl=rep(T, nrow(SampleInfo)))
+
+
+```
+
+## WGCNA module plots only D62
+
+
+## KO effect in noDIFF noRAPA
+
+
+### D62
+
+```{r noDIFF_noRAPA_D62}
+getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "noRAPA")
+```
+
+## KO effect in DIFF noRAPA
+
+### D62
+
+```{r DIFF_noRAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
+
+```
+
+## KO effect in noDIFF RAPA
+### D62
+
+```{r noDIFF_RAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
+
+```
+## KO effect in DIFF RAPA
+
+### D62
+
+```{r DIFF_RAPA_D62}
+
+getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
+
+```
+
+
+```{r goresplots}
+
+gene_univers = rownames(ddsMat)
+
+Genes_of_interset = split(rownames(ddsMat), mcols(ddsMat)$cluster)
+
+gostres = getGOresults(Genes_of_interset, gene_univers)
+
+toptab = gostres$result
+
+write.xlsx2(toptab, file = paste0(output,"/D62_GOresWGCNA.xlsx"), sheetName = "GO_enrichment")
+
+for (module in names(Genes_of_interset)){
+  idx = toptab$query==module & grepl("GO", toptab$source)
+  if(!any(idx)){
+    p = ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                            label = "no significant GO term") + 
+      ggtitle(module)+theme_void()+
+      theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    p=GOplot(toptab[idx, ], 10, Title =module)
+  }
+  print(p)
+}
+
+
+```
+

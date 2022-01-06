@@ -232,7 +232,6 @@ EigengenePlot=function(data, Sampledata, samplesincl){
     legend(0,0.375, legend = names(ann_colors[["RAPA"]]),fill = ann_colors[["RAPA"]], xpd=T,bty = "n")
     legend(0,0.25, legend = names(ann_colors[["DIFF"]]),fill = ann_colors[["DIFF"]], xpd=T,bty = "n")
     legend(0,0.125, legend = names(ann_colors[["CellLine"]]),fill = ann_colors[["CellLine"]], xpd=T,bty = "n")
-
   }
 }
 
