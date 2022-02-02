@@ -70,7 +70,7 @@ Ntot= nrow(Countdata)
 
 #merge non unique annotations
 if(length(unique(rownames(Countdata))) != Ntot){
-  Countdata = Countdata %>% group_by(row.names(Countdata)) %>% summarise_each(sum)
+  Countdata = Countdata %>% dplyr::group_by(row.names(Countdata)) %>% summarise_each(sum)
   Ntot= nrow(Countdata)
 }
 
@@ -80,15 +80,16 @@ hgnc=gconvert(query=as.numeric(rownames(Countdata)),
               numeric_ns = "ENTREZGENE_ACC",
               target = "HGNC")
 
+
 Ids = hgnc %>%  dplyr::select(name, input, description) %>% group_by(input) %>% 
-  summarise(name=paste(name, sep="; ", collapse = ";"), description = dplyr::first(description))
+  dplyr::summarise(name=paste(name, sep="; ", collapse = ";"), description = dplyr::first(description))
 
 rowdescription = data.frame(entrez_gene = Ids$input, 
                             hgnc=Ids$name, 
                             description=Ids$description)
 
 
-if(all(row.names(Countdata) %in% rowdescription$entrez_gene)){
+if(! all(row.names(Countdata) %in% rowdescription$entrez_gene)){
   
   rowdescription = rowdescription[match(row.names(Countdata), rowdescription$entrez_gene),]
   rownames(rowdescription)=row.names(Countdata)
@@ -179,7 +180,7 @@ keeperidx = rowSums(Countdata>1)>nrow(SampleInfo)/2
 
 Countdata_cl = Countdata[keeperidx, ]
 
-rowdescription = rowdescription[row.names(Countdata_cl),]
+rowdescription = rowdescription[as.character(row.names(Countdata_cl)),]
 
 fullmodel = as.formula("~CellLine+gRNA+DIFF+RAPA")
 
@@ -234,7 +235,7 @@ cpm.sel.trans = t(log2_cpm[order(varsset,decreasing = T)[1:2000],])
 rownames(cpm.sel.trans)=SampleInfo$label_rep
 
 distance = dist(cpm.sel.trans)
-hc = hclust(distance, method="ward.D2")
+hc = stats::hclust(distance, method="ward.D2")
 cutN=24
 clusters = cutree(hc, k=cutN)
 Colors=sample(jetcolors(cutN))[clusters]

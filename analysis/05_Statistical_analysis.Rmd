@@ -12,7 +12,7 @@ home = getwd()
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=F
+reanalyze=T
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))
@@ -81,7 +81,7 @@ if(reanalyze | !file.exists(paste0(home,"/output/ResTabs_KO.RData"))){
           lab = paste("restab", Cl, vs_label, d,r, sep="_")
           print(lab)
           assign(lab, 
-                 comparison(ddsMat, samples = Set, 
+                 comparison(dds_object = ddsMat, samples = Set, 
                             target =target,randomeffect = c()))
         }
       }
