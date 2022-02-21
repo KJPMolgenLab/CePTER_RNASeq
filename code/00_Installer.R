@@ -4,7 +4,8 @@
 package<-c("RColorBrewer", "dplyr", "httr", "parallel", "rJava",
            "compareGroups", "kableExtra", "tidyverse","dendextend",
            "knitr", "pheatmap", "glmpca", "plotly", "rsconnect", "xlsx",
-           "lavaan", "semPlot", "ggplotify", "qqman", "webshot")
+           "lavaan", "semPlot", "ggplotify", "qqman", "webshot", "M3C",
+           "data.table")
 
 
 if(length(setdiff(package, rownames(installed.packages()))) > 0)	{

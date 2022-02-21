@@ -190,8 +190,8 @@ names(diffcol) = levels(SampleInfo$DIFF)
 rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
 names(rapacol) = levels(SampleInfo$RAPA)
 
-clustcol = gplots::col2hex(unique(as.character(colors_new)))
-names(clustcol) = unique(as.character(colors_new))
+clustcol = gplots::col2hex(unique(as.character(mcols(ddsMat)$cluster)))
+names(clustcol) = unique(as.character(mcols(ddsMat)$cluster))
 
 rownames(WGCNA_matrix)=SampleInfo[rownames(WGCNA_matrix), "label_rep"]
 
@@ -263,7 +263,7 @@ MEMat = SampleInfo[,grep("ME", colnames(SampleInfo))]
 
 
 
-## herlper functions#test differences
+## helper functions#test differences
 testit=function(Dataset, samples = Set, 
                 depvar){
   data = Dataset[samples,]
@@ -406,6 +406,7 @@ EigengenePlot(data=SampleInfo[,grep("ME", colnames(SampleInfo))],
 
 ```{r noDIFF_noRAPA_D62}
 getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "noRAPA")
+
 ```
 
 ## KO effect in DIFF noRAPA
@@ -433,6 +434,26 @@ getWGCNAoutputs(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
 ```{r DIFF_RAPA_D62}
 
 getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
+
+```
+
+## KO additional Plots for better visulization 
+
+
+```{r}
+dataset=SampleInfo[,grep("brown|black", colnames(SampleInfo))]
+idx=order(SampleInfo$RAPA, SampleInfo$gRNA)
+SampleInfosort = SampleInfo[idx,]
+
+EigengenePlot(data=dataset,
+              Sampledata = SampleInfosort, 
+              samplesincl=SampleInfosort$DIFF=="noDIFF")
+
+
+EigengenePlot(data=dataset,
+              Sampledata = SampleInfosort, 
+              samplesincl=SampleInfosort$DIFF=="DIFF")
+
 
 ```
 

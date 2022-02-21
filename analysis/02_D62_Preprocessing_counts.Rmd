@@ -148,14 +148,13 @@ Total number of samples overlapping between Counts and SampleInfo: `r nrow(Sampl
 
 
 ```{r plot_counts}
-
 boxplot_counts = function(plotsubset, maintitle, colorcode) {
   par(mar=c(3,3,5,7))
   a =boxplot(log2(plotsubset+1), main = maintitle, 
              col = Dark8[as.factor(SampleInfo[,colorcode])], names=NA,
              ylab = "log2 transformed", xlab="samples")
   legend("bottomleft", legend = levels(SampleInfo[,colorcode]),
-         bg="white",
+         bty = "n", bg="white",
          pch = 16, col = Dark8[1:length(unique(SampleInfo[,colorcode]))])
 }
 
@@ -165,7 +164,7 @@ barplot_counts = function(DF, maintitle, colorcode) {
           col = Dark8[as.factor(DF[,colorcode])], names="",
           ylab = "log2 transformed",xlab="samples")
   legend("bottomleft", legend = levels(DF[,colorcode]), pch = 16, 
-         bg="white",
+         bty = "n", bg="white",
          col = Dark8[1:length(unique(DF[,colorcode]))])
 }
 
